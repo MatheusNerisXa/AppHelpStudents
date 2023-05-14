@@ -1,11 +1,11 @@
-import { SafeAreaView, Text, View } from "react-native";
+import { SafeAreaView, Text } from 'react-native';
 
 const App = () => {
-    return (
+  return (
     <SafeAreaView>
-        <Text>Testando</Text>
+      <Text>Testando</Text>
     </SafeAreaView>
-    )
+  );
 };
 
 export default App;
