@@ -7,5 +7,6 @@ interface ContainerTextProps {
 export const ContainerText = styled.Text<ContainerTextProps>`
   ${(props: { color: unknown }) => (props.color ? `color: ${props.color}` : '')};
 
+  font-family: Poppins-Regular;
   font-size: ${(props: { fontSize: unknown }) => props.fontSize};
 `;
