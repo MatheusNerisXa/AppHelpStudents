@@ -8,6 +8,7 @@ interface ContainerTextProps {
 export const ContainerText = styled.Text<ContainerTextProps>`
   ${(props: { color: unknown }) => (props.color ? `color: ${props.color}` : '')};
 
+  padding-top: 3px;
   font-family: ${(props: { fontFamily: unknown }) => props.fontFamily};
   font-size: ${(props: { fontSize: unknown }) => props.fontSize};
 `;
