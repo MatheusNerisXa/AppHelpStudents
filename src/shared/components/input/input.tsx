@@ -8,21 +8,31 @@ import { ContainerInput } from './input.style';
 
 interface InputProps extends TextInputProps {
   title?: string;
+  errorMessage?: string;
 }
 
-const Input = ({ title, ...props }: InputProps) => {
+const Input = ({ title, errorMessage, ...props }: InputProps) => {
   return (
     <DisplayFlexColumn>
       {title && (
         <Text
           margin="0px 0px 4px 8px"
           color={theme.colors.grayTheme.gray100}
-          type={textTypes.PARAGRAPH_SMALL_SEMI_BOLD}
+          type={textTypes.PARAGRAPH_REGULAR}
         >
           {title}
         </Text>
       )}
-      <ContainerInput {...props} />
+      <ContainerInput isError={!!errorMessage} {...props} />
+      {errorMessage && (
+        <Text
+          margin="0px 0px 0px 8px"
+          type={textTypes.PARAGRAPH_REGULAR}
+          color={theme.colors.orangeTheme.orange80}
+        >
+          {errorMessage}
+        </Text>
+      )}
     </DisplayFlexColumn>
   );
 };

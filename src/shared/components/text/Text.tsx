@@ -10,7 +10,6 @@ interface TextProps extends TextPropsNative {
   margin?: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Text = ({ margin, color, type, ...props }: TextProps) => {
   const fontSize = useMemo(() => {
     switch (type) {
