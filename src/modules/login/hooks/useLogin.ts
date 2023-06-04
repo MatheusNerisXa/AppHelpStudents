@@ -7,7 +7,6 @@ export const useLogin = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const { authRequest, errorMessage, loading, setErrorMessage } = useRequest();
-
   const handleOnPress = async () => {
     authRequest({
       email,
