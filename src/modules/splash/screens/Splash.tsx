@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { MethodEnum } from '../../../enums/methods.enum';
 import { URL_USER } from '../../../shared/constants/urls';
 import { MenuUrl } from '../../../shared/enum/MenuUrl.enum';
+import { getAuthorizationToken } from '../../../shared/functions/connection/auth';
 import { useRequest } from '../../../shared/hooks/useRequest';
 import { useUserReducer } from '../../../store/reducers/userReducer/useUserReducer';
 import { ContainerSplash, ImagelogoSplash } from '../styles/splash.style';
@@ -14,11 +15,15 @@ const Splash = () => {
   const { setUser } = useUserReducer();
   useEffect(() => {
     const verifyLogin = async () => {
-      const returnUser = await request({
-        url: URL_USER,
-        method: MethodEnum.GET,
-        saveGlobal: setUser,
-      });
+      let returnUser;
+      const token = await getAuthorizationToken();
+      if (token) {
+        returnUser = await request({
+          url: URL_USER,
+          method: MethodEnum.GET,
+          saveGlobal: setUser,
+        });
+      }
 
       if (returnUser) {
         reset({
