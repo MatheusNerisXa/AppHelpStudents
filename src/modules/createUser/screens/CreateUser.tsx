@@ -17,6 +17,7 @@ const CreateUser = () => {
       <Input
         value={createUser.phone}
         onChange={(event) => handleOnChangeInput(event, 'phone')}
+        type="cel-phone"
         margin="0px 0px 16px 0px"
         placeholder="Digite"
         title="Telefone:"
@@ -31,6 +32,7 @@ const CreateUser = () => {
       <Input
         onChange={(event) => handleOnChangeInput(event, 'cpf')}
         value={createUser.cpf}
+        type="cpf"
         margin="0px 0px 16px 0px"
         placeholder="Digite"
         title="CPF:"
