@@ -25,7 +25,7 @@ const Input = ({ margin, secureTextEntry, title, errorMessage, ...props }: Input
       {title && (
         <Text
           margin="0px 0px 4px 8px"
-          color={theme.colors.grayTheme.gray100}
+          color={theme.colors.neutralTheme.black}
           type={textTypes.PARAGRAPH_REGULAR}
         >
           {title}
