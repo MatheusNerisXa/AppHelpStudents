@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import { useGlobalReducer } from '../../store/reducers/globalReducer/useGlobalReducer';
 import { useUserReducer } from '../../store/reducers/userReducer/useUserReducer';
+import { AUTHORIZATION_KEY } from '../constants/authorizationConstants';
 import { MenuUrl } from '../enum/MenuUrl.enum';
 import { setAuthorizationToken } from '../functions/connection/auth';
 import ConnectionAPI, {
@@ -64,7 +65,7 @@ export const useRequest = () => {
     setLoading(true);
     await connectionAPIPost<ReturnLogin>('http://192.168.1.13:8080/auth', body)
       .then((result) => {
-        setAuthorizationToken(result.acessToken);
+        setAuthorizationToken(AUTHORIZATION_KEY);
         setUser(result.user);
         reset({
           index: 0,
