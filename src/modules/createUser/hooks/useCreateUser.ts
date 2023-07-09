@@ -5,6 +5,7 @@ import { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native/typ
 import { MethodEnum } from '../../../enums/methods.enum';
 import { URL_USER } from '../../../shared/constants/urls';
 import { MenuUrl } from '../../../shared/enum/MenuUrl.enum';
+import { removeSecialCharacters } from '../../../shared/functions/characters';
 import { validateCpf } from '../../../shared/functions/cpf';
 import { validateEmail } from '../../../shared/functions/email';
 import { validatePhone } from '../../../shared/functions/phone';
@@ -43,7 +44,11 @@ export const useCreateUser = () => {
     const resultCreateUser = await request({
       url: URL_USER,
       method: MethodEnum.POST,
-      body: createUser,
+      body: {
+        ...createUser,
+        phone: removeSecialCharacters(createUser.phone),
+        cpf: removeSecialCharacters(createUser.cpf),
+      },
       message: 'Usuário cadastrado com sucesso!',
     });
 
