@@ -18,7 +18,7 @@ const TabNavigation = () => {
     let iconName: string;
 
     switch (route.name) {
-      case 'Home':
+      case 'Homee':
         iconName = 'home';
         break;
       case 'Orders':
@@ -36,9 +36,16 @@ const TabNavigation = () => {
         tabBarIcon: ({ color }) => renderTabBarIcon(color, route),
         tabBarActiveTintColor: theme.colors.mainTheme.primary,
         tabBarInactiveTintColor: theme.colors.grayTheme.gray80,
+        tabBarLabelStyle: {
+          marginBottom: 8,
+        },
+        tabBarStyle: {
+          height: 80,
+          padding: 8,
+        },
       })}
     >
-      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Homee" component={Home} />
       <Tab.Screen name="Orders" component={Orders} />
       <Tab.Screen name="Profile" component={Profile} options={{ title: 'Perfil' }} />
     </Tab.Navigator>
