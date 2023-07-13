@@ -12,14 +12,14 @@ export const mainTheme = {
   primary: '#8C29B0',
 };
 
-export const pinkTheme = {
-  pink80: '#C833DB',
+export const turquesaTheme = {
+  turquesa80: '#00D2FF',
 };
 
 export const purpleTheme = {
   purple80: '#512c85',
 };
 
-export const orangeTheme = {
-  orange80: '#E7774d',
+export const blueTheme = {
+  blue80: '#007AFF',
 };

@@ -1,14 +1,21 @@
 import { buttonsTheme } from './buttons';
-import { grayTheme, mainTheme, neutralTheme, orangeTheme, pinkTheme, purpleTheme } from './colors';
+import {
+  blueTheme,
+  grayTheme,
+  mainTheme,
+  neutralTheme,
+  purpleTheme,
+  turquesaTheme,
+} from './colors';
 
 export const theme = {
   colors: {
     grayTheme,
     neutralTheme,
     mainTheme,
-    pinkTheme,
+    turquesaTheme,
     purpleTheme,
-    orangeTheme,
+    blueTheme,
   },
   buttons: {
     buttonsTheme,

@@ -1,4 +1,5 @@
 import { TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native';
 
 import Button from '../../../shared/components/button/Button';
 import Input from '../../../shared/components/input/input';
@@ -21,42 +22,44 @@ const Login = () => {
   } = useLogin();
 
   return (
-    <View>
-      <ContainerLogin>
-        <Imagelogo resizeMode="cover" source={require('../../../assets/images/logo.png')} />
-        <Input
-          value={email}
-          errorMessage={errorMessage}
-          margin="0px 0px 8px 0px"
-          placeholder="Digite seu email"
-          title="Email:"
-          onChange={handleOnChangeEmail}
-        />
-        <Input
-          errorMessage={errorMessage}
-          value={password}
-          secureTextEntry
-          placeholder="Digite sua senha"
-          title="Senha:"
-          onChange={handleOnChangePassword}
-        />
-        <TouchableOpacity onPress={handleGoToCreateUser}>
-          <Text
-            margin="16px"
-            type={textTypes.PARAGRAPH_SEMI_BOLD}
-            color={theme.colors.mainTheme.primary}
-          >
-            Cadastrar usuário
-          </Text>
-        </TouchableOpacity>
-        <Button
-          type={theme.buttons.buttonsTheme.primary}
-          loading={loading}
-          title="ENTRAR"
-          onPress={handleOnPress}
-        />
-      </ContainerLogin>
-    </View>
+    <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={20} style={{ flex: 1 }}>
+      <View>
+        <ContainerLogin>
+          <Imagelogo resizeMode="cover" source={require('../../../assets/images/logo.png')} />
+          <Input
+            value={email}
+            errorMessage={errorMessage}
+            margin="0px 0px 8px 0px"
+            placeholder="Digite seu email"
+            title="Email:"
+            onChange={handleOnChangeEmail}
+          />
+          <Input
+            errorMessage={errorMessage}
+            value={password}
+            secureTextEntry
+            placeholder="Digite sua senha"
+            title="Senha:"
+            onChange={handleOnChangePassword}
+          />
+          <TouchableOpacity onPress={handleGoToCreateUser}>
+            <Text
+              margin="16px"
+              type={textTypes.PARAGRAPH_SEMI_BOLD}
+              color={theme.colors.mainTheme.primary}
+            >
+              Cadastrar usuário
+            </Text>
+          </TouchableOpacity>
+          <Button
+            type={theme.buttons.buttonsTheme.primary}
+            loading={loading}
+            title="ENTRAR"
+            onPress={handleOnPress}
+          />
+        </ContainerLogin>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 
