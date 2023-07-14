@@ -39,6 +39,7 @@ const Login = () => {
   };
 
   return (
+    // eslint-disable-next-line react-native/no-inline-styles
     <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={20} style={{ flex: 1 }}>
       <View>
         <ContainerLogin>
@@ -65,6 +66,7 @@ const Login = () => {
             />
           </Animated.View>
           <Animated.View
+            // eslint-disable-next-line react-native/no-inline-styles
             style={{
               opacity: animation.interpolate({
                 inputRange: [0, 1],
@@ -100,6 +102,7 @@ const Login = () => {
           </Animated.View>
           <TouchableOpacity onPress={handleGoToCreateUser}>
             <Animated.View
+              // eslint-disable-next-line react-native/no-inline-styles
               style={{
                 opacity: animation,
                 transform: [
@@ -123,6 +126,7 @@ const Login = () => {
             </Animated.View>
           </TouchableOpacity>
           <Animated.View
+            // eslint-disable-next-line react-native/no-inline-styles
             style={{
               opacity: animation,
               transform: [
