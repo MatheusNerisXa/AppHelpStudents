@@ -1,4 +1,5 @@
-import { TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Animated, TouchableOpacity, View } from 'react-native';
 import { KeyboardAvoidingView } from 'react-native';
 
 import Button from '../../../shared/components/button/Button';
@@ -21,42 +22,127 @@ const Login = () => {
     handleGoToCreateUser,
   } = useLogin();
 
+  // Definir estado para animação
+  const [animationCompleted, setAnimationCompleted] = useState(false);
+  const [animation] = useState(new Animated.Value(0));
+
+  useEffect(() => {
+    Animated.timing(animation, {
+      toValue: animationCompleted ? 1 : 0,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  }, [animationCompleted]);
+
+  const handleAnimationComplete = () => {
+    setAnimationCompleted(true);
+  };
+
   return (
     <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={20} style={{ flex: 1 }}>
       <View>
         <ContainerLogin>
-          <Imagelogo resizeMode="cover" source={require('../../../assets/images/logo.png')} />
-          <Input
-            value={email}
-            errorMessage={errorMessage}
-            margin="0px 0px 8px 0px"
-            placeholder="Digite seu email"
-            title="Email:"
-            onChange={handleOnChangeEmail}
-          />
-          <Input
-            errorMessage={errorMessage}
-            value={password}
-            secureTextEntry
-            placeholder="Digite sua senha"
-            title="Senha:"
-            onChange={handleOnChangePassword}
-          />
+          <Animated.View
+            style={{
+              opacity: animation.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, 1],
+              }),
+              transform: [
+                {
+                  translateY: animation.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [-50, 0],
+                  }),
+                },
+              ],
+            }}
+          >
+            <Imagelogo
+              resizeMode="cover"
+              source={require('../../../assets/images/logo.png')}
+              onLoad={handleAnimationComplete}
+            />
+          </Animated.View>
+          <Animated.View
+            style={{
+              opacity: animation.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, 1],
+              }),
+              transform: [
+                {
+                  translateY: animation.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [50, 0],
+                  }),
+                },
+              ],
+              width: '100%',
+            }}
+          >
+            <Input
+              value={email}
+              errorMessage={errorMessage}
+              margin="0px 0px 8px 0px"
+              placeholder="Digite seu email"
+              title="Email:"
+              onChange={handleOnChangeEmail}
+            />
+            <Input
+              errorMessage={errorMessage}
+              value={password}
+              secureTextEntry
+              placeholder="Digite sua senha"
+              title="Senha:"
+              onChange={handleOnChangePassword}
+            />
+          </Animated.View>
           <TouchableOpacity onPress={handleGoToCreateUser}>
-            <Text
-              margin="16px"
-              type={textTypes.PARAGRAPH_SEMI_BOLD}
-              color={theme.colors.mainTheme.primary}
+            <Animated.View
+              style={{
+                opacity: animation,
+                transform: [
+                  {
+                    translateY: animation.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [50, 0],
+                    }),
+                  },
+                ],
+                width: '100%',
+              }}
             >
-              Cadastrar usuário
-            </Text>
+              <Text
+                margin="16px"
+                type={textTypes.PARAGRAPH_SEMI_BOLD}
+                color={theme.colors.mainTheme.primary}
+              >
+                Cadastrar usuário
+              </Text>
+            </Animated.View>
           </TouchableOpacity>
-          <Button
-            type={theme.buttons.buttonsTheme.primary}
-            loading={loading}
-            title="ENTRAR"
-            onPress={handleOnPress}
-          />
+          <Animated.View
+            style={{
+              opacity: animation,
+              transform: [
+                {
+                  translateY: animation.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [50, 0],
+                  }),
+                },
+              ],
+              width: '100%',
+            }}
+          >
+            <Button
+              type={theme.buttons.buttonsTheme.primary}
+              loading={loading}
+              title="ENTRAR"
+              onPress={handleOnPress}
+            />
+          </Animated.View>
         </ContainerLogin>
       </View>
     </KeyboardAvoidingView>

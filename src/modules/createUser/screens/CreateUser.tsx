@@ -17,6 +17,7 @@ const CreateUser = () => {
   const confirmPasswordInput = useRef<TextInput>(null);
 
   return (
+    // eslint-disable-next-line react-native/no-inline-styles
     <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <CreateUserContainer>
         <Input
