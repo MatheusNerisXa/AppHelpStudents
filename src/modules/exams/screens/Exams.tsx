@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { RefreshControl, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Card, Paragraph, Title } from 'react-native-paper';
 
 interface Exam {
@@ -46,11 +46,21 @@ const styles = StyleSheet.create({
   boldText: {
     fontWeight: 'bold',
   },
+  searchContainer: {
+    marginBottom: 16,
+  },
+  searchInput: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    paddingHorizontal: 8,
+  },
 });
 
 const Exam = () => {
   const [exams, setExams] = useState<Exam[]>([]);
   const [refreshing, setRefreshing] = useState(false);
+  const [searchText, setSearchText] = useState('');
 
   const fetchData = () => {
     fetch('http://192.168.1.13:8080/exams')
@@ -68,14 +78,34 @@ const Exam = () => {
     fetchData();
   };
 
+  const handleSearch = (text: string) => {
+    setSearchText(text);
+  };
+
+  const filteredExams = exams.filter((exam) =>
+    exam.title.toLowerCase().includes(searchText.toLowerCase()),
+  );
+
   return (
     <View style={styles.container}>
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Digite a universidade ou escola"
+          placeholderTextColor="#000000"
+          value={searchText}
+          onChangeText={handleSearch}
+          autoFocus
+        />
+      </View>
       <ScrollView
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor="#007AFF" />
+        }
       >
-        {exams.map((exam) => (
+        {filteredExams.map((exam) => (
           <Card key={exam.id} style={styles.card}>
             <Card.Content style={styles.cardContent}>
               <Title style={styles.title}>{exam.title}</Title>
