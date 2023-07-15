@@ -90,7 +90,7 @@ const Input = forwardRef<TextInput, InputProps>(
           <Text
             margin="0px 0px 0px 8px"
             type={textTypes.PARAGRAPH_REGULAR}
-            color={theme.colors.orangeTheme.orange80}
+            color={theme.colors.blueTheme.blue80}
           >
             {errorMessage}
           </Text>

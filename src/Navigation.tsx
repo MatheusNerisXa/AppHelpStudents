@@ -1,27 +1,30 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, ParamListBase, RouteProp } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
 
 import CreateUser from './modules/createUser';
+import Exam from './modules/exams';
 import Home from './modules/home';
 import Login from './modules/login';
-import Orders from './modules/orders';
 import Profile from './modules/profile';
 import Splash from './modules/splash';
 import { Icon } from './shared/components/icon/Icon';
 import { MenuUrl } from './shared/enum/MenuUrl.enum';
 import { theme } from './shared/themes/theme';
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
 const TabNavigation = () => {
   const renderTabBarIcon = (color: string, route: RouteProp<ParamListBase, string>) => {
     let iconName: string;
 
     switch (route.name) {
-      case 'Homee':
+      case 'Home':
         iconName = 'home';
         break;
-      case 'Orders':
+      case 'Prova':
         iconName = 'cart';
         break;
       default:
@@ -30,11 +33,12 @@ const TabNavigation = () => {
     }
     return <Icon name={iconName} color={color} size={16} />;
   };
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color }) => renderTabBarIcon(color, route),
-        tabBarActiveTintColor: theme.colors.mainTheme.primary,
+        tabBarActiveTintColor: theme.colors.blueTheme.blue80,
         tabBarInactiveTintColor: theme.colors.grayTheme.gray80,
         tabBarLabelStyle: {
           marginBottom: 8,
@@ -46,7 +50,7 @@ const TabNavigation = () => {
       })}
     >
       <Tab.Screen name="Homee" component={Home} />
-      <Tab.Screen name="Orders" component={Orders} />
+      <Tab.Screen name="Provas" component={Exam} />
       <Tab.Screen name="Profile" component={Profile} options={{ title: 'Perfil' }} />
     </Tab.Navigator>
   );
