@@ -28,11 +28,11 @@ const Menu = () => {
         <Text style={styles.optionText}>Meus Dados</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.optionContainer}>
-        <Icon name="settings" size={24} color="#007AFF" style={styles.optionIcon} />
+        <Icon name="profile" size={24} color="#007AFF" style={styles.optionIcon} />
         <Text style={styles.optionText}>Configurações</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.optionContainer}>
-        <Icon name="help" size={24} color="#007AFF" style={styles.optionIcon} />
+        <Icon name="profile" size={24} color="#007AFF" style={styles.optionIcon} />
         <Text style={styles.optionText}>Ajuda</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.optionContainer} onPress={handleLogout}>
