@@ -87,6 +87,18 @@ const ExamComponent = () => {
     exam.title.toLowerCase().includes(searchText.toLowerCase()),
   );
 
+  const renderExams = () => {
+    if (filteredExams.length === 0 && searchText.length > 0) {
+      return (
+        <View style={ExamsStyle.container}>
+          <Text>Nenhuma faculdade ou escola encontrada com o nome "{searchText}"</Text>
+        </View>
+      );
+    }
+
+    return filteredExams.map((exam) => <ExamItem key={exam.id} exam={exam} />);
+  };
+
   return (
     <View style={ExamsStyle.container}>
       <View style={ExamsStyle.searchContainer}>
@@ -106,9 +118,7 @@ const ExamComponent = () => {
           <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor="#007AFF" />
         }
       >
-        {filteredExams.map((exam) => (
-          <ExamItem key={exam.id} exam={exam} />
-        ))}
+        {renderExams()}
       </ScrollView>
     </View>
   );
