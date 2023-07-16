@@ -1,6 +1,9 @@
+import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
-import { RefreshControl, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { RefreshControl, ScrollView, Text, TextInput, View } from 'react-native';
 import { Card, Paragraph, Title } from 'react-native-paper';
+
+import { ExamsStyle } from '../styles/exams.style';
 
 interface Exam {
   id: number;
@@ -13,51 +16,7 @@ interface Exam {
   resultDate: string;
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#f2f2f2',
-  },
-  contentContainer: {
-    paddingBottom: 16,
-  },
-  card: {
-    marginBottom: 16,
-    elevation: 4,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#007AFF',
-    backgroundColor: '#FFFFFF',
-  },
-  cardContent: {
-    padding: 16,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#007AFF',
-    marginBottom: 12,
-  },
-  paragraph: {
-    color: '#444444',
-    marginBottom: 8,
-  },
-  boldText: {
-    fontWeight: 'bold',
-  },
-  searchContainer: {
-    marginBottom: 16,
-  },
-  searchInput: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    paddingHorizontal: 8,
-  },
-});
-
-const Exam = () => {
+const ExamComponent = () => {
   const [exams, setExams] = useState<Exam[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const [searchText, setSearchText] = useState('');
@@ -82,55 +41,71 @@ const Exam = () => {
     setSearchText(text);
   };
 
+  const formatBrazilianDate = (date: string) => {
+    return format(new Date(date), 'dd/MM/yyyy');
+  };
+
   const filteredExams = exams.filter((exam) =>
     exam.title.toLowerCase().includes(searchText.toLowerCase()),
   );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.searchContainer}>
+    <View style={ExamsStyle.container}>
+      <View style={ExamsStyle.searchContainer}>
         <TextInput
-          style={styles.searchInput}
+          style={ExamsStyle.searchInput}
           placeholder="Digite a universidade ou escola"
-          placeholderTextColor="#000000"
+          placeholderTextColor="#FFFFFF"
           value={searchText}
           onChangeText={handleSearch}
           autoFocus
         />
       </View>
       <ScrollView
-        contentContainerStyle={styles.contentContainer}
+        contentContainerStyle={ExamsStyle.contentContainer}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor="#007AFF" />
         }
       >
         {filteredExams.map((exam) => (
-          <Card key={exam.id} style={styles.card}>
-            <Card.Content style={styles.cardContent}>
-              <Title style={styles.title}>{exam.title}</Title>
-              <Paragraph style={styles.paragraph}>
-                <Text>{exam.description}</Text>
-              </Paragraph>
-              <Paragraph style={styles.paragraph}>
-                <Text style={styles.boldText}>Inscrições:</Text> {exam.registrationStart} a{' '}
-                {exam.registrationEnd}
-              </Paragraph>
-              <Paragraph style={styles.paragraph}>
-                <Text style={styles.boldText}>Prova 1ª Fase:</Text> {exam.exam1Date}
-              </Paragraph>
-              <Paragraph style={styles.paragraph}>
-                <Text style={styles.boldText}>Prova 2ª Fase:</Text> {exam.exam2Date}
-              </Paragraph>
-              <Paragraph style={styles.paragraph}>
-                <Text style={styles.boldText}>Resultado Final:</Text> {exam.resultDate}
-              </Paragraph>
-            </Card.Content>
-          </Card>
+          <View key={exam.id} style={ExamsStyle.cardContainer}>
+            <Card>
+              <View style={ExamsStyle.cardContent}>
+                <Title style={ExamsStyle.title}>{exam.title}</Title>
+                {exam.description && (
+                  <Paragraph style={ExamsStyle.paragraph}>
+                    <Text>{exam.description}</Text>
+                  </Paragraph>
+                )}
+                <Paragraph style={ExamsStyle.paragraph}>
+                  <Text style={ExamsStyle.boldText}>Inscrições:</Text>{' '}
+                  {formatBrazilianDate(exam.registrationStart)} a{' '}
+                  {formatBrazilianDate(exam.registrationEnd)}
+                </Paragraph>
+                <Paragraph style={ExamsStyle.paragraph}>
+                  <Text style={ExamsStyle.boldText}>Prova 1ª Fase:</Text>{' '}
+                  {formatBrazilianDate(exam.exam1Date)}
+                </Paragraph>
+                {exam.exam2Date && (
+                  <Paragraph style={ExamsStyle.paragraph}>
+                    <Text style={ExamsStyle.boldText}>Prova 2ª Fase:</Text>{' '}
+                    {formatBrazilianDate(exam.exam2Date)}
+                  </Paragraph>
+                )}
+                {exam.resultDate && (
+                  <Paragraph style={ExamsStyle.paragraph}>
+                    <Text style={ExamsStyle.boldText}>Resultado Final:</Text>{' '}
+                    {formatBrazilianDate(exam.resultDate)}
+                  </Paragraph>
+                )}
+              </View>
+            </Card>
+          </View>
         ))}
       </ScrollView>
     </View>
   );
 };
 
-export default Exam;
+export default ExamComponent;

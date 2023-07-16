@@ -21,11 +21,14 @@ const TabNavigation = () => {
     let iconName: string;
 
     switch (route.name) {
-      case 'Home':
+      case 'Homee': // Adjusted the screen name to match
         iconName = 'home';
         break;
-      case 'Prova':
+      case 'Vestibulares':
         iconName = 'cart';
+        break;
+      case 'Profile':
+        iconName = 'profile';
         break;
       default:
         iconName = 'profile';
@@ -38,20 +41,45 @@ const TabNavigation = () => {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color }) => renderTabBarIcon(color, route),
-        tabBarActiveTintColor: theme.colors.blueTheme.blue80,
-        tabBarInactiveTintColor: theme.colors.grayTheme.gray80,
+        tabBarActiveTintColor: theme.colors.purpleTheme.purple80,
+        tabBarInactiveTintColor: theme.colors.neutralTheme.white,
         tabBarLabelStyle: {
           marginBottom: 8,
         },
         tabBarStyle: {
+          backgroundColor: theme.colors.blueTheme.blue80,
           height: 80,
           padding: 8,
         },
       })}
     >
-      <Tab.Screen name="Homee" component={Home} />
-      <Tab.Screen name="Provas" component={Exam} />
-      <Tab.Screen name="Profile" component={Profile} options={{ title: 'Perfil' }} />
+      <Tab.Screen
+        name="Homee"
+        component={Home}
+        options={{
+          title: 'Ínicio',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: '#007AFF' },
+        }}
+      />
+      <Tab.Screen
+        name="Vestibulares"
+        component={Exam}
+        options={{
+          title: 'Vestibulares',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: '#007AFF' },
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          title: 'Perfil',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: '#007AFF' },
+        }}
+      />
     </Tab.Navigator>
   );
 };
