@@ -7,6 +7,7 @@ import CreateUser from './modules/createUser';
 import Exam from './modules/exams';
 import Home from './modules/home';
 import Login from './modules/login';
+import Menu from './modules/menu';
 import Profile from './modules/profile';
 import Splash from './modules/splash';
 import { Icon } from './shared/components/icon/Icon';
@@ -21,7 +22,7 @@ const TabNavigation = () => {
     let iconName: string;
 
     switch (route.name) {
-      case 'Homee': // Adjusted the screen name to match
+      case 'Homee':
         iconName = 'home';
         break;
       case 'Vestibulares':
@@ -29,6 +30,9 @@ const TabNavigation = () => {
         break;
       case 'Profile':
         iconName = 'profile';
+        break;
+      case 'Menu':
+        iconName = 'menu';
         break;
       default:
         iconName = 'profile';
@@ -76,6 +80,15 @@ const TabNavigation = () => {
         component={Profile}
         options={{
           title: 'Perfil',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: '#007AFF' },
+        }}
+      />
+      <Tab.Screen
+        name="Menu"
+        component={Menu}
+        options={{
+          title: 'Menu',
           headerTintColor: '#FFF',
           headerStyle: { backgroundColor: '#007AFF' },
         }}
