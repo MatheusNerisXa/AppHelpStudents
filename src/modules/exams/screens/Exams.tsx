@@ -31,7 +31,7 @@ const ExamItem = ({ exam }: { exam: Exam }) => {
         <View style={ExamsStyle.descriptionContainer}>
           <Text style={ExamsStyle.descriptionText}>
             <Text style={ExamsStyle.boldText}>Data de Inscrição:</Text>{' '}
-            {formatBrazilianDate(exam.registrationStart)} -{' '}
+            {formatBrazilianDate(exam.registrationStart)} a{' '}
             {formatBrazilianDate(exam.registrationEnd)}
           </Text>
           <Text style={ExamsStyle.descriptionText}>

@@ -54,7 +54,7 @@ export const ExamsStyle = StyleSheet.create({
     borderRadius: 8,
     overflow: 'hidden',
     borderWidth: 2,
-    borderColor: 'transparent',
+    borderColor: '#D9D9D9',
     backgroundColor: '#FFFFFF',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
