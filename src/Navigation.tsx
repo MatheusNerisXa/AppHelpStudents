@@ -41,7 +41,7 @@ const TabNavigation = () => {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color }) => renderTabBarIcon(color, route),
-        tabBarActiveTintColor: theme.colors.purpleTheme.purple80,
+        tabBarActiveTintColor: theme.colors.grayTheme.gray80,
         tabBarInactiveTintColor: theme.colors.neutralTheme.white,
         tabBarLabelStyle: {
           marginBottom: 8,
