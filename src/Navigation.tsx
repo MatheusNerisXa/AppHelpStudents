@@ -2,6 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, ParamListBase, RouteProp } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
+import { Pressable } from 'react-native';
 
 import CreateUser from './modules/createUser';
 import Exam from './modules/exams';
@@ -41,6 +42,12 @@ const TabNavigation = () => {
     return <Icon name={iconName} color={color} size={16} />;
   };
 
+  const renderHeaderLeft = (navigation: any) => (
+    <Pressable style={{ marginLeft: 16 }} onPress={() => navigation.goBack()}>
+      <Icon name="arrow-left" color="#FFF" size={24} />
+    </Pressable>
+  );
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -69,11 +76,12 @@ const TabNavigation = () => {
       <Tab.Screen
         name="Vestibulares"
         component={Exam}
-        options={{
+        options={({ navigation }) => ({
           title: 'Vestibulares',
           headerTintColor: '#FFF',
           headerStyle: { backgroundColor: '#007AFF' },
-        }}
+          headerLeft: () => renderHeaderLeft(navigation),
+        })}
       />
       <Tab.Screen
         name="Profile"

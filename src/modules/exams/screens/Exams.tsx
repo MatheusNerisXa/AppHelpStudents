@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { RefreshControl, ScrollView, Text, TextInput, View } from 'react-native';
-import { Card, Paragraph, Title } from 'react-native-paper';
+import { List } from 'react-native-paper';
 
 import { ExamsStyle } from '../styles/exams.style';
 
@@ -15,6 +15,48 @@ interface Exam {
   exam2Date: string;
   resultDate: string;
 }
+
+const ExamItem = ({ exam }: { exam: Exam }) => {
+  const formatBrazilianDate = (date: string) => {
+    return format(new Date(date), 'dd/MM/yyyy');
+  };
+
+  return (
+    <List.Item
+      key={exam.id}
+      title={exam.title}
+      titleNumberOfLines={2}
+      // eslint-disable-next-line react/no-unstable-nested-components
+      description={() => (
+        <View style={ExamsStyle.descriptionContainer}>
+          <Text style={ExamsStyle.descriptionText}>
+            <Text style={ExamsStyle.boldText}>Data de Inscrição:</Text>{' '}
+            {formatBrazilianDate(exam.registrationStart)} -{' '}
+            {formatBrazilianDate(exam.registrationEnd)}
+          </Text>
+          <Text style={ExamsStyle.descriptionText}>
+            <Text style={ExamsStyle.boldText}>Data da Prova:</Text>{' '}
+            {formatBrazilianDate(exam.exam1Date)}
+          </Text>
+          {exam.exam2Date && (
+            <Text style={ExamsStyle.descriptionText}>
+              <Text style={ExamsStyle.boldText}>2ª Fase da Prova:</Text>{' '}
+              {formatBrazilianDate(exam.exam2Date)}
+            </Text>
+          )}
+          {exam.resultDate && (
+            <Text style={ExamsStyle.descriptionText}>
+              <Text style={ExamsStyle.boldText}>Data do Resultado:</Text>{' '}
+              {formatBrazilianDate(exam.resultDate)}
+            </Text>
+          )}
+        </View>
+      )}
+      titleStyle={ExamsStyle.title}
+      style={ExamsStyle.listItem}
+    />
+  );
+};
 
 const ExamComponent = () => {
   const [exams, setExams] = useState<Exam[]>([]);
@@ -41,10 +83,6 @@ const ExamComponent = () => {
     setSearchText(text);
   };
 
-  const formatBrazilianDate = (date: string) => {
-    return format(new Date(date), 'dd/MM/yyyy');
-  };
-
   const filteredExams = exams.filter((exam) =>
     exam.title.toLowerCase().includes(searchText.toLowerCase()),
   );
@@ -69,39 +107,7 @@ const ExamComponent = () => {
         }
       >
         {filteredExams.map((exam) => (
-          <View key={exam.id} style={ExamsStyle.cardContainer}>
-            <Card>
-              <View style={ExamsStyle.cardContent}>
-                <Title style={ExamsStyle.title}>{exam.title}</Title>
-                {exam.description && (
-                  <Paragraph style={ExamsStyle.paragraph}>
-                    <Text>{exam.description}</Text>
-                  </Paragraph>
-                )}
-                <Paragraph style={ExamsStyle.paragraph}>
-                  <Text style={ExamsStyle.boldText}>Inscrições:</Text>{' '}
-                  {formatBrazilianDate(exam.registrationStart)} a{' '}
-                  {formatBrazilianDate(exam.registrationEnd)}
-                </Paragraph>
-                <Paragraph style={ExamsStyle.paragraph}>
-                  <Text style={ExamsStyle.boldText}>Prova 1ª Fase:</Text>{' '}
-                  {formatBrazilianDate(exam.exam1Date)}
-                </Paragraph>
-                {exam.exam2Date && (
-                  <Paragraph style={ExamsStyle.paragraph}>
-                    <Text style={ExamsStyle.boldText}>Prova 2ª Fase:</Text>{' '}
-                    {formatBrazilianDate(exam.exam2Date)}
-                  </Paragraph>
-                )}
-                {exam.resultDate && (
-                  <Paragraph style={ExamsStyle.paragraph}>
-                    <Text style={ExamsStyle.boldText}>Resultado Final:</Text>{' '}
-                    {formatBrazilianDate(exam.resultDate)}
-                  </Paragraph>
-                )}
-              </View>
-            </Card>
-          </View>
+          <ExamItem key={exam.id} exam={exam} />
         ))}
       </ScrollView>
     </View>

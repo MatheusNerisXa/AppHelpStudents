@@ -9,33 +9,12 @@ export const ExamsStyle = StyleSheet.create({
   contentContainer: {
     paddingBottom: 16,
   },
-  cardContainer: {
-    marginBottom: 16,
-    borderRadius: 8,
-    overflow: 'hidden',
-    borderWidth: 2,
-    borderColor: 'transparent',
-    backgroundColor: '#FFFFFF',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    elevation: 4,
-  },
-  cardContent: {
-    padding: 16,
-    backgroundColor: '#FFFFFF',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#007AFF',
-    marginBottom: 12,
-  },
-  paragraph: {
-    color: '#333333',
+  descriptionContainer: {
     marginBottom: 8,
-    textAlign: 'justify',
+  },
+  descriptionText: {
+    color: '#333333',
+    marginBottom: 4,
   },
   boldText: {
     fontWeight: 'bold',
@@ -63,5 +42,24 @@ export const ExamsStyle = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 2,
     elevation: 2,
+  },
+  title: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: '#007AFF',
+    marginBottom: 12,
+  },
+  listItem: {
+    marginBottom: 16,
+    borderRadius: 8,
+    overflow: 'hidden',
+    borderWidth: 2,
+    borderColor: 'transparent',
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 4,
   },
 });
