@@ -42,7 +42,9 @@ const TabNavigation = () => {
     return <Icon name={iconName} color={color} size={16} />;
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const renderHeaderLeft = (navigation: any) => (
+    // eslint-disable-next-line react-native/no-inline-styles
     <Pressable style={{ marginLeft: 16 }} onPress={() => navigation.goBack()}>
       <Icon name="arrow-left" color="#FFF" size={24} />
     </Pressable>
