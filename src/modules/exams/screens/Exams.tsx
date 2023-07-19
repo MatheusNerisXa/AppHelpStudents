@@ -4,7 +4,6 @@ import { RefreshControl, ScrollView, Text, TextInput, View } from 'react-native'
 import { List } from 'react-native-paper';
 
 import { ExamsStyle } from '../styles/exams.style';
-
 interface Exam {
   id: number;
   description: string;
@@ -64,7 +63,7 @@ const ExamComponent = () => {
   const [searchText, setSearchText] = useState('');
 
   const fetchData = () => {
-    fetch('http://192.168.1.13:8080/exams')
+    fetch('http://192.168.1.15:8080/exams')
       .then((response) => response.json())
       .then((data) => setExams(data))
       .finally(() => setRefreshing(false));

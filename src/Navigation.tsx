@@ -2,10 +2,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, ParamListBase, RouteProp } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import { Pressable } from 'react-native';
 
 import CreateUser from './modules/createUser';
-import Exam from './modules/exams';
+import Exams from './modules/exams';
 import Home from './modules/home';
 import Login from './modules/login';
 import Menu from './modules/menu';
@@ -26,9 +25,6 @@ const TabNavigation = () => {
       case 'Homee':
         iconName = 'home';
         break;
-      case 'Vestibulares':
-        iconName = 'cart';
-        break;
       case 'Profile':
         iconName = 'profile';
         break;
@@ -41,14 +37,6 @@ const TabNavigation = () => {
     }
     return <Icon name={iconName} color={color} size={16} />;
   };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const renderHeaderLeft = (navigation: any) => (
-    // eslint-disable-next-line react-native/no-inline-styles
-    <Pressable style={{ marginLeft: 16 }} onPress={() => navigation.goBack()}>
-      <Icon name="arrow-left" color="#FFF" size={24} />
-    </Pressable>
-  );
 
   return (
     <Tab.Navigator
@@ -76,22 +64,22 @@ const TabNavigation = () => {
         }}
       />
       <Tab.Screen
-        name="Vestibulares"
-        component={Exam}
-        options={({ navigation }) => ({
-          title: 'Vestibulares',
-          headerTintColor: '#FFF',
-          headerStyle: { backgroundColor: '#007AFF' },
-          headerLeft: () => renderHeaderLeft(navigation),
-        })}
-      />
-      <Tab.Screen
         name="Profile"
         component={Profile}
         options={{
           title: 'Perfil',
           headerTintColor: '#FFF',
           headerStyle: { backgroundColor: '#007AFF' },
+        }}
+      />
+      <Tab.Screen
+        name="Exam"
+        component={Exams}
+        options={{
+          title: 'Vestibulares',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: '#007AFF' },
+          tabBarButton: () => null,
         }}
       />
       <Tab.Screen
@@ -123,6 +111,7 @@ const Navigation = () => {
           component={TabNavigation}
           options={{ headerShown: false }}
         />
+        <Stack.Screen name={MenuUrl.Exam} component={Exams} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
