@@ -1,5 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import { useReducer } from 'react';
 
 import { useGlobalReducer } from '../../store/reducers/globalReducer/useGlobalReducer';
 import { useUserReducer } from '../../store/reducers/userReducer/useUserReducer';
@@ -13,7 +14,7 @@ import ConnectionAPI, {
 import { RequestLogin } from '../types/requestLogin';
 import { ReturnLogin } from '../types/returnLogin';
 
-interface requestProps<T> {
+interface RequestProps<T> {
   url: string;
   method: MethodType;
   saveGlobal?: (object: T) => void;
@@ -21,73 +22,128 @@ interface requestProps<T> {
   message?: string;
 }
 
+interface RequestState {
+  loading: boolean;
+  errorMessage: string;
+}
+
+type RequestAction =
+  | { type: 'START_REQUEST' }
+  | { type: 'REQUEST_SUCCESS' }
+  | { type: 'REQUEST_FAILURE'; payload: string }
+  | { type: 'SET_ERROR_MESSAGE'; payload: string };
+
+const requestReducer = (state: RequestState, action: RequestAction): RequestState => {
+  switch (action.type) {
+    case 'START_REQUEST':
+      return { ...state, loading: true, errorMessage: '' };
+    case 'REQUEST_SUCCESS':
+      return { ...state, loading: false };
+    case 'REQUEST_FAILURE':
+      return { ...state, loading: false, errorMessage: action.payload };
+    case 'SET_ERROR_MESSAGE':
+      return { ...state, errorMessage: action.payload };
+    default:
+      return state;
+  }
+};
+
 export const useRequest = () => {
   const { reset } = useNavigation<NavigationProp<ParamListBase>>();
   const { setUser } = useUserReducer();
   const { setModal } = useGlobalReducer();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>('');
+
+  const [state, dispatch] = useReducer(requestReducer, { loading: false, errorMessage: '' });
+
   const request = async <T>({
     url,
     method,
     saveGlobal,
     body,
     message,
-  }: requestProps<T>): Promise<T | undefined> => {
-    setLoading(true);
-    const returnObject: T | undefined = await ConnectionAPI.connect<T>(url, method, body)
-      .then((result) => {
-        if (saveGlobal) {
-          saveGlobal(result);
-        }
-        if (message) {
-          setModal({
-            visible: true,
-            title: 'Sucesso!',
-            text: message,
-          });
-        }
-        return result;
-      })
-      .catch((error: Error) => {
+  }: RequestProps<T>): Promise<T | undefined> => {
+    dispatch({ type: 'START_REQUEST' });
+
+    try {
+      const result = await ConnectionAPI.connect<T>(url, method, body);
+
+      if (saveGlobal) {
+        saveGlobal(result);
+      }
+
+      if (message) {
         setModal({
           visible: true,
-          title: 'Erro',
-          text: error.message,
+          title: 'Sucesso!',
+          text: message,
         });
-        return undefined;
-      });
-    setLoading(false);
-    return returnObject;
+      }
+
+      dispatch({ type: 'REQUEST_SUCCESS' });
+      return result;
+    } catch (error: any) {
+      console.log('Error in API call:', error);
+
+      dispatch({ type: 'REQUEST_FAILURE', payload: 'An error occurred. Please try again later.' });
+      return undefined;
+    }
+  };
+
+  const saveUserToStorage = async (user: any) => {
+    try {
+      await AsyncStorage.setItem('user', JSON.stringify(user));
+    } catch (error) {
+      console.log('Error saving user to storage:', error);
+    }
+  };
+
+  const getUserFromStorage = async () => {
+    try {
+      const userData = await AsyncStorage.getItem('user');
+      return userData ? JSON.parse(userData) : null;
+    } catch (error) {
+      console.log('Error getting user from storage:', error);
+      return null;
+    }
   };
 
   const authRequest = async (body: RequestLogin) => {
-    setLoading(true);
-    await connectionAPIPost<ReturnLogin>('http://192.168.1.15:8080/auth', body)
-      .then((result) => {
+    dispatch({ type: 'START_REQUEST' });
+
+    try {
+      const response = await connectionAPIPost<ReturnLogin>('http://192.168.1.6:8080/auth', body);
+
+      if (response) {
         setAuthorizationToken(AUTHORIZATION_KEY);
-        setUser(result.user);
+        setUser(response.user);
+        await saveUserToStorage(response.user);
         reset({
           index: 0,
           routes: [{ name: MenuUrl.HOME }],
         });
-      })
-      .catch(() => {
-        setModal({
-          visible: true,
-          title: 'Erro',
-          text: 'Usuário ou senha inválidos',
-        });
-      });
+      }
 
-    setLoading(false);
+      dispatch({ type: 'REQUEST_SUCCESS' });
+    } catch (error: any) {
+      console.log('Error in auth request:', error);
+
+      dispatch({
+        type: 'REQUEST_FAILURE',
+        payload: 'A autenticação falhou. Verifique suas credenciais.',
+      });
+    }
+  };
+
+  const setErrorMessage = (message: string) => {
+    dispatch({ type: 'SET_ERROR_MESSAGE', payload: message });
   };
 
   return {
     request,
-    loading,
-    errorMessage,
+    loading: state.loading,
+    errorMessage: state.errorMessage,
     setErrorMessage,
     authRequest,
+    getUserFromStorage,
   };
 };

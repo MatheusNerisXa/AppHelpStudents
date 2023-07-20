@@ -63,7 +63,7 @@ const ExamComponent = () => {
   const [searchText, setSearchText] = useState('');
 
   const fetchData = () => {
-    fetch('http://192.168.1.15:8080/exams')
+    fetch('http://192.168.1.6:8080/exams')
       .then((response) => response.json())
       .then((data) => setExams(data))
       .finally(() => setRefreshing(false));

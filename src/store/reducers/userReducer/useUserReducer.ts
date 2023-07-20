@@ -1,17 +1,25 @@
-import { useDispatch } from 'react-redux';
+// useUserReducer.tsx
+import { useCallback, useState } from 'react';
 
-import { UserType } from '../../../shared/types/userType';
-import { useAppSelector } from '../../hooks';
-import { setUserAction } from '.';
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  cpf: string;
+  phone: string;
+  // Add other user properties as needed
+}
 
 export const useUserReducer = () => {
-  const dispatch = useDispatch();
-  const { user } = useAppSelector((state) => state.userReducer);
-  const setUser = (currentUser: UserType) => {
-    dispatch(setUserAction(currentUser));
-  };
+  const [user, setUser] = useState<User | null>(null);
+
+  // useCallback to memoize the setUser function
+  const memoizedSetUser = useCallback((userData: User | null) => {
+    setUser(userData);
+  }, []);
+
   return {
     user,
-    setUser,
+    setUser: memoizedSetUser,
   };
 };
