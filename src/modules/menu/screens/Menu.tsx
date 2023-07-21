@@ -19,13 +19,17 @@ const Menu = () => {
     navigation.navigate(MenuUrl.Exam);
   };
 
+  const handleProfilePress = () => {
+    navigation.navigate(MenuUrl.Profile);
+  };
+
   return (
     <View style={menuStyles.container}>
       <TouchableOpacity style={menuStyles.optionContainer} onPress={handleExamPress}>
         <Icon name="books" size={24} color="#007AFF" style={menuStyles.optionIcon} />
         <Text style={menuStyles.optionText}>Vestibulares</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={menuStyles.optionContainer}>
+      <TouchableOpacity style={menuStyles.optionContainer} onPress={handleProfilePress}>
         <Icon name="profile" size={24} color="#007AFF" style={menuStyles.optionIcon} />
         <Text style={menuStyles.optionText}>Meus Dados</Text>
       </TouchableOpacity>

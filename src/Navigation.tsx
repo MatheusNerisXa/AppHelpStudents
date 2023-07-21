@@ -25,9 +25,6 @@ const TabNavigation = () => {
       case 'Homee':
         iconName = 'home';
         break;
-      case 'Profile':
-        iconName = 'profile';
-        break;
       case 'Menu':
         iconName = 'menu';
         break;
@@ -70,6 +67,7 @@ const TabNavigation = () => {
           title: 'Perfil',
           headerTintColor: '#FFF',
           headerStyle: { backgroundColor: '#007AFF' },
+          tabBarButton: () => null,
         }}
       />
       <Tab.Screen

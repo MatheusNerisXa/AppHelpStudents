@@ -5,4 +5,5 @@ export enum MenuUrl {
   CREATE_USER = 'CreateUser',
   SPLASH = 'Splash',
   Exam = 'Exam',
+  Profile = 'Profile',
 }
