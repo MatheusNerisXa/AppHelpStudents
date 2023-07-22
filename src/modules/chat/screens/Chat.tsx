@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   },
   sendButton: {
     backgroundColor: '#2196F3',
-    padding: 10,
+    // padding: 10,
     borderRadius: 5,
   },
   sendButtonText: {
