@@ -3,6 +3,7 @@ import { NavigationContainer, ParamListBase, RouteProp } from '@react-navigation
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
+import ChatGPT from './modules/chat/screens/Chat';
 import CreateUser from './modules/createUser';
 import Exams from './modules/exams';
 import Home from './modules/home';
@@ -27,6 +28,9 @@ const TabNavigation = () => {
         break;
       case 'Menu':
         iconName = 'menu';
+        break;
+      case 'Chat':
+        iconName = 'bubbles4';
         break;
       default:
         iconName = 'profile';
@@ -56,6 +60,15 @@ const TabNavigation = () => {
         component={Home}
         options={{
           title: 'Ínicio',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: '#007AFF' },
+        }}
+      />
+      <Tab.Screen
+        name="Chat"
+        component={ChatGPT}
+        options={{
+          title: 'Chat',
           headerTintColor: '#FFF',
           headerStyle: { backgroundColor: '#007AFF' },
         }}
