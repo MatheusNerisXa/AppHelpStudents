@@ -2,6 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, ParamListBase, RouteProp } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
+import { Text, TouchableOpacity } from 'react-native';
 
 import ChatGPT from './modules/chat/screens/Chat';
 import CreateUser from './modules/createUser';
@@ -11,6 +12,7 @@ import Login from './modules/login';
 import Menu from './modules/menu';
 import Profile from './modules/profile';
 import Splash from './modules/splash';
+import navigationStyle from './Navigation.style';
 import { Icon } from './shared/components/icon/Icon';
 import { MenuUrl } from './shared/enum/MenuUrl.enum';
 import { theme } from './shared/themes/theme';
@@ -86,12 +88,23 @@ const TabNavigation = () => {
       <Tab.Screen
         name="Exam"
         component={Exams}
-        options={{
+        options={({ navigation }) => ({
           title: 'Vestibulares',
           headerTintColor: '#FFF',
           headerStyle: { backgroundColor: '#007AFF' },
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={navigationStyle.headerLeftContainer}
+            >
+              <Text style={navigationStyle.headerLeftText}>
+                <Icon name="arrow-left2" color="#FFF" size={23} />
+              </Text>
+            </TouchableOpacity>
+          ),
           tabBarButton: () => null,
-        }}
+        })}
       />
       <Tab.Screen
         name="Menu"
