@@ -6,4 +6,5 @@ export enum MenuUrl {
   SPLASH = 'Splash',
   Exam = 'Exam',
   Profile = 'Profile',
+  News = 'News',
 }

@@ -14,6 +14,10 @@ const Home = () => {
     navigation.navigate(MenuUrl.Exam);
   };
 
+  const handleNewsPress = () => {
+    navigation.navigate(MenuUrl.News);
+  };
+
   return (
     <View style={homeStyle.container}>
       <View style={homeStyle.cardRow}>
@@ -23,7 +27,7 @@ const Home = () => {
           </View>
           <Text style={homeStyle.cardText}>Vestibulares</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={homeStyle.cardContainer}>
+        <TouchableOpacity style={homeStyle.cardContainer} onPress={handleNewsPress}>
           <View style={homeStyle.iconContainer}>
             <Icon name="newspaper" size={24} color="#007AFF" style={homeStyle.icon} />
           </View>
