@@ -1,6 +1,6 @@
 import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { Alert, TouchableOpacity, View } from 'react-native';
 
 import { Icon } from '../../../shared/components/icon/Icon';
 import Text from '../../../shared/components/text/Text';
@@ -12,7 +12,24 @@ const Menu = () => {
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
 
   const handleLogout = () => {
-    logout(navigation);
+    Alert.alert(
+      'Confirmar saída',
+      'Deseja realmente sair?',
+      [
+        {
+          text: 'Cancelar',
+          style: 'cancel',
+        },
+        {
+          text: 'Sair',
+          style: 'destructive',
+          onPress: () => {
+            logout(navigation);
+          },
+        },
+      ],
+      { cancelable: true },
+    );
   };
 
   const handleExamPress = () => {
@@ -34,16 +51,16 @@ const Menu = () => {
         <Text style={menuStyles.optionText}>Meus Dados</Text>
       </TouchableOpacity>
       <TouchableOpacity style={menuStyles.optionContainer}>
-        <Icon name="profile" size={24} color="#007AFF" style={menuStyles.optionIcon} />
+        <Icon name="pencil" size={24} color="#007AFF" style={menuStyles.optionIcon} />
         <Text style={menuStyles.optionText}>Configurações</Text>
       </TouchableOpacity>
       <TouchableOpacity style={menuStyles.optionContainer}>
-        <Icon name="profile" size={24} color="#007AFF" style={menuStyles.optionIcon} />
+        <Icon name="home3" size={24} color="#007AFF" style={menuStyles.optionIcon} />
         <Text style={menuStyles.optionText}>Ajuda</Text>
       </TouchableOpacity>
       <TouchableOpacity style={menuStyles.optionContainer} onPress={handleLogout}>
-        <Icon name="exit" size={24} color="#007AFF" style={menuStyles.optionIcon} />
-        <Text style={menuStyles.optionText}>Sair</Text>
+        <Icon name="exit" size={24} color="#FF4136" style={menuStyles.optionIcon} />
+        <Text style={menuStyles.logoutText}>Sair</Text>
       </TouchableOpacity>
     </View>
   );
