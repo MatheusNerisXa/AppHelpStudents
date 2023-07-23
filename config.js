@@ -1,1 +1,1 @@
-export const KEY_CHAT = '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';
+export const KEY_CHAT = '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';
