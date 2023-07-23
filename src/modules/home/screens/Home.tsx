@@ -25,9 +25,9 @@ const Home = () => {
         </TouchableOpacity>
         <TouchableOpacity style={homeStyle.cardContainer}>
           <View style={homeStyle.iconContainer}>
-            <Icon name="question" size={24} color="#007AFF" style={homeStyle.icon} />
+            <Icon name="newspaper" size={24} color="#007AFF" style={homeStyle.icon} />
           </View>
-          <Text style={homeStyle.cardText}>Ajuda</Text>
+          <Text style={homeStyle.cardText}>Notícias</Text>
         </TouchableOpacity>
       </View>
       <View style={homeStyle.cardRow}>
