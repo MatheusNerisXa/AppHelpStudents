@@ -42,6 +42,18 @@ const Menu = () => {
 
   return (
     <View style={menuStyles.container}>
+      <TouchableOpacity style={menuStyles.optionContainer}>
+        <Icon name="home3" size={24} color="#007AFF" style={menuStyles.optionIcon} />
+        <Text style={menuStyles.optionText}>Ajuda</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={menuStyles.optionContainer}>
+        <Icon name="pencil2" size={24} color="#007AFF" style={menuStyles.optionIcon} />
+        <Text style={menuStyles.optionText}>Anotações</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={menuStyles.optionContainer}>
+        <Icon name="book" size={24} color="#007AFF" style={menuStyles.optionIcon} />
+        <Text style={menuStyles.optionText}>Conteúdos</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={menuStyles.optionContainer} onPress={handleExamPress}>
         <Icon name="books" size={24} color="#007AFF" style={menuStyles.optionIcon} />
         <Text style={menuStyles.optionText}>Vestibulares</Text>
@@ -49,14 +61,6 @@ const Menu = () => {
       <TouchableOpacity style={menuStyles.optionContainer} onPress={handleProfilePress}>
         <Icon name="profile" size={24} color="#007AFF" style={menuStyles.optionIcon} />
         <Text style={menuStyles.optionText}>Meus Dados</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={menuStyles.optionContainer}>
-        <Icon name="pencil" size={24} color="#007AFF" style={menuStyles.optionIcon} />
-        <Text style={menuStyles.optionText}>Configurações</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={menuStyles.optionContainer}>
-        <Icon name="home3" size={24} color="#007AFF" style={menuStyles.optionIcon} />
-        <Text style={menuStyles.optionText}>Ajuda</Text>
       </TouchableOpacity>
       <TouchableOpacity style={menuStyles.optionContainer} onPress={handleLogout}>
         <Icon name="exit" size={24} color="#FF4136" style={menuStyles.optionIcon} />

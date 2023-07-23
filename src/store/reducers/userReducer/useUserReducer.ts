@@ -7,7 +7,6 @@ interface User {
   email: string;
   cpf: string;
   phone: string;
-  // Add other user properties as needed
 }
 
 export const useUserReducer = () => {
