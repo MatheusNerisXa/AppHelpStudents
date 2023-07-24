@@ -11,6 +11,7 @@ import {
   View,
 } from 'react-native';
 
+import { URL_NEWS } from '../../../shared/constants/urls';
 import newsStyle from '../styles/news.style';
 interface News {
   id: number;
@@ -54,7 +55,7 @@ const NewsComponent = () => {
   const [searchText, setSearchText] = useState('');
 
   const fetchData = () => {
-    fetch('http://192.168.1.6:8080/news')
+    fetch(URL_NEWS)
       .then((response) => response.json())
       .then((data) => setNews(data))
       .finally(() => setRefreshing(false));

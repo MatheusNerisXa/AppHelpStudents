@@ -6,6 +6,7 @@ import { useReducer } from 'react';
 import { useGlobalReducer } from '../../store/reducers/globalReducer/useGlobalReducer';
 import { useUserReducer } from '../../store/reducers/userReducer/useUserReducer';
 import { AUTHORIZATION_KEY } from '../constants/authorizationConstants';
+import { URL_AUTH } from '../constants/urls';
 import { MenuUrl } from '../enum/MenuUrl.enum';
 import { setAuthorizationToken } from '../functions/connection/auth';
 import ConnectionAPI, {
@@ -112,7 +113,7 @@ export const useRequest = () => {
     dispatch({ type: 'START_REQUEST' });
 
     try {
-      const response = await connectionAPIPost<ReturnLogin>('http://192.168.1.6:8080/auth', body);
+      const response = await connectionAPIPost<ReturnLogin>(URL_AUTH, body);
 
       if (response) {
         setAuthorizationToken(AUTHORIZATION_KEY);

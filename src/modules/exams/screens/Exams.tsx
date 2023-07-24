@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { RefreshControl, ScrollView, Text, TextInput, View } from 'react-native';
 import { List } from 'react-native-paper';
 
+import { URL_EXAM } from '../../../shared/constants/urls';
 import { ExamsStyle } from '../styles/exams.style';
 interface Exam {
   id: number;
@@ -63,7 +64,7 @@ const ExamComponent = () => {
   const [searchText, setSearchText] = useState('');
 
   const fetchData = () => {
-    fetch('http://192.168.1.6:8080/exams')
+    fetch(URL_EXAM)
       .then((response) => response.json())
       .then((data) => setExams(data))
       .finally(() => setRefreshing(false));
