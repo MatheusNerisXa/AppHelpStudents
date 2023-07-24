@@ -11,6 +11,7 @@ import Home from './modules/home';
 import Login from './modules/login';
 import Menu from './modules/menu';
 import News from './modules/news';
+import NewsDetailsScreen from './modules/newsDetails';
 import Profile from './modules/profile';
 import Splash from './modules/splash';
 import navigationStyle from './Navigation.style';
@@ -130,6 +131,28 @@ const TabNavigation = () => {
       />
 
       <Tab.Screen
+        name="NewsDetails"
+        component={NewsDetailsScreen}
+        options={({ navigation }) => ({
+          title: 'Notícias',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: '#007AFF' },
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={navigationStyle.headerLeftContainer}
+            >
+              <Text style={navigationStyle.headerLeftText}>
+                <Icon name="arrow-left2" color="#FFF" size={23} />
+              </Text>
+            </TouchableOpacity>
+          ),
+          tabBarButton: () => null,
+        })}
+      />
+
+      <Tab.Screen
         name="Menu"
         component={Menu}
         options={{
@@ -160,6 +183,11 @@ const Navigation = () => {
         />
         <Stack.Screen name={MenuUrl.Exam} component={Exams} options={{ headerShown: false }} />
         <Stack.Screen name={MenuUrl.News} component={News} options={{ headerShown: false }} />
+        <Stack.Screen
+          name={MenuUrl.NewsDetails}
+          component={News}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
