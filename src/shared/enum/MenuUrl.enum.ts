@@ -8,4 +8,5 @@ export enum MenuUrl {
   Profile = 'Profile',
   News = 'News',
   NewsDetails = 'NewsDetails',
+  Suport = 'Suport',
 }

@@ -18,6 +18,10 @@ const Home = () => {
     navigation.navigate(MenuUrl.News);
   };
 
+  const handleSuportPress = () => {
+    navigation.navigate(MenuUrl.Suport);
+  };
+
   return (
     <View style={homeStyle.container}>
       <View style={homeStyle.cardRow}>
@@ -35,11 +39,11 @@ const Home = () => {
         </TouchableOpacity>
       </View>
       <View style={homeStyle.cardRow}>
-        <TouchableOpacity style={homeStyle.cardContainer} onPress={handleExamPress}>
+        <TouchableOpacity style={homeStyle.cardContainer} onPress={handleSuportPress}>
           <View style={homeStyle.iconContainer}>
-            <Icon name="books" size={24} color="#007AFF" style={homeStyle.icon} />
+            <Icon name="question" size={24} color="#007AFF" style={homeStyle.icon} />
           </View>
-          <Text style={homeStyle.cardText}>Vestibulares</Text>
+          <Text style={homeStyle.cardText}>Ajuda</Text>
         </TouchableOpacity>
         <TouchableOpacity style={homeStyle.cardContainer} onPress={handleExamPress}>
           <View style={homeStyle.iconContainer}>
