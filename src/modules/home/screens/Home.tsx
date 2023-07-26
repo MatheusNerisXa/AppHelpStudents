@@ -22,6 +22,10 @@ const Home = () => {
     navigation.navigate(MenuUrl.Suport);
   };
 
+  const handleTranslationPress = () => {
+    navigation.navigate(MenuUrl.Translation);
+  };
+
   return (
     <View style={homeStyle.container}>
       <View style={homeStyle.cardRow}>
@@ -45,11 +49,11 @@ const Home = () => {
           </View>
           <Text style={homeStyle.cardText}>Ajuda</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={homeStyle.cardContainer} onPress={handleExamPress}>
+        <TouchableOpacity style={homeStyle.cardContainer} onPress={handleTranslationPress}>
           <View style={homeStyle.iconContainer}>
-            <Icon name="books" size={24} color="#007AFF" style={homeStyle.icon} />
+            <Icon name="earth" size={24} color="#007AFF" style={homeStyle.icon} />
           </View>
-          <Text style={homeStyle.cardText}>Vestibulares</Text>
+          <Text style={homeStyle.cardText}>Traduções</Text>
         </TouchableOpacity>
       </View>
     </View>

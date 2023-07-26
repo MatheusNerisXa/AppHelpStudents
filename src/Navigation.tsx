@@ -15,6 +15,7 @@ import NewsDetailsScreen from './modules/newsDetails';
 import Profile from './modules/profile';
 import Splash from './modules/splash';
 import Suport from './modules/suport';
+import Translation from './modules/translation';
 import navigationStyle from './Navigation.style';
 import { Icon } from './shared/components/icon/Icon';
 import { MenuUrl } from './shared/enum/MenuUrl.enum';
@@ -132,6 +133,28 @@ const TabNavigation = () => {
       />
 
       <Tab.Screen
+        name="Translation"
+        component={Translation}
+        options={({ navigation }) => ({
+          title: 'Traduções',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: '#007AFF' },
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={navigationStyle.headerLeftContainer}
+            >
+              <Text style={navigationStyle.headerLeftText}>
+                <Icon name="arrow-left2" color="#FFF" size={23} />
+              </Text>
+            </TouchableOpacity>
+          ),
+          tabBarButton: () => null,
+        })}
+      />
+
+      <Tab.Screen
         name="News"
         component={News}
         options={({ navigation }) => ({
@@ -212,6 +235,11 @@ const Navigation = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen name={MenuUrl.Suport} component={Suport} options={{ headerShown: false }} />
+        <Stack.Screen
+          name={MenuUrl.Translation}
+          component={Translation}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
