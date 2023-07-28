@@ -22,7 +22,6 @@ const Login = () => {
     handleGoToCreateUser,
   } = useLogin();
 
-  // Definir estado para animação
   const [animationCompleted, setAnimationCompleted] = useState(false);
   const [animation] = useState(new Animated.Value(0));
 
