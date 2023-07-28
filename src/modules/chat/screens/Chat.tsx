@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import { KEY_CHAT } from '../../../../config';
+import { URL_CHATGPT } from '../../../shared/constants/urls';
 import chatStyle from '../styles/chat.style';
 
 const OPENAI_API_KEY = KEY_CHAT;
@@ -33,7 +34,7 @@ const Chat = () => {
 
     try {
       const response = await axios.post(
-        'https://api.openai.com/v1/chat/completions',
+        URL_CHATGPT,
         {
           model: 'gpt-3.5-turbo',
           messages: [
