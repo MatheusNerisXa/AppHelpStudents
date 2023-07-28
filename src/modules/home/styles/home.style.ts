@@ -3,15 +3,33 @@ import { StyleSheet } from 'react-native';
 const homeStyle = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    padding: 16,
+  },
+  greetingContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 16,
+  },
+  greetingText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  userNameContainer: {
+    borderRadius: 8,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+  },
+  userName: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'blue',
+  },
+  cardsContainer: {
+    marginBottom: 16,
   },
   cardRow: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    width: '100%',
-    paddingHorizontal: 16,
+    justifyContent: 'space-between',
     marginBottom: 16,
   },
   cardContainer: {
@@ -24,9 +42,7 @@ const homeStyle = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
     alignItems: 'center',
-    flex: 1,
-    marginHorizontal: 8,
-    marginBottom: 16,
+    width: '30%',
   },
   iconContainer: {
     backgroundColor: '#FFF',
@@ -38,7 +54,7 @@ const homeStyle = StyleSheet.create({
     alignSelf: 'center',
   },
   cardText: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: 'bold',
     color: '#FFF',
     marginTop: 8,

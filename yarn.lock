@@ -8762,11 +8762,6 @@ react-native-linear-gradient@^2.6.2:
   resolved "https://registry.npmjs.org/react-native-linear-gradient/-/react-native-linear-gradient-2.6.2.tgz"
   integrity sha512-Z8Xxvupsex+9BBFoSYS87bilNPWcRfRsGC0cpJk72Nxb5p2nEkGSBv73xZbEHnW2mUFvP+huYxrVvjZkr/gRjQ==
 
-react-native-mail-compose@^0.0.6:
-  version "0.0.6"
-  resolved "https://registry.npmjs.org/react-native-mail-compose/-/react-native-mail-compose-0.0.6.tgz"
-  integrity sha512-00vJhqanyBtiF0g8i3mKScE/EXbtlHoQO/4O+HH/ENPNlegPcM2i8KL551sQnafn4Qc31XEbIiQo6xy+f8hKYQ==
-
 react-native-modal-dropdown@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/react-native-modal-dropdown/-/react-native-modal-dropdown-1.0.2.tgz"

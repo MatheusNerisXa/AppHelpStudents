@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
+import React from 'react';
 import { useReducer } from 'react';
 
 import { useGlobalReducer } from '../../store/reducers/globalReducer/useGlobalReducer';
-import { useUserReducer } from '../../store/reducers/userReducer/useUserReducer';
 import { AUTHORIZATION_KEY } from '../constants/authorizationConstants';
 import { URL_AUTH } from '../constants/urls';
-import { MenuUrl } from '../enum/MenuUrl.enum';
 import { setAuthorizationToken } from '../functions/connection/auth';
 import ConnectionAPI, {
   connectionAPIPost,
@@ -51,8 +49,6 @@ const requestReducer = (state: RequestState, action: RequestAction): RequestStat
 };
 
 export const useRequest = () => {
-  const { reset } = useNavigation<NavigationProp<ParamListBase>>();
-  const { setUser } = useUserReducer();
   const { setModal } = useGlobalReducer();
 
   const [state, dispatch] = useReducer(requestReducer, { loading: false, errorMessage: '' });
@@ -119,10 +115,6 @@ export const useRequest = () => {
         setAuthorizationToken(AUTHORIZATION_KEY);
         setUser(response.user);
         await saveUserToStorage(response.user);
-        reset({
-          index: 0,
-          routes: [{ name: MenuUrl.HOME }],
-        });
       }
 
       dispatch({ type: 'REQUEST_SUCCESS' });
@@ -140,6 +132,18 @@ export const useRequest = () => {
     dispatch({ type: 'SET_ERROR_MESSAGE', payload: message });
   };
 
+  // Get the user object from storage during component initialization
+  const [user, setUser] = React.useState<any | null>(null);
+
+  React.useEffect(() => {
+    const fetchUserFromStorage = async () => {
+      const storedUser = await getUserFromStorage();
+      setUser(storedUser);
+    };
+
+    fetchUserFromStorage();
+  }, []);
+
   return {
     request,
     loading: state.loading,
@@ -147,5 +151,6 @@ export const useRequest = () => {
     setErrorMessage,
     authRequest,
     getUserFromStorage,
+    user,
   };
 };
