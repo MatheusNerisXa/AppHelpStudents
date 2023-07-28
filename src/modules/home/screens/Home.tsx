@@ -13,7 +13,7 @@ const Home = () => {
 
   const { user } = useRequest();
 
-  const userName = user?.name || 'Guest';
+  const userName = user?.name;
 
   const handleExamPress = () => {
     navigation.navigate(MenuUrl.Exam);
