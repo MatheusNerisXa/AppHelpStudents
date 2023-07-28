@@ -1,6 +1,6 @@
 import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 
 import { Icon } from '../../../shared/components/icon/Icon';
 import Text from '../../../shared/components/text/Text';
@@ -27,7 +27,7 @@ const Home = () => {
   };
 
   return (
-    <View style={homeStyle.container}>
+    <ScrollView contentContainerStyle={homeStyle.container}>
       <View style={homeStyle.cardRow}>
         <TouchableOpacity style={homeStyle.cardContainer} onPress={handleExamPress}>
           <View style={homeStyle.iconContainer}>
@@ -56,7 +56,21 @@ const Home = () => {
           <Text style={homeStyle.cardText}>Traduções</Text>
         </TouchableOpacity>
       </View>
-    </View>
+      <View style={homeStyle.cardRow}>
+        <TouchableOpacity style={homeStyle.cardContainer} onPress={handleSuportPress}>
+          <View style={homeStyle.iconContainer}>
+            <Icon name="book" size={24} color="#007AFF" style={homeStyle.icon} />
+          </View>
+          <Text style={homeStyle.cardText}>Conteúdos</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={homeStyle.cardContainer} onPress={handleTranslationPress}>
+          <View style={homeStyle.iconContainer}>
+            <Icon name="earth" size={24} color="#007AFF" style={homeStyle.icon} />
+          </View>
+          <Text style={homeStyle.cardText}>Traduções</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 };
 
