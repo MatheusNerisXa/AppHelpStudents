@@ -52,7 +52,6 @@ const Translation = () => {
           <Text style={translationStyles.languageLabel}>De:</Text>
           <ModalDropdown
             style={translationStyles.languageDropdown}
-            dropdownStyle={translationStyles.dropdown}
             options={languageOptions.map((option) => option.label)}
             onSelect={(index) => setSourceLanguage(languageOptions[index].value)}
           >
@@ -94,7 +93,7 @@ const Translation = () => {
         style={translationStyles.output}
         multiline
         editable={false}
-        placeholder="Aqui aparecerá o resultado da tradução"
+        placeholder="Resposta"
         value={targetText}
       />
     </View>
