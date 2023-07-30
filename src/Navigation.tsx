@@ -6,6 +6,7 @@ import { Text, TouchableOpacity } from 'react-native';
 
 import ChatGPT from './modules/chat/screens/Chat';
 import CreateUser from './modules/createUser';
+import Discipline from './modules/discipline';
 import Exams from './modules/exams';
 import Home from './modules/home';
 import Login from './modules/login';
@@ -133,6 +134,28 @@ const TabNavigation = () => {
       />
 
       <Tab.Screen
+        name="Discipline"
+        component={Discipline}
+        options={({ navigation }) => ({
+          title: 'Matêrias',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: '#007AFF' },
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={navigationStyle.headerLeftContainer}
+            >
+              <Text style={navigationStyle.headerLeftText}>
+                <Icon name="arrow-left2" color="#FFF" size={23} />
+              </Text>
+            </TouchableOpacity>
+          ),
+          tabBarButton: () => null,
+        })}
+      />
+
+      <Tab.Screen
         name="Translation"
         component={Translation}
         options={({ navigation }) => ({
@@ -235,6 +258,12 @@ const Navigation = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen name={MenuUrl.Suport} component={Suport} options={{ headerShown: false }} />
+        <Stack.Screen
+          name={MenuUrl.Discipline}
+          component={Discipline}
+          options={{ headerShown: false }}
+        />
+
         <Stack.Screen
           name={MenuUrl.Translation}
           component={Translation}

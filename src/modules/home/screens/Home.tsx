@@ -27,6 +27,10 @@ const Home = () => {
     navigation.navigate(MenuUrl.Suport);
   };
 
+  const handleDisciplinePress = () => {
+    navigation.navigate(MenuUrl.Discipline);
+  };
+
   const handleTranslationPress = () => {
     navigation.navigate(MenuUrl.Translation);
   };
@@ -90,7 +94,7 @@ const Home = () => {
       </View>
 
       <View style={homeStyle.cardRow}>
-        <TouchableOpacity onPress={handleSupportPress}>
+        <TouchableOpacity onPress={handleDisciplinePress}>
           <Animatable.View animation="fadeInLeft" duration={1000} style={homeStyle.cardContainer}>
             <Icon name="book" size={32} color="#007AFF" style={homeStyle.icon} />
             <Text style={homeStyle.cardText}>Matérias</Text>
