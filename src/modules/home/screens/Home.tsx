@@ -47,6 +47,16 @@ const Home = () => {
         <Text style={homeStyle.userName}>{userName}!</Text>
       </View>
 
+      <Animatable.View ref={bannerRef} style={homeStyle.bannerContainer}>
+        <Image
+          source={{
+            uri: 'https://helpstudent.s3.amazonaws.com/banners/Apresentac%CC%A7a%CC%83o+Empresarial+Boas+Vindas+Esta%CC%81gio.jpg',
+          }}
+          style={homeStyle.bannerImage}
+          resizeMode="cover"
+        />
+      </Animatable.View>
+
       <View style={homeStyle.cardRow}>
         <TouchableOpacity onPress={handleExamPress}>
           <Animatable.View animation="fadeInLeft" duration={1000} style={homeStyle.cardContainer}>
@@ -94,14 +104,6 @@ const Home = () => {
           </Animatable.View>
         </TouchableOpacity>
       </View>
-
-      <Animatable.View ref={bannerRef} style={homeStyle.bannerContainer}>
-        <Image
-          source={{ uri: 'https://helpstudent.s3.amazonaws.com/noticias/imagens/2020-03-02.jpg' }}
-          style={homeStyle.bannerImage}
-          resizeMode="cover"
-        />
-      </Animatable.View>
     </ScrollView>
   );
 };
