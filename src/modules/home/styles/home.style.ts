@@ -1,8 +1,7 @@
 import { Dimensions, StyleSheet } from 'react-native';
-
 const screenWidth = Dimensions.get('window').width;
-const cardWidth = (screenWidth - 50) / 2;
-const cardSpacing = 5;
+
+const cardWidth = (screenWidth - 40) / 2;
 
 const homeStyle = StyleSheet.create({
   container: {
@@ -64,45 +63,6 @@ const homeStyle = StyleSheet.create({
   bannerImage: {
     width: '100%',
     height: '100%',
-  },
-  carouselContainer: {
-    flex: 1,
-  },
-  carouselCardContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#F5F5F5',
-    borderRadius: 8,
-    width: cardWidth,
-    height: cardWidth,
-    marginVertical: cardSpacing / 2,
-    padding: 3,
-  },
-  carouselCardText: {
-    marginTop: 8,
-    textAlign: 'center',
-  },
-  paginationContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 10,
-  },
-  paginationDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginHorizontal: 4,
-    backgroundColor: '#007AFF',
-  },
-  activeDot: {
-    backgroundColor: '#fff',
-  },
-  pageCountText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-    marginTop: 16,
-    alignSelf: 'center',
   },
 });
 
