@@ -1,8 +1,17 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+import { URL_DISCIPLINE } from '../../../shared/constants/urls';
 import { useRequest } from '../../../shared/hooks/useRequest';
 import disciplineStyle from '../styles/discipline.style';
+
+const statusMap = {
+  1: 'Aprovado',
+  2: 'Reprovado',
+  3: 'Cursando',
+  4: 'Sub',
+};
 
 const Discipline = () => {
   const [disciplines, setDisciplines] = useState([]);
@@ -25,7 +34,7 @@ const Discipline = () => {
   }, [userId]);
 
   const fetchDisciplines = () => {
-    fetch(`http://192.168.1.8:8080/discipline/user/${userId}`)
+    fetch(URL_DISCIPLINE + `${userId}`)
       .then((response) => response.json())
       .then((data) => setDisciplines(data))
       .catch((error) => console.error('Error fetching disciplines:', error));
@@ -36,15 +45,33 @@ const Discipline = () => {
     return new Date(dateString).toLocaleDateString('pt-BR', options);
   };
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item, index }) => {
+    const fixedColors = [
+      '#27cd5e',
+      '#11697fce',
+      '#0be754',
+      '#f9d2c2',
+      '#f9f5c2',
+      '#c2f9f5',
+      '#f5c2f9',
+      '#c2f5f9',
+    ];
     return (
-      <View style={disciplineStyle.item}>
+      <TouchableOpacity
+        style={[disciplineStyle.item, { backgroundColor: fixedColors[index % fixedColors.length] }]}
+      >
         <Text style={disciplineStyle.name}>{item.name}</Text>
-        <Text>{item.status_discipline}</Text>
+        <Text>{statusMap[item.status_discipline as keyof typeof statusMap]}</Text>
         <Text>Início: {formatBrazilianDate(item.dateStart)}</Text>
         <Text>Fim: {formatBrazilianDate(item.dateEnd)}</Text>
-      </View>
+      </TouchableOpacity>
     );
+  };
+
+  const navigation = useNavigation();
+
+  const handleCreateDiscipline = () => {
+    navigation.navigate('DisciplineCreationScreen');
   };
 
   return (
@@ -54,8 +81,32 @@ const Discipline = () => {
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
       />
+
+      <TouchableOpacity style={styles.addButton} onPress={handleCreateDiscipline}>
+        <Text style={styles.addButtonText}>+</Text>
+      </TouchableOpacity>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  addButton: {
+    position: 'absolute',
+    bottom: 16,
+    right: 16,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#007AFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 3,
+  },
+  addButtonText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#FFF',
+  },
+});
 
 export default Discipline;

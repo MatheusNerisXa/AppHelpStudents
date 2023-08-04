@@ -17,6 +17,7 @@ const disciplineStyle = StyleSheet.create({
     borderRadius: 8,
   },
   name: {
+    color: '#FFF',
     fontSize: 18,
     fontWeight: 'bold',
   },

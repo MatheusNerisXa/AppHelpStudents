@@ -35,7 +35,7 @@ const ExamItem = ({ exam }: { exam: Exam }) => {
             {formatBrazilianDate(exam.registrationEnd)}
           </Text>
           <Text style={ExamsStyle.descriptionText}>
-            <Text style={ExamsStyle.boldText}>Data da Prova:</Text>{' '}
+            <Text style={ExamsStyle.boldText}>1ª Fase da Prova:</Text>{' '}
             {formatBrazilianDate(exam.exam1Date)}
           </Text>
           {exam.exam2Date && (
