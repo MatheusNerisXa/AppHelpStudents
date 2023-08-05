@@ -5,6 +5,15 @@ const disciplineStyle = StyleSheet.create({
     flex: 1,
     padding: 16,
   },
+  searchContainer: {
+    backgroundColor: '#007AFF',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+  },
+  searchInput: {
+    color: '#FFFFFF',
+    fontSize: 16,
+  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',

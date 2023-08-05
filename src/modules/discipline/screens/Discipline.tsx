@@ -1,6 +1,6 @@
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import { URL_DISCIPLINE } from '../../../shared/constants/urls';
 import { useRequest } from '../../../shared/hooks/useRequest';
@@ -17,6 +17,7 @@ const Discipline = () => {
   const [disciplines, setDisciplines] = useState([]);
   const { getUserFromStorage } = useRequest();
   const [userId, setUserId] = useState(null);
+  const [searchText, setSearchText] = useState('');
 
   const fetchDisciplines = () => {
     fetch(URL_DISCIPLINE + `${userId}`)
@@ -51,12 +52,12 @@ const Discipline = () => {
     const fixedColors = [
       '#27cd5e',
       '#11697fce',
-      '#0be754',
-      '#f9d2c2',
-      '#f9f5c2',
-      '#c2f9f5',
-      '#f5c2f9',
-      '#c2f5f9',
+      '#a4375b',
+      '#c85629',
+      '#716d38',
+      '#6133be',
+      '#95479a',
+      '#2a6b70',
     ];
     return (
       <TouchableOpacity
@@ -76,13 +77,34 @@ const Discipline = () => {
     navigation.navigate('DisciplineCreationScreen');
   };
 
+  const handleSearch = (text) => {
+    setSearchText(text);
+  };
+
+  const filteredDisciplines = disciplines.filter((discipline) =>
+    discipline.name.toLowerCase().includes(searchText.toLowerCase()),
+  );
+
   return (
     <View style={disciplineStyle.container}>
-      <FlatList
-        data={disciplines}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
-      />
+      <View style={disciplineStyle.searchContainer}>
+        <TextInput
+          style={disciplineStyle.searchInput}
+          placeholder="Digite o nome da matéria"
+          placeholderTextColor="#FFFFFF"
+          value={searchText}
+          onChangeText={handleSearch}
+          autoFocus
+        />
+      </View>
+
+      <View>
+        <FlatList
+          data={filteredDisciplines}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id.toString()}
+        />
+      </View>
 
       <TouchableOpacity style={disciplineStyle.addButton} onPress={handleCreateDiscipline}>
         <Text style={disciplineStyle.addButtonText}>+</Text>
