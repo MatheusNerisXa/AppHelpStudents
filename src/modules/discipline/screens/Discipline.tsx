@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 
 import { URL_DISCIPLINE } from '../../../shared/constants/urls';
 import { useRequest } from '../../../shared/hooks/useRequest';
@@ -82,31 +82,11 @@ const Discipline = () => {
         keyExtractor={(item) => item.id.toString()}
       />
 
-      <TouchableOpacity style={styles.addButton} onPress={handleCreateDiscipline}>
-        <Text style={styles.addButtonText}>+</Text>
+      <TouchableOpacity style={disciplineStyle.addButton} onPress={handleCreateDiscipline}>
+        <Text style={disciplineStyle.addButtonText}>+</Text>
       </TouchableOpacity>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  addButton: {
-    position: 'absolute',
-    bottom: 16,
-    right: 16,
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: '#007AFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 3,
-  },
-  addButtonText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#FFF',
-  },
-});
 
 export default Discipline;

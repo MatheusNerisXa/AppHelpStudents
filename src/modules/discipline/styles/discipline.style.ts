@@ -21,6 +21,24 @@ const disciplineStyle = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+
+  addButton: {
+    position: 'absolute',
+    bottom: 16,
+    right: 16,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#007AFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 3,
+  },
+  addButtonText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#FFF',
+  },
 });
 
 export default disciplineStyle;

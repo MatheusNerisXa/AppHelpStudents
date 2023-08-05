@@ -5,6 +5,7 @@ import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 
 import ChatGPT from './modules/chat/screens/Chat';
+import DisciplineCreationScreen from './modules/createDiscipline';
 import CreateUser from './modules/createUser';
 import Discipline from './modules/discipline';
 import Exams from './modules/exams';
@@ -200,6 +201,28 @@ const TabNavigation = () => {
       />
 
       <Tab.Screen
+        name="DisciplineCreationScreen"
+        component={DisciplineCreationScreen}
+        options={({ navigation }) => ({
+          title: 'Cadastro de matérias',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: '#007AFF' },
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={navigationStyle.headerLeftContainer}
+            >
+              <Text style={navigationStyle.headerLeftText}>
+                <Icon name="arrow-left2" color="#FFF" size={23} />
+              </Text>
+            </TouchableOpacity>
+          ),
+          tabBarButton: () => null,
+        })}
+      />
+
+      <Tab.Screen
         name="NewsDetails"
         component={NewsDetailsScreen}
         options={({ navigation }) => ({
@@ -261,6 +284,12 @@ const Navigation = () => {
         <Stack.Screen
           name={MenuUrl.Discipline}
           component={Discipline}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name={MenuUrl.DisciplineCreationScreen}
+          component={DisciplineCreationScreen}
           options={{ headerShown: false }}
         />
 
