@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 
@@ -18,6 +18,15 @@ const Discipline = () => {
   const { getUserFromStorage } = useRequest();
   const [userId, setUserId] = useState(null);
 
+  const fetchDisciplines = () => {
+    fetch(URL_DISCIPLINE + `${userId}`)
+      .then((response) => response.json())
+      .then((data) => setDisciplines(data))
+      .catch((error) => console.error('Error fetching disciplines:', error));
+  };
+
+  const isFocused = useIsFocused();
+
   useEffect(() => {
     const fetchUserData = async () => {
       const userData = await getUserFromStorage();
@@ -28,17 +37,10 @@ const Discipline = () => {
   }, [getUserFromStorage]);
 
   useEffect(() => {
-    if (userId !== null) {
+    if (isFocused && userId !== null) {
       fetchDisciplines();
     }
-  }, [userId]);
-
-  const fetchDisciplines = () => {
-    fetch(URL_DISCIPLINE + `${userId}`)
-      .then((response) => response.json())
-      .then((data) => setDisciplines(data))
-      .catch((error) => console.error('Error fetching disciplines:', error));
-  };
+  }, [isFocused, userId]);
 
   const formatBrazilianDate = (dateString) => {
     const options = { year: 'numeric', month: 'numeric', day: 'numeric' };

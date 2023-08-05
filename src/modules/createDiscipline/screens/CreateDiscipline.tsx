@@ -61,7 +61,7 @@ const DisciplineCreationScreen = () => {
         setShowSuccessMessage(true);
         setTimeout(() => {
           setShowSuccessMessage(false);
-          navigation.goBack();
+          navigation.navigate('Discipline', { refresh: true });
         }, 1500);
       } else {
         console.error('Erro ao criar materia:', response.status);
