@@ -64,7 +64,6 @@ const disciplineStyle = StyleSheet.create({
   },
   statusText: {
     fontSize: 14,
-    fontWeight: 'bold',
   },
   addButton: {
     position: 'absolute',
