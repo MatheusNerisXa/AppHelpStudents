@@ -1,6 +1,6 @@
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { FlatList, RefreshControl, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import { URL_DISCIPLINE } from '../../../shared/constants/urls';
 import { useRequest } from '../../../shared/hooks/useRequest';
@@ -18,26 +18,20 @@ const Discipline = () => {
   const { getUserFromStorage } = useRequest();
   const [userId, setUserId] = useState(null);
   const [searchText, setSearchText] = useState('');
+  const [refreshing, setRefreshing] = useState(false);
 
   const fetchDisciplines = () => {
     fetch(URL_DISCIPLINE + `${userId}`)
       .then((response) => response.json())
       .then((data) => setDisciplines(data))
-      .catch((error) => console.error('Error fetching disciplines:', error));
+      .catch((error) => console.error('Error fetching disciplines:', error))
+      .finally(() => setRefreshing(false));
   };
 
-  const cardColors = [
-    '#82C2E2',
-    '#B8A8D3',
-    '#F5B090',
-    '#8AC6D0',
-    '#F3D250',
-    '#F0A3A3',
-    '#9CD7A9',
-    '#E6AF4B',
-  ];
-
-  const isFocused = useIsFocused();
+  const handleRefresh = () => {
+    setRefreshing(true);
+    fetchDisciplines();
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -98,6 +92,19 @@ const Discipline = () => {
     discipline.name.toLowerCase().includes(searchText.toLowerCase()),
   );
 
+  const isFocused = useIsFocused();
+
+  const cardColors = [
+    '#82C2E2',
+    '#B8A8D3',
+    '#F5B090',
+    '#8AC6D0',
+    '#F3D250',
+    '#F0A3A3',
+    '#9CD7A9',
+    '#E6AF4B',
+  ];
+
   return (
     <View style={disciplineStyle.container}>
       <View style={disciplineStyle.searchContainer}>
@@ -121,6 +128,9 @@ const Discipline = () => {
         ListEmptyComponent={() => (
           <Text style={disciplineStyle.emptyText}>Nenhuma matéria encontrada.</Text>
         )}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor="#007AFF" />
+        }
       />
 
       <TouchableOpacity style={disciplineStyle.addButton} onPress={handleCreateDiscipline}>
