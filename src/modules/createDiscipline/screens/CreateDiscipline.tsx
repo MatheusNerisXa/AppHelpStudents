@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Modal, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 
 import { URL_DISCIPLINE_CREATE } from '../../../shared/constants/urls';
@@ -21,7 +21,10 @@ const DisciplineCreationScreen = () => {
   const [endDate, setEndDate] = useState(new Date());
   const { getUserFromStorage } = useRequest();
   const [userId, setUserId] = useState(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -35,7 +38,7 @@ const DisciplineCreationScreen = () => {
   const navigation = useNavigation();
 
   const handleCreate = async () => {
-    console.log('Criando materia...');
+    console.log('Criando matéria...');
 
     const newDiscipline = {
       name,
@@ -45,7 +48,7 @@ const DisciplineCreationScreen = () => {
       dateEnd: endDate.toISOString(),
     };
 
-    console.log('New discipline:', newDiscipline);
+    console.log('Nova matéria:', newDiscipline);
 
     try {
       const response = await fetch(URL_DISCIPLINE_CREATE, {
@@ -57,17 +60,18 @@ const DisciplineCreationScreen = () => {
       });
 
       if (response.ok) {
-        console.log('Materia criada com sucesso!');
-        setShowSuccessMessage(true);
+        console.log('Matéria criada com sucesso!');
+        setModalVisible(true);
         setTimeout(() => {
           setShowSuccessMessage(false);
+          setModalVisible(false);
           navigation.navigate('Discipline', { refresh: true });
         }, 1500);
       } else {
-        console.error('Erro ao criar materia:', response.status);
+        console.error('Erro ao criar matéria:', response.status);
       }
     } catch (error) {
-      console.error('Erro ao criar materia:', error);
+      console.error('Erro ao criar matéria:', error);
     }
   };
 
@@ -79,7 +83,7 @@ const DisciplineCreationScreen = () => {
 
   return (
     <View style={CreateDisciplineStyle.container}>
-      <Text style={CreateDisciplineStyle.label}>Noma da matéria:</Text>
+      <Text style={CreateDisciplineStyle.label}>Nome da matéria:</Text>
       <TextInput
         style={CreateDisciplineStyle.input}
         onChangeText={(text) => setName(text)}
@@ -102,14 +106,14 @@ const DisciplineCreationScreen = () => {
         ))}
       </View>
 
-      <Text style={CreateDisciplineStyle.label}>Data de ínicio:</Text>
+      <Text style={CreateDisciplineStyle.label}>Data de início:</Text>
       <DatePicker
         style={CreateDisciplineStyle.datePicker}
         date={startDate}
         mode="date"
         format="YYYY-MM-DD"
-        confirmBtnText="Confirm"
-        cancelBtnText="Cancel"
+        confirmBtnText="Confirmar"
+        cancelBtnText="Cancelar"
         customStyles={{
           dateIcon: {
             position: 'absolute',
@@ -135,8 +139,8 @@ const DisciplineCreationScreen = () => {
         date={endDate}
         mode="date"
         format="YYYY-MM-DD"
-        confirmBtnText="Confirm"
-        cancelBtnText="Cancel"
+        confirmBtnText="Confirmar"
+        cancelBtnText="Cancelar"
         customStyles={{
           dateIcon: {
             position: 'absolute',
@@ -160,11 +164,18 @@ const DisciplineCreationScreen = () => {
         <Text style={CreateDisciplineStyle.addButtonText}>Cadastrar matéria</Text>
       </TouchableOpacity>
 
-      {showSuccessMessage && (
-        <View style={CreateDisciplineStyle.successMessage}>
-          <Text style={CreateDisciplineStyle.successText}>Matéria cadastrada com sucesso!</Text>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={CreateDisciplineStyle.modalContainer}>
+          <View style={CreateDisciplineStyle.modalContent}>
+            <Text style={CreateDisciplineStyle.modalText}>Matéria cadastrada com sucesso!</Text>
+          </View>
         </View>
-      )}
+      </Modal>
     </View>
   );
 };
