@@ -81,7 +81,7 @@ const NewsComponent = () => {
   const renderNews = () => {
     if (filteredNews.length === 0 && searchText.length > 0) {
       return (
-        <View style={newsStyle.container}>
+        <View style={newsStyle.emptyContainer}>
           <Text>Nenhuma notícia encontrada com o título "{searchText}"</Text>
         </View>
       );
@@ -98,7 +98,7 @@ const NewsComponent = () => {
         <TextInput
           style={newsStyle.searchInput}
           placeholder="Digite o título da notícia"
-          placeholderTextColor="#FFFFFF"
+          placeholderTextColor="#666"
           value={searchText}
           onChangeText={handleSearch}
           autoFocus

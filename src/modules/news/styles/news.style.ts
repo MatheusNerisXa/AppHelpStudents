@@ -38,13 +38,26 @@ const newsStyle = StyleSheet.create({
     alignItems: 'center',
   },
   searchContainer: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#FFF',
     paddingVertical: 8,
     paddingHorizontal: 16,
+    marginBottom: 16,
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 3,
   },
   searchInput: {
-    color: '#FFFFFF',
+    color: '#000',
     fontSize: 16,
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 16,
   },
 });
 
