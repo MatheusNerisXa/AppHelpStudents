@@ -105,7 +105,7 @@ const ExamComponent = () => {
         <TextInput
           style={ExamsStyle.searchInput}
           placeholder="Digite a universidade ou escola"
-          placeholderTextColor="#FFFFFF"
+          placeholderTextColor="#666"
           value={searchText}
           onChangeText={handleSearch}
           autoFocus
