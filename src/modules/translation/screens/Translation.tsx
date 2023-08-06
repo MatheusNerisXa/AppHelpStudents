@@ -45,6 +45,11 @@ const Translation = () => {
     }
   };
 
+  const handleClearInput = () => {
+    setSourceText('');
+    setTargetText('');
+  };
+
   return (
     <View style={translationStyles.container}>
       <View style={translationStyles.languageContainer}>
@@ -84,9 +89,15 @@ const Translation = () => {
         onChangeText={setSourceText}
       />
 
-      <TouchableOpacity style={translationStyles.button} onPress={handleTranslation}>
-        <Text style={translationStyles.buttonText}>Traduzir</Text>
-      </TouchableOpacity>
+      <View style={translationStyles.buttonContainer}>
+        <TouchableOpacity style={translationStyles.button} onPress={handleTranslation}>
+          <Text style={translationStyles.buttonText}>Traduzir</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={translationStyles.clearButton} onPress={handleClearInput}>
+          <Text style={translationStyles.clearButtonText}>Limpar</Text>
+        </TouchableOpacity>
+      </View>
 
       <View style={translationStyles.resultContainer}>
         <Text style={translationStyles.outputLabel}>Resultado:</Text>

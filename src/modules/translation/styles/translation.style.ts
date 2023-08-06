@@ -65,6 +65,8 @@ export const translationStyles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
+    marginLeft: 20,
+    marginRight: 20,
   },
   resultContainer: {
     backgroundColor: 'white',
@@ -80,5 +82,25 @@ export const translationStyles = StyleSheet.create({
   outputText: {
     fontSize: 16,
     color: '#555',
+  },
+  clearButton: {
+    backgroundColor: '#E74C3C',
+    borderRadius: 8,
+    paddingVertical: 12,
+    alignItems: 'center',
+    marginBottom: 16,
+    marginLeft: 4,
+  },
+  clearButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 20,
   },
 });
