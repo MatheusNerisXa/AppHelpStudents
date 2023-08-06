@@ -41,7 +41,7 @@ const Translation = () => {
       const response = await axios.post(url, payload, { headers });
       setTargetText(response.data.data.translatedText);
     } catch (error) {
-      console.error('Error translating:', error);
+      console.error('Erro na tradução:', error);
     }
   };
 
@@ -79,7 +79,7 @@ const Translation = () => {
       <TextInput
         style={translationStyles.input}
         multiline
-        placeholder="Insira o texto para ser traduzido"
+        placeholder="Insira o texto para tradução"
         value={sourceText}
         onChangeText={setSourceText}
       />
@@ -88,14 +88,10 @@ const Translation = () => {
         <Text style={translationStyles.buttonText}>Traduzir</Text>
       </TouchableOpacity>
 
-      <Text style={translationStyles.outputLabel}>Resultado da tradução:</Text>
-      <TextInput
-        style={translationStyles.output}
-        multiline
-        editable={false}
-        placeholder="Resposta"
-        value={targetText}
-      />
+      <View style={translationStyles.resultContainer}>
+        <Text style={translationStyles.outputLabel}>Resultado:</Text>
+        <Text style={translationStyles.outputText}>{targetText}</Text>
+      </View>
     </View>
   );
 };
