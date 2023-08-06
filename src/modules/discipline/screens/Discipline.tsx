@@ -7,10 +7,10 @@ import { useRequest } from '../../../shared/hooks/useRequest';
 import disciplineStyle from '../styles/discipline.style';
 
 const statusMap = {
-  1: 'Aprovado',
-  2: 'Reprovado',
-  3: 'Cursando',
-  4: 'Sub',
+  1: { label: 'Aprovado', color: '#057a11' },
+  2: { label: 'Reprovado', color: '#ff0d0d' },
+  3: { label: 'Cursando', color: '#13035cce' },
+  4: { label: 'Sub', color: '#636302' },
 };
 
 const Discipline = () => {
@@ -25,6 +25,17 @@ const Discipline = () => {
       .then((data) => setDisciplines(data))
       .catch((error) => console.error('Error fetching disciplines:', error));
   };
+
+  const cardColors = [
+    '#82C2E2',
+    '#B8A8D3',
+    '#F5B090',
+    '#8AC6D0',
+    '#F3D250',
+    '#F0A3A3',
+    '#9CD7A9',
+    '#E6AF4B',
+  ];
 
   const isFocused = useIsFocused();
 
@@ -49,24 +60,26 @@ const Discipline = () => {
   };
 
   const renderItem = ({ item, index }) => {
-    const fixedColors = [
-      '#27cd5e',
-      '#11697fce',
-      '#a4375b',
-      '#c85629',
-      '#716d38',
-      '#6133be',
-      '#95479a',
-      '#2a6b70',
-    ];
+    const statusInfo = statusMap[item.status_discipline] || {};
     return (
       <TouchableOpacity
-        style={[disciplineStyle.item, { backgroundColor: fixedColors[index % fixedColors.length] }]}
+        style={[disciplineStyle.item, { backgroundColor: cardColors[index % cardColors.length] }]}
       >
-        <Text style={disciplineStyle.name}>{item.name}</Text>
-        <Text>{statusMap[item.status_discipline as keyof typeof statusMap]}</Text>
-        <Text>Início: {formatBrazilianDate(item.dateStart)}</Text>
-        <Text>Fim: {formatBrazilianDate(item.dateEnd)}</Text>
+        <View style={disciplineStyle.cardHeader}>
+          <Text style={disciplineStyle.name}>{item.name}</Text>
+          <View
+            style={[
+              disciplineStyle.statusIndicator,
+              { backgroundColor: statusInfo.color || '#000' },
+            ]}
+          />
+        </View>
+        <Text style={disciplineStyle.dateText}>
+          {formatBrazilianDate(item.dateStart)} - {formatBrazilianDate(item.dateEnd)}
+        </Text>
+        <Text style={[disciplineStyle.statusText, { color: statusInfo.color || '#000' }]}>
+          {statusInfo.label || 'Sem Status'}
+        </Text>
       </TouchableOpacity>
     );
   };
@@ -91,20 +104,24 @@ const Discipline = () => {
         <TextInput
           style={disciplineStyle.searchInput}
           placeholder="Digite o nome da matéria"
-          placeholderTextColor="#FFFFFF"
+          placeholderTextColor="#666"
           value={searchText}
           onChangeText={handleSearch}
           autoFocus
         />
       </View>
 
-      <View>
-        <FlatList
-          data={filteredDisciplines}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id.toString()}
-        />
-      </View>
+      <FlatList
+        data={filteredDisciplines}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id.toString()}
+        // eslint-disable-next-line react/no-unstable-nested-components
+        ItemSeparatorComponent={() => <View style={disciplineStyle.separator} />}
+        // eslint-disable-next-line react/no-unstable-nested-components
+        ListEmptyComponent={() => (
+          <Text style={disciplineStyle.emptyText}>Nenhuma matéria encontrada.</Text>
+        )}
+      />
 
       <TouchableOpacity style={disciplineStyle.addButton} onPress={handleCreateDiscipline}>
         <Text style={disciplineStyle.addButtonText}>+</Text>

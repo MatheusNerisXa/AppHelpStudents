@@ -1,6 +1,4 @@
-/**
- * @format
- */
+import 'react-native-analytics';
 
 import { AppRegistry } from 'react-native';
 
