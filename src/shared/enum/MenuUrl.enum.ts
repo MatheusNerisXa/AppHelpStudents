@@ -12,4 +12,5 @@ export enum MenuUrl {
   Translation = 'Translation',
   Discipline = 'Discipline',
   DisciplineCreationScreen = 'DisciplineCreationScreen',
+  Dashboard = 'Dashboard',
 }

@@ -7,6 +7,7 @@ import { Text, TouchableOpacity } from 'react-native';
 import ChatGPT from './modules/chat/screens/Chat';
 import DisciplineCreationScreen from './modules/createDiscipline';
 import CreateUser from './modules/createUser';
+import Dashboard from './modules/dashboards';
 import Discipline from './modules/discipline';
 import Exams from './modules/exams';
 import Home from './modules/home';
@@ -40,6 +41,9 @@ const TabNavigation = () => {
       case 'Chat':
         iconName = 'bubbles4';
         break;
+      case 'Dashboards':
+        iconName = 'stats-bars2';
+        break;
       default:
         iconName = 'profile';
         break;
@@ -68,6 +72,15 @@ const TabNavigation = () => {
         component={Home}
         options={{
           title: 'Ínicio',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: '#007AFF' },
+        }}
+      />
+      <Tab.Screen
+        name="Dashboards"
+        component={Dashboard}
+        options={{
+          title: 'Dash',
           headerTintColor: '#FFF',
           headerStyle: { backgroundColor: '#007AFF' },
         }}
@@ -278,6 +291,11 @@ const Navigation = () => {
         <Stack.Screen
           name={MenuUrl.NewsDetails}
           component={News}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={MenuUrl.Dashboard}
+          component={Dashboard}
           options={{ headerShown: false }}
         />
         <Stack.Screen name={MenuUrl.Suport} component={Suport} options={{ headerShown: false }} />
