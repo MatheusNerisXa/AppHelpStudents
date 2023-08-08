@@ -32,7 +32,7 @@ export const ExamsStyle = StyleSheet.create({
   searchInput: {
     height: 40,
     paddingHorizontal: 12,
-    color: '#FFF',
+    color: '#000',
     borderWidth: 1,
     borderColor: '#FFF',
     borderRadius: 8,

@@ -1,10 +1,11 @@
 import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { ProgressBar } from 'react-native-paper';
 
 import { URL_DISCIPLINE } from '../../../shared/constants/urls';
 import { useRequest } from '../../../shared/hooks/useRequest';
+import dashboardStyles from '../styles/dashboard.style';
 
 const Dashboard = () => {
   const [disciplines, setDisciplines] = useState([]);
@@ -48,87 +49,52 @@ const Dashboard = () => {
   const isFocused = useIsFocused();
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}> Matérias</Text>
-      <View style={styles.statsContainer}>
-        <View style={styles.statsItem}>
-          <ProgressBar progress={calculateProgress(3)} color="#3498db" style={styles.progressBar} />
-          <Text style={styles.statsValue}>{countDisciplinesByStatus(3)}</Text>
-          <Text style={styles.statsLabel}>Cursando</Text>
+    <View style={dashboardStyles.container}>
+      <Text style={dashboardStyles.heading}> Matérias</Text>
+      <View style={dashboardStyles.statsContainer}>
+        <View style={dashboardStyles.statsItem}>
+          <ProgressBar
+            progress={calculateProgress(3)}
+            color="#3498db"
+            style={dashboardStyles.progressBar}
+          />
+          <Text style={dashboardStyles.statsValue}>{countDisciplinesByStatus(3)}</Text>
+          <Text style={dashboardStyles.statsLabel}>Cursando</Text>
         </View>
-        <View style={styles.statsItem}>
-          <ProgressBar progress={calculateProgress(1)} color="#2ecc71" style={styles.progressBar} />
-          <Text style={styles.statsValue}>{countDisciplinesByStatus(1)}</Text>
-          <Text style={styles.statsLabel}>Aprovadas</Text>
+        <View style={dashboardStyles.statsItem}>
+          <ProgressBar
+            progress={calculateProgress(1)}
+            color="#2ecc71"
+            style={dashboardStyles.progressBar}
+          />
+          <Text style={dashboardStyles.statsValue}>{countDisciplinesByStatus(1)}</Text>
+          <Text style={dashboardStyles.statsLabel}>Aprovadas</Text>
         </View>
-        <View style={styles.statsItem}>
-          <ProgressBar progress={calculateProgress(2)} color="#e74c3c" style={styles.progressBar} />
-          <Text style={styles.statsValue}>{countDisciplinesByStatus(2)}</Text>
-          <Text style={styles.statsLabel}>Reprovadas</Text>
+        <View style={dashboardStyles.statsItem}>
+          <ProgressBar
+            progress={calculateProgress(2)}
+            color="#e74c3c"
+            style={dashboardStyles.progressBar}
+          />
+          <Text style={dashboardStyles.statsValue}>{countDisciplinesByStatus(2)}</Text>
+          <Text style={dashboardStyles.statsLabel}>Reprovadas</Text>
         </View>
-        <View style={styles.statsItem}>
-          <ProgressBar progress={calculateProgress(4)} color="#f39c12" style={styles.progressBar} />
-          <Text style={styles.statsValue}>{countDisciplinesByStatus(4)}</Text>
-          <Text style={styles.statsLabel}>Sub</Text>
+        <View style={dashboardStyles.statsItem}>
+          <ProgressBar
+            progress={calculateProgress(4)}
+            color="#f39c12"
+            style={dashboardStyles.progressBar}
+          />
+          <Text style={dashboardStyles.statsValue}>{countDisciplinesByStatus(4)}</Text>
+          <Text style={dashboardStyles.statsLabel}>Sub</Text>
         </View>
       </View>
-      <View style={styles.totalContainer}>
-        <ProgressBar progress={1} color="#555" style={styles.totalProgressBar} />
-        <Text style={styles.totalText}>{disciplines.length} Total Disciplinas</Text>
+      <View style={dashboardStyles.totalContainer}>
+        <ProgressBar progress={1} color="#555" style={dashboardStyles.totalProgressBar} />
+        <Text style={dashboardStyles.totalText}>{disciplines.length} Total Disciplinas</Text>
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#f5f5f5',
-  },
-  heading: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 16,
-  },
-  statsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 32,
-  },
-  statsItem: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  progressBar: {
-    width: Dimensions.get('window').width * 0.15,
-    height: 8,
-    borderRadius: 4,
-    marginBottom: 8,
-  },
-  statsValue: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 4,
-  },
-  statsLabel: {
-    fontSize: 14,
-    color: '#555',
-  },
-  totalContainer: {
-    alignItems: 'center',
-  },
-  totalProgressBar: {
-    width: '100%',
-    height: 8,
-    borderRadius: 4,
-    marginBottom: 8,
-  },
-  totalText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#555',
-  },
-});
 
 export default Dashboard;

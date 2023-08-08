@@ -1,27 +1,52 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 export const dashboardStyles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#F4F5F7',
+    backgroundColor: '#f5f5f5',
   },
-  dashboardItem: {
-    backgroundColor: 'white',
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 16,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  dashboardValue: {
+  heading: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
+    marginBottom: 16,
   },
-  dashboardLabel: {
+  statsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 32,
+  },
+  statsItem: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  progressBar: {
+    width: Dimensions.get('window').width * 0.15,
+    height: 8,
+    borderRadius: 4,
+    marginBottom: 8,
+  },
+  statsValue: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
+  statsLabel: {
+    fontSize: 14,
+    color: '#555',
+  },
+  totalContainer: {
+    alignItems: 'center',
+  },
+  totalProgressBar: {
+    width: '100%',
+    height: 8,
+    borderRadius: 4,
+    marginBottom: 8,
+  },
+  totalText: {
     fontSize: 16,
+    fontWeight: 'bold',
     color: '#555',
   },
 });
