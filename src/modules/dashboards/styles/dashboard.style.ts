@@ -49,6 +49,16 @@ export const dashboardStyles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#555',
   },
+  tooltip: {
+    backgroundColor: '#333',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+  },
+  tooltipContent: {
+    color: 'white',
+    fontSize: 14,
+  },
 });
 
 export default dashboardStyles;
