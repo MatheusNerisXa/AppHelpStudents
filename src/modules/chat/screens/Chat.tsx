@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
 import { KEY_CHAT } from '../../../../config';
 import { URL_CHATGPT } from '../../../shared/constants/urls';
@@ -19,6 +20,7 @@ const OPENAI_API_KEY = KEY_CHAT;
 const Chat = () => {
   const [inputText, setInputText] = useState('');
   const [chatLog, setChatLog] = useState([]);
+  const [isThinking, setIsThinking] = useState(false);
   const scrollViewRef = useRef(null);
 
   useEffect(() => {
@@ -31,6 +33,7 @@ const Chat = () => {
     if (inputText.trim() === '') return;
     setChatLog((prevChatLog) => [...prevChatLog, { type: 'user', text: inputText }]);
     setInputText('');
+    setIsThinking(true);
 
     try {
       const response = await axios.post(
@@ -50,7 +53,7 @@ const Chat = () => {
         },
       );
 
-      console.log('API Response:', response.data);
+      setIsThinking(false);
 
       const assistantReply = response.data.choices[0].message.content.trim();
       if (assistantReply) {
@@ -61,6 +64,7 @@ const Chat = () => {
         'Error sending message to the API:',
         error.response ? error.response.data : error,
       );
+      setIsThinking(false);
     }
   };
 
@@ -68,7 +72,7 @@ const Chat = () => {
     <KeyboardAvoidingView
       style={chatStyle.container}
       behavior={Platform.OS === 'ios' ? 'padding' : null}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0} // Ajuste o valor conforme necessário
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
     >
       <ScrollView
         style={chatStyle.chatContainer}
@@ -90,6 +94,35 @@ const Chat = () => {
           </View>
         ))}
       </ScrollView>
+      {isThinking && (
+        <View style={chatStyle.animationContainer}>
+          <View style={chatStyle.thinkingDotsContainer}>
+            <Animatable.Text
+              animation="fadeIn"
+              iterationCount="infinite"
+              style={[chatStyle.thinkingDot, chatStyle.dotRed]}
+            >
+              .
+            </Animatable.Text>
+            <Animatable.Text
+              animation="fadeIn"
+              iterationCount="infinite"
+              delay={200}
+              style={[chatStyle.thinkingDot, chatStyle.dotGreen]}
+            >
+              .
+            </Animatable.Text>
+            <Animatable.Text
+              animation="fadeIn"
+              iterationCount="infinite"
+              delay={400}
+              style={[chatStyle.thinkingDot, chatStyle.dotBlue]}
+            >
+              .
+            </Animatable.Text>
+          </View>
+        </View>
+      )}
       <View style={chatStyle.inputContainer}>
         <TextInput
           style={chatStyle.input}

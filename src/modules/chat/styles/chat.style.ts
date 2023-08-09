@@ -53,6 +53,28 @@ const chatStyle = StyleSheet.create({
     color: '#FFF',
     fontWeight: 'bold',
   },
+  animationContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  thinkingDotsContainer: {
+    flexDirection: 'row',
+  },
+  thinkingDot: {
+    fontSize: 60,
+    marginLeft: 5,
+  },
+  dotRed: {
+    color: '#FF5733',
+  },
+  dotGreen: {
+    color: '#4CAF50',
+  },
+  dotBlue: {
+    color: '#2196F3',
+  },
 });
 
 export default chatStyle;
