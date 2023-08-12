@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Animated, RefreshControl, ScrollView, Text, TextInput, View } from 'react-native';
 
 import Button from '../../../shared/components/button/Button';
-import Input from '../../../shared/components/input/input';
 import { useRequest } from '../../../shared/hooks/useRequest';
 import { useUserReducer } from '../../../store/reducers/userReducer/useUserReducer';
+import profileStyle from '../styles/profile.style';
 
 const Profile = () => {
   const { user, setUser } = useUserReducer();
@@ -66,17 +66,22 @@ const Profile = () => {
     }
   }, [user]);
 
+  const handleSaveChanges = async () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const updatedUser = { ...user, name, email, cpf, phone };
+  };
+
   return (
-    <View style={styles.pageContainer}>
+    <View style={profileStyle.pageContainer}>
       <ScrollView
-        contentContainerStyle={styles.container}
+        contentContainerStyle={profileStyle.container}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#007AFF" />
         }
       >
         <Animated.View
           style={[
-            styles.contentContainer,
+            profileStyle.contentContainer,
             {
               opacity: animation,
               transform: [
@@ -90,92 +95,54 @@ const Profile = () => {
             },
           ]}
         >
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Name</Text>
-            <Input
+          <View style={profileStyle.inputContainer}>
+            <Text style={profileStyle.label}>Nome</Text>
+            <TextInput
               value={name}
               onChangeText={setName}
-              style={styles.input}
-              placeholder="Enter your name"
+              style={profileStyle.input}
+              placeholder="Digite o seu nome"
             />
           </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Email</Text>
-            <Input
+          <View style={profileStyle.inputContainer}>
+            <Text style={profileStyle.label}>Email</Text>
+            <TextInput
               value={email}
               onChangeText={setEmail}
-              style={styles.input}
-              placeholder="Enter your email"
+              style={profileStyle.input}
+              placeholder="Digite o seu email"
             />
           </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>CPF</Text>
-            <Input
+          <View style={profileStyle.inputContainer}>
+            <Text style={profileStyle.label}>CPF</Text>
+            <TextInput
               value={cpf}
               onChangeText={setCpf}
-              style={styles.input}
-              placeholder="Enter your CPF"
+              style={profileStyle.input}
+              placeholder="Digite o seu CPF"
             />
           </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Phone</Text>
-            <Input
+          <View style={profileStyle.inputContainer}>
+            <Text style={profileStyle.label}>Celular</Text>
+            <TextInput
               value={phone}
               onChangeText={setPhone}
-              style={styles.input}
-              placeholder="Enter your phone number"
+              style={profileStyle.input}
+              placeholder="Digite o seu número de celular"
             />
           </View>
           <Button
             title="Salvar"
-            onPress={() => {
-              // Handle the form submission here, if needed
-            }}
-            style={styles.button}
+            onPress={handleSaveChanges}
+            style={profileStyle.button}
             loading={loading}
           >
-            Save Changes
+            Salvar Alterações
           </Button>
         </Animated.View>
       </ScrollView>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  pageContainer: {
-    flex: 1,
-    backgroundColor: 'white', // Set the background color of the entire page to white
-  },
-  container: {
-    padding: 16,
-    borderRadius: 10,
-    margin: 16,
-    elevation: 4,
-  },
-  contentContainer: {
-    flexGrow: 1,
-  },
-  inputContainer: {
-    marginBottom: 16,
-  },
-  label: {
-    fontSize: 16,
-    color: 'gray',
-    marginBottom: 8,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    fontSize: 16,
-    color: 'black',
-  },
-  button: {
-    marginTop: 24,
-  },
-});
 
 export default Profile;
