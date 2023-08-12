@@ -1,10 +1,10 @@
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { RefreshControl, ScrollView, Text, TextInput, View } from 'react-native';
-import { List } from 'react-native-paper';
 
 import { URL_EXAM } from '../../../shared/constants/urls';
-import { ExamsStyle } from '../styles/exams.style';
+import ExamsStyle from '../styles/exams.style';
+
 interface Exam {
   id: number;
   description: string;
@@ -15,48 +15,6 @@ interface Exam {
   exam2Date: string;
   resultDate: string;
 }
-
-const ExamItem = ({ exam }: { exam: Exam }) => {
-  const formatBrazilianDate = (date: string) => {
-    return format(new Date(date), 'dd/MM/yyyy');
-  };
-
-  return (
-    <List.Item
-      key={exam.id}
-      title={exam.title}
-      titleNumberOfLines={2}
-      // eslint-disable-next-line react/no-unstable-nested-components
-      description={() => (
-        <View style={ExamsStyle.descriptionContainer}>
-          <Text style={ExamsStyle.descriptionText}>
-            <Text style={ExamsStyle.boldText}>Data de Inscrição:</Text>{' '}
-            {formatBrazilianDate(exam.registrationStart)} a{' '}
-            {formatBrazilianDate(exam.registrationEnd)}
-          </Text>
-          <Text style={ExamsStyle.descriptionText}>
-            <Text style={ExamsStyle.boldText}>1ª Fase da Prova:</Text>{' '}
-            {formatBrazilianDate(exam.exam1Date)}
-          </Text>
-          {exam.exam2Date && (
-            <Text style={ExamsStyle.descriptionText}>
-              <Text style={ExamsStyle.boldText}>2ª Fase da Prova:</Text>{' '}
-              {formatBrazilianDate(exam.exam2Date)}
-            </Text>
-          )}
-          {exam.resultDate && (
-            <Text style={ExamsStyle.descriptionText}>
-              <Text style={ExamsStyle.boldText}>Data do Resultado:</Text>{' '}
-              {formatBrazilianDate(exam.resultDate)}
-            </Text>
-          )}
-        </View>
-      )}
-      titleStyle={ExamsStyle.title}
-      style={ExamsStyle.listItem}
-    />
-  );
-};
 
 const ExamComponent = () => {
   const [exams, setExams] = useState<Exam[]>([]);
@@ -87,30 +45,16 @@ const ExamComponent = () => {
     exam.title.toLowerCase().includes(searchText.toLowerCase()),
   );
 
-  const renderExams = () => {
-    if (filteredExams.length === 0 && searchText.length > 0) {
-      return (
-        <View style={ExamsStyle.container}>
-          <Text>Nenhuma faculdade ou escola encontrada com o nome "{searchText}"</Text>
-        </View>
-      );
-    }
-
-    return filteredExams.map((exam) => <ExamItem key={exam.id} exam={exam} />);
-  };
-
   return (
     <View style={ExamsStyle.container}>
-      <View style={ExamsStyle.searchContainer}>
-        <TextInput
-          style={ExamsStyle.searchInput}
-          placeholder="Digite a universidade ou escola"
-          placeholderTextColor="#666"
-          value={searchText}
-          onChangeText={handleSearch}
-          autoFocus
-        />
-      </View>
+      <TextInput
+        style={ExamsStyle.searchInput}
+        placeholder="Buscar universidade ou escola"
+        placeholderTextColor="#AAA"
+        value={searchText}
+        onChangeText={handleSearch}
+        autoFocus
+      />
       <ScrollView
         contentContainerStyle={ExamsStyle.contentContainer}
         showsVerticalScrollIndicator={false}
@@ -118,10 +62,35 @@ const ExamComponent = () => {
           <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor="#007AFF" />
         }
       >
-        {renderExams()}
+        {filteredExams.length === 0 && searchText.length > 0 ? (
+          <View style={ExamsStyle.noResultsContainer}>
+            <Text style={ExamsStyle.noResultsText}>
+              Nenhuma faculdade ou escola encontrada com o nome "{searchText}"
+            </Text>
+          </View>
+        ) : (
+          filteredExams.map((exam) => (
+            <View key={exam.id} style={ExamsStyle.examContainer}>
+              <Text style={ExamsStyle.examTitle}>{exam.title}</Text>
+              <View style={ExamsStyle.dateRow}>
+                <DateInfo label="Inscrição" date={exam.registrationStart} />
+                <DateInfo label="1ª Fase" date={exam.exam1Date} />
+                {exam.exam2Date && <DateInfo label="2ª Fase" date={exam.exam2Date} />}
+                {exam.resultDate && <DateInfo label="Resultado" date={exam.resultDate} />}
+              </View>
+            </View>
+          ))
+        )}
       </ScrollView>
     </View>
   );
 };
+
+const DateInfo = ({ label, date }: { label: string; date: string }) => (
+  <View style={ExamsStyle.dateInfo}>
+    <Text style={ExamsStyle.dateLabel}>{label}:</Text>
+    <Text style={ExamsStyle.dateText}>{format(new Date(date), 'dd/MM/yyyy')}</Text>
+  </View>
+);
 
 export default ExamComponent;
