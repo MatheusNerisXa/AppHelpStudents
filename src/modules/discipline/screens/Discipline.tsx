@@ -69,7 +69,7 @@ const Discipline = () => {
           />
         </View>
         <Text style={disciplineStyle.dateText}>
-          {formatBrazilianDate(item.dateStart)} - {formatBrazilianDate(item.dateEnd)}
+          Período: {formatBrazilianDate(item.dateStart)} até {formatBrazilianDate(item.dateEnd)}
         </Text>
         <Text style={[disciplineStyle.statusText, { color: statusInfo.color || '#000' }]}>
           {statusInfo.label || 'Sem Status'}

@@ -21,9 +21,6 @@ const DisciplineCreationScreen = () => {
   const [endDate, setEndDate] = useState(new Date());
   const { getUserFromStorage } = useRequest();
   const [userId, setUserId] = useState(null);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
@@ -38,8 +35,6 @@ const DisciplineCreationScreen = () => {
   const navigation = useNavigation();
 
   const handleCreate = async () => {
-    console.log('Criando matéria...');
-
     const newDiscipline = {
       name,
       disciplineStatusId: status,
@@ -47,8 +42,6 @@ const DisciplineCreationScreen = () => {
       dateStart: startDate.toISOString(),
       dateEnd: endDate.toISOString(),
     };
-
-    console.log('Nova matéria:', newDiscipline);
 
     try {
       const response = await fetch(URL_DISCIPLINE_CREATE, {
@@ -60,10 +53,8 @@ const DisciplineCreationScreen = () => {
       });
 
       if (response.ok) {
-        console.log('Matéria criada com sucesso!');
         setModalVisible(true);
         setTimeout(() => {
-          setShowSuccessMessage(false);
           setModalVisible(false);
           navigation.navigate('Discipline', { refresh: true });
         }, 1500);
@@ -75,10 +66,22 @@ const DisciplineCreationScreen = () => {
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const formatBrazilianDate = (dateString) => {
-    const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString('pt-BR', options);
+  const getMonthName = (month) => {
+    const months = [
+      'Janeiro',
+      'Fevereiro',
+      'Março',
+      'Abril',
+      'Maio',
+      'Junho',
+      'Julho',
+      'Agosto',
+      'Setembro',
+      'Outubro',
+      'Novembro',
+      'Dezembro',
+    ];
+    return months[month - 1];
   };
 
   return (
@@ -111,7 +114,7 @@ const DisciplineCreationScreen = () => {
         style={CreateDisciplineStyle.datePicker}
         date={startDate}
         mode="date"
-        format="YYYY-MM-DD"
+        format="DD-MM-YYYY"
         confirmBtnText="Confirmar"
         cancelBtnText="Cancelar"
         customStyles={{
@@ -131,6 +134,8 @@ const DisciplineCreationScreen = () => {
           },
         }}
         onDateChange={(date) => setStartDate(new Date(date))}
+        locale={'pt-br'}
+        renderMonth={(month) => <Text style={{ color: 'black' }}>{getMonthName(month)}</Text>}
       />
 
       <Text style={CreateDisciplineStyle.label}>Data de conclusão:</Text>
@@ -138,7 +143,7 @@ const DisciplineCreationScreen = () => {
         style={CreateDisciplineStyle.datePicker}
         date={endDate}
         mode="date"
-        format="YYYY-MM-DD"
+        format="DD-MM-YYYY"
         confirmBtnText="Confirmar"
         cancelBtnText="Cancelar"
         customStyles={{
@@ -158,6 +163,8 @@ const DisciplineCreationScreen = () => {
           },
         }}
         onDateChange={(date) => setEndDate(new Date(date))}
+        locale={'pt-br'}
+        renderMonth={(month) => <Text style={{ color: 'black' }}>{getMonthName(month)}</Text>}
       />
 
       <TouchableOpacity style={CreateDisciplineStyle.addButton} onPress={handleCreate}>
