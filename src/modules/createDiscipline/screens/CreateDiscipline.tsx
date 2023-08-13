@@ -34,6 +34,8 @@ const DisciplineCreationScreen = () => {
 
   const navigation = useNavigation();
 
+  const [createdDisciplineName, setCreatedDisciplineName] = useState('');
+
   const handleCreate = async () => {
     const newDiscipline = {
       name,
@@ -53,6 +55,7 @@ const DisciplineCreationScreen = () => {
       });
 
       if (response.ok) {
+        setCreatedDisciplineName(name);
         setModalVisible(true);
         setTimeout(() => {
           setModalVisible(false);
@@ -102,7 +105,12 @@ const DisciplineCreationScreen = () => {
               CreateDisciplineStyle.statusButton,
               status === parseInt(statusKey, 10) && CreateDisciplineStyle.selectedStatus,
             ]}
-            onPress={() => setStatus(parseInt(statusKey, 10))}
+            onPress={() => {
+              if (parseInt(statusKey, 10) === 3) {
+                setStatus(parseInt(statusKey, 10));
+              }
+            }}
+            disabled={parseInt(statusKey, 10) !== 3 && status !== 3}
           >
             <Text style={CreateDisciplineStyle.statusText}>{statusMap[statusKey]}</Text>
           </TouchableOpacity>
@@ -172,7 +180,6 @@ const DisciplineCreationScreen = () => {
       <TouchableOpacity style={CreateDisciplineStyle.addButton} onPress={handleCreate}>
         <Text style={CreateDisciplineStyle.addButtonText}>Cadastrar matéria</Text>
       </TouchableOpacity>
-
       <Modal
         animationType="slide"
         transparent={true}
@@ -181,7 +188,9 @@ const DisciplineCreationScreen = () => {
       >
         <View style={CreateDisciplineStyle.modalContainer}>
           <View style={CreateDisciplineStyle.modalContent}>
-            <Text style={CreateDisciplineStyle.modalText}>Matéria cadastrada com sucesso!</Text>
+            <Text style={CreateDisciplineStyle.modalText}>
+              Matéria {createdDisciplineName} cadastrada com sucesso!
+            </Text>
           </View>
         </View>
       </Modal>
