@@ -135,6 +135,7 @@ const DisciplineCreationScreen = () => {
         }}
         onDateChange={(date) => setStartDate(new Date(date))}
         locale={'pt-br'}
+        // eslint-disable-next-line react-native/no-inline-styles
         renderMonth={(month) => <Text style={{ color: 'black' }}>{getMonthName(month)}</Text>}
       />
 
@@ -164,6 +165,7 @@ const DisciplineCreationScreen = () => {
         }}
         onDateChange={(date) => setEndDate(new Date(date))}
         locale={'pt-br'}
+        // eslint-disable-next-line react-native/no-inline-styles
         renderMonth={(month) => <Text style={{ color: 'black' }}>{getMonthName(month)}</Text>}
       />
 
