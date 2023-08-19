@@ -3,12 +3,10 @@ import { Animated, RefreshControl, ScrollView, Text, TextInput, View } from 'rea
 
 import Button from '../../../shared/components/button/Button';
 import { useRequest } from '../../../shared/hooks/useRequest';
-import { useUserReducer } from '../../../store/reducers/userReducer/useUserReducer';
 import profileStyle from '../styles/profile.style';
 
 const Profile = () => {
-  const { user, setUser } = useUserReducer();
-  const { loading, authRequest, getUserFromStorage } = useRequest();
+  const { user, setUser } = useRequest();
   const [refreshing, setRefreshing] = useState(false);
 
   const [name, setName] = useState('');
@@ -20,34 +18,8 @@ const Profile = () => {
 
   const onRefresh = async () => {
     setRefreshing(true);
-    const userId = user?.id;
-    if (userId) {
-      const response = await authRequest({});
-      if (response) {
-        setUser(response);
-      }
-    }
     setRefreshing(false);
   };
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const userId = user?.id;
-      if (!userId) {
-        const userDataFromStorage = await getUserFromStorage();
-        if (userDataFromStorage) {
-          setUser(userDataFromStorage);
-        }
-      } else {
-        const response = await authRequest({});
-        if (response) {
-          setUser(response);
-        }
-      }
-    };
-
-    fetchUserData();
-  }, []);
 
   useEffect(() => {
     Animated.timing(animation, {
@@ -55,20 +27,28 @@ const Profile = () => {
       duration: 500,
       useNativeDriver: true,
     }).start();
-  }, [animation]);
 
-  useEffect(() => {
-    if (user && user.name && user.email && user.cpf && user.phone) {
+    // Initialize the input fields with user data
+    if (user) {
       setName(user.name);
       setEmail(user.email);
       setCpf(user.cpf);
       setPhone(user.phone);
     }
-  }, [user]);
+  }, [animation, user]);
 
   const handleSaveChanges = async () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const updatedUser = { ...user, name, email, cpf, phone };
+    // Update user data and perform API call
+    // ...
+
+    // Set the updated user data in state
+    setUser({
+      ...user,
+      name: name,
+      email: email,
+      cpf: cpf,
+      phone: phone,
+    });
   };
 
   return (
@@ -135,7 +115,7 @@ const Profile = () => {
             title="Salvar"
             onPress={handleSaveChanges}
             style={profileStyle.button}
-            loading={loading}
+            loading={false}
           >
             Salvar Alterações
           </Button>
