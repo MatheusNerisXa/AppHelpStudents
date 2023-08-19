@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { Modal, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -30,10 +31,9 @@ const DisciplineCreationScreen = () => {
     };
 
     fetchUserData();
-  }, [getUserFromStorage]);
+  }, []);
 
   const navigation = useNavigation();
-
   const [createdDisciplineName, setCreatedDisciplineName] = useState('');
 
   const handleCreate = async () => {
@@ -89,97 +89,77 @@ const DisciplineCreationScreen = () => {
 
   return (
     <View style={CreateDisciplineStyle.container}>
-      <Text style={CreateDisciplineStyle.label}>Nome da matéria:</Text>
-      <TextInput
-        style={CreateDisciplineStyle.input}
-        onChangeText={(text) => setName(text)}
-        value={name}
-      />
-
-      <Text style={CreateDisciplineStyle.label}>Status:</Text>
-      <View style={CreateDisciplineStyle.statusContainer}>
-        {Object.keys(statusMap).map((statusKey) => (
-          <TouchableOpacity
-            key={statusKey}
-            style={[
-              CreateDisciplineStyle.statusButton,
-              status === parseInt(statusKey, 10) && CreateDisciplineStyle.selectedStatus,
-            ]}
-            onPress={() => {
-              if (parseInt(statusKey, 10) === 3) {
-                setStatus(parseInt(statusKey, 10));
-              }
-            }}
-            disabled={parseInt(statusKey, 10) !== 3 && status !== 3}
-          >
-            <Text style={CreateDisciplineStyle.statusText}>{statusMap[statusKey]}</Text>
-          </TouchableOpacity>
-        ))}
+      <View style={CreateDisciplineStyle.inputContainer}>
+        <Text style={CreateDisciplineStyle.label}>Matéria:</Text>
+        <TextInput
+          style={CreateDisciplineStyle.input}
+          onChangeText={(text) => setName(text)}
+          value={name}
+        />
       </View>
 
-      <Text style={CreateDisciplineStyle.label}>Data de início:</Text>
-      <DatePicker
-        style={CreateDisciplineStyle.datePicker}
-        date={startDate}
-        mode="date"
-        format="DD-MM-YYYY"
-        confirmBtnText="Confirmar"
-        cancelBtnText="Cancelar"
-        customStyles={{
-          dateIcon: {
-            position: 'absolute',
-            left: 0,
-            top: 4,
-            marginLeft: 0,
-          },
-          dateInput: {
-            marginLeft: 36,
-            borderWidth: 0,
-            backgroundColor: 'white',
-          },
-          dateText: {
-            color: 'black',
-          },
-        }}
-        onDateChange={(date) => setStartDate(new Date(date))}
-        locale={'pt-br'}
-        // eslint-disable-next-line react-native/no-inline-styles
-        renderMonth={(month) => <Text style={{ color: 'black' }}>{getMonthName(month)}</Text>}
-      />
+      <View style={CreateDisciplineStyle.inputContainer}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <View style={{ flex: 1, marginRight: 8 }}>
+            <Text style={CreateDisciplineStyle.label}>Data de início:</Text>
+            <DatePicker
+              style={CreateDisciplineStyle.datePicker}
+              date={startDate}
+              mode="date"
+              format="DD-MM-YYYY"
+              confirmBtnText="Confirmar"
+              cancelBtnText="Cancelar"
+              showIcon={false}
+              onDateChange={(date) => setStartDate(new Date(date))}
+              locale={'pt-br'}
+              renderMonth={(month) => <Text style={{ color: 'black' }}>{getMonthName(month)}</Text>}
+            />
+          </View>
+          <View style={{ flex: 1, marginLeft: 8 }}>
+            <Text style={CreateDisciplineStyle.label}>Data de conclusão:</Text>
+            <DatePicker
+              style={CreateDisciplineStyle.datePicker}
+              date={endDate}
+              mode="date"
+              format="DD-MM-YYYY"
+              confirmBtnText="Confirmar"
+              cancelBtnText="Cancelar"
+              showIcon={false}
+              onDateChange={(date) => setEndDate(new Date(date))}
+              locale={'pt-br'}
+              renderMonth={(month) => <Text style={{ color: 'black' }}>{getMonthName(month)}</Text>}
+            />
+          </View>
+        </View>
+      </View>
 
-      <Text style={CreateDisciplineStyle.label}>Data de conclusão:</Text>
-      <DatePicker
-        style={CreateDisciplineStyle.datePicker}
-        date={endDate}
-        mode="date"
-        format="DD-MM-YYYY"
-        confirmBtnText="Confirmar"
-        cancelBtnText="Cancelar"
-        customStyles={{
-          dateIcon: {
-            position: 'absolute',
-            left: 0,
-            top: 4,
-            marginLeft: 0,
-          },
-          dateInput: {
-            marginLeft: 36,
-            borderWidth: 0,
-            backgroundColor: 'white',
-          },
-          dateText: {
-            color: 'black',
-          },
-        }}
-        onDateChange={(date) => setEndDate(new Date(date))}
-        locale={'pt-br'}
-        // eslint-disable-next-line react-native/no-inline-styles
-        renderMonth={(month) => <Text style={{ color: 'black' }}>{getMonthName(month)}</Text>}
-      />
+      <View style={CreateDisciplineStyle.inputContainer}>
+        <Text style={CreateDisciplineStyle.label}>Status:</Text>
+        <View style={CreateDisciplineStyle.statusContainer}>
+          {Object.keys(statusMap).map((statusKey) => (
+            <TouchableOpacity
+              key={statusKey}
+              style={[
+                CreateDisciplineStyle.statusButton,
+                status === parseInt(statusKey, 10)
+                  ? CreateDisciplineStyle.selectedStatus
+                  : { backgroundColor: '#ccc' },
+              ]}
+              onPress={() => {
+                setStatus(parseInt(statusKey, 10));
+              }}
+              disabled={false}
+            >
+              <Text style={CreateDisciplineStyle.statusText}>{statusMap[statusKey]}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
 
       <TouchableOpacity style={CreateDisciplineStyle.addButton} onPress={handleCreate}>
-        <Text style={CreateDisciplineStyle.addButtonText}>Cadastrar matéria</Text>
+        <Text style={CreateDisciplineStyle.addButtonText}>Cadastrar Matéria</Text>
       </TouchableOpacity>
+
       <Modal
         animationType="slide"
         transparent={true}

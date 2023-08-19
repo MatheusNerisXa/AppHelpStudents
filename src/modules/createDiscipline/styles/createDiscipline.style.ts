@@ -6,26 +6,27 @@ const CreateDisciplineStyle = StyleSheet.create({
     padding: 16,
     backgroundColor: 'white',
   },
+  inputContainer: {
+    marginBottom: 16,
+  },
   label: {
     fontSize: 16,
     marginBottom: 8,
-    color: '#333',
+    color: '#000',
   },
   input: {
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 4,
     padding: 8,
-    marginBottom: 16,
-    color: '#333',
+    color: '#000',
   },
   statusContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 16,
   },
   statusButton: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#c',
     paddingVertical: 10,
     paddingHorizontal: 12,
     borderRadius: 4,
@@ -35,10 +36,10 @@ const CreateDisciplineStyle = StyleSheet.create({
   },
   statusText: {
     fontSize: 16,
-    color: '#333',
+    color: '#FFF',
   },
   datePicker: {
-    width: 200,
+    width: '100%',
     marginBottom: 16,
   },
   addButton: {
@@ -51,23 +52,6 @@ const CreateDisciplineStyle = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
-  },
-  successMessage: {
-    position: 'absolute',
-    top: '50%',
-    left: 0,
-    right: 0,
-    alignItems: 'center',
-  },
-  successText: {
-    color: 'green',
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
-  dateText: {
-    fontSize: 16,
-    color: 'black',
-    marginBottom: 8,
   },
   modalContainer: {
     flex: 1,
