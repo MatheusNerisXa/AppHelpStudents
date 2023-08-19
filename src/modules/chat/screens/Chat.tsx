@@ -125,9 +125,11 @@ const Chat = () => {
       )}
       <View style={chatStyle.inputContainer}>
         <TextInput
-          style={chatStyle.input}
+          style={[chatStyle.input]}
           onChangeText={setInputText}
           value={inputText}
+          multiline={true}
+          numberOfLines={4}
           placeholder="Digite sua mensagem..."
         />
         <TouchableOpacity style={chatStyle.sendButton} onPress={sendMessage}>
