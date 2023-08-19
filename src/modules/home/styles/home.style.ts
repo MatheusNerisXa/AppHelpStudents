@@ -17,6 +17,22 @@ const homeStyle = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 24,
+  },
+  greetingText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginRight: 8,
+    color: '#333',
+  },
+  userName: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#007AFF',
+  },
 });
 
 export default homeStyle;

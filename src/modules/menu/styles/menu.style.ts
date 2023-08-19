@@ -10,22 +10,6 @@ export const menuStyles = StyleSheet.create({
     padding: 16,
     backgroundColor: '#F8F8F8',
   },
-  headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 24,
-  },
-  greetingText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginRight: 8,
-    color: '#333',
-  },
-  userName: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#007AFF',
-  },
   cardsContainer: {
     marginBottom: 16,
   },

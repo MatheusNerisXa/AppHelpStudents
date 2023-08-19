@@ -7,13 +7,10 @@ import { Icon } from '../../../shared/components/icon/Icon';
 import Text from '../../../shared/components/text/Text';
 import { MenuUrl } from '../../../shared/enum/MenuUrl.enum';
 import { logout } from '../../../shared/functions/connection/auth';
-import { useRequest } from '../../../shared/hooks/useRequest';
 import { menuStyles } from '../styles/menu.style';
 
 const Menu = () => {
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
-  const { user } = useRequest();
-  const userName = user?.name;
 
   const handleLogout = () => {
     Alert.alert(
@@ -61,11 +58,6 @@ const Menu = () => {
 
   return (
     <ScrollView contentContainerStyle={menuStyles.container}>
-      <View style={menuStyles.headerContainer}>
-        <Text style={menuStyles.greetingText}>Olá,</Text>
-        <Text style={menuStyles.userName}>{userName}!</Text>
-      </View>
-
       <View style={menuStyles.cardRow}>
         <TouchableOpacity onPress={handleExamPress}>
           <Animatable.View animation="fadeInLeft" duration={1000} style={menuStyles.cardContainer}>
