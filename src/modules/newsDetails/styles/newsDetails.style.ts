@@ -2,27 +2,45 @@ import { StyleSheet } from 'react-native';
 
 const newsDetailsStyle = StyleSheet.create({
   container: {
-    backgroundColor: '#F0F0F0',
-    paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 32,
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
+  scrollContainer: {
+    paddingHorizontal: 32,
+    paddingTop: 32,
+    paddingBottom: 64,
   },
   image: {
     width: '100%',
-    height: 200,
-    borderRadius: 8,
-    marginBottom: 16,
+    height: 250,
+    borderRadius: 12,
+    marginBottom: 24,
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 5,
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 8,
+    textAlign: 'justify',
+    marginBottom: 16,
     color: '#333333',
   },
-  descriptionText: {
+  date: {
+    marginTop: 20,
     fontSize: 16,
-    color: '#555555',
-    lineHeight: 24,
+    color: '#000',
+    marginBottom: 8,
+  },
+  descriptionText: {
+    fontSize: 17,
+    color: '#444444',
+    lineHeight: 28,
     textAlign: 'justify',
   },
 });
