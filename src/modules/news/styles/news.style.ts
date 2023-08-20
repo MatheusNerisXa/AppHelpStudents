@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const newsStyle = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F0F0F0',
+    backgroundColor: '#FFF',
     paddingHorizontal: 16,
     paddingTop: 16,
   },
@@ -22,8 +22,10 @@ const newsStyle = StyleSheet.create({
     elevation: 4,
   },
   postedAtText: {
+    marginTop: 10,
     fontSize: 12,
-    color: '#777777',
+    color: '#007AFF',
+    fontWeight: 'bold',
   },
   textContainer: {
     paddingHorizontal: 16,
@@ -38,7 +40,7 @@ const newsStyle = StyleSheet.create({
     alignItems: 'center',
   },
   searchContainer: {
-    backgroundColor: '#FFF',
+    backgroundColor: '#007AFF',
     paddingVertical: 8,
     paddingHorizontal: 16,
     marginBottom: 16,
@@ -50,7 +52,8 @@ const newsStyle = StyleSheet.create({
     elevation: 3,
   },
   searchInput: {
-    color: '#000',
+    color: '#FFF',
+    textAlign: 'center',
     fontSize: 16,
   },
   emptyContainer: {

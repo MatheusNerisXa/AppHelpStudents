@@ -13,6 +13,7 @@ import {
 
 import { URL_NEWS } from '../../../shared/constants/urls';
 import newsStyle from '../styles/news.style';
+
 interface News {
   id: number;
   title: string;
@@ -42,7 +43,7 @@ const NewsItem = ({ news }: { news: News }) => {
       <View style={newsStyle.textContainer}>
         <Text style={newsStyle.title}>{news.title}</Text>
         <Text style={newsStyle.postedAtText}>
-          Data da Postagem: {formatBrazilianDate(news.postedAt)}
+          Publicado em {formatBrazilianDate(news.postedAt)}
         </Text>
       </View>
     </TouchableOpacity>
@@ -90,22 +91,20 @@ const NewsComponent = () => {
     return filteredNews.map((newsItem) => <NewsItem key={newsItem.id} news={newsItem} />);
   };
 
-  const contentContainerStyle = [newsStyle.contentContainer, { marginTop: 16 }];
-
   return (
     <View style={newsStyle.container}>
       <View style={newsStyle.searchContainer}>
         <TextInput
           style={newsStyle.searchInput}
           placeholder="Digite o título da notícia"
-          placeholderTextColor="#666"
+          placeholderTextColor="#FFF"
           value={searchText}
           onChangeText={handleSearch}
           autoFocus
         />
       </View>
       <ScrollView
-        contentContainerStyle={contentContainerStyle}
+        contentContainerStyle={newsStyle.contentContainer}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor="#007AFF" />
