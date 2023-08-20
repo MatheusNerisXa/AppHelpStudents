@@ -10,6 +10,7 @@ import CreateUser from './modules/createUser';
 import Dashboard from './modules/dashboards';
 import Discipline from './modules/discipline';
 import Exams from './modules/exams';
+import ExamDetails from './modules/examsDetails';
 import Home from './modules/home';
 import Login from './modules/login';
 import Menu from './modules/menu';
@@ -214,6 +215,28 @@ const TabNavigation = () => {
       />
 
       <Tab.Screen
+        name="ExamDetails"
+        component={ExamDetails}
+        options={({ navigation }) => ({
+          title: 'Vestibulares',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: '#007AFF' },
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={navigationStyle.headerLeftContainer}
+            >
+              <Text style={navigationStyle.headerLeftText}>
+                <Icon name="arrow-left2" color="#FFF" size={23} />
+              </Text>
+            </TouchableOpacity>
+          ),
+          tabBarButton: () => null,
+        })}
+      />
+
+      <Tab.Screen
         name="DisciplineCreationScreen"
         component={DisciplineCreationScreen}
         options={({ navigation }) => ({
@@ -291,6 +314,11 @@ const Navigation = () => {
         <Stack.Screen
           name={MenuUrl.NewsDetails}
           component={News}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={MenuUrl.ExamDetails}
+          component={ExamDetails}
           options={{ headerShown: false }}
         />
         <Stack.Screen

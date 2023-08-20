@@ -13,4 +13,5 @@ export enum MenuUrl {
   Discipline = 'Discipline',
   DisciplineCreationScreen = 'DisciplineCreationScreen',
   Dashboard = 'Dashboard',
+  ExamDetails = 'ExamDetails',
 }

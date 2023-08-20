@@ -1,6 +1,7 @@
+import { useNavigation } from '@react-navigation/native';
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
-import { RefreshControl, ScrollView, Text, TextInput, View } from 'react-native';
+import { RefreshControl, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import { URL_EXAM } from '../../../shared/constants/urls';
 import ExamsStyle from '../styles/exams.style';
@@ -20,6 +21,8 @@ const ExamComponent = () => {
   const [exams, setExams] = useState<Exam[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const [searchText, setSearchText] = useState('');
+
+  const navigation = useNavigation();
 
   const fetchData = () => {
     fetch(URL_EXAM)
@@ -72,7 +75,11 @@ const ExamComponent = () => {
           </View>
         ) : (
           filteredExams.map((exam) => (
-            <View key={exam.id} style={ExamsStyle.examContainer}>
+            <TouchableOpacity
+              key={exam.id}
+              style={ExamsStyle.examContainer}
+              onPress={() => navigation.navigate('ExamDetails', { exam })}
+            >
               <Text style={ExamsStyle.examTitle}>{exam.title}</Text>
               <View style={ExamsStyle.dateInfoContainer}>
                 <DateInfo
@@ -101,7 +108,7 @@ const ExamComponent = () => {
                   />
                 )}
               </View>
-            </View>
+            </TouchableOpacity>
           ))
         )}
       </ScrollView>
