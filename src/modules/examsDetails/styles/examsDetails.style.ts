@@ -15,7 +15,7 @@ const ExamDetailsStyle = StyleSheet.create({
     color: '#333333',
   },
   examDescription: {
-    marginTop: 2,
+    marginTop: 10,
     fontSize: 16,
     marginBottom: 20,
     fontFamily: 'Arial',
@@ -23,7 +23,8 @@ const ExamDetailsStyle = StyleSheet.create({
     textAlign: 'justify',
   },
   imageContainer: {
-    marginTop: 5,
+    marginTop: 2,
+    paddingBottom: 15,
     alignItems: 'center',
     marginBottom: 5,
     borderBottomWidth: 1,
@@ -86,6 +87,12 @@ const ExamDetailsStyle = StyleSheet.create({
     height: 1,
     backgroundColor: '#DDDDDD',
     marginVertical: 20,
+  },
+  loadingIndicator: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: 200,
   },
 });
 
