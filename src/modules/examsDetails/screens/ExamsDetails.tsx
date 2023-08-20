@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { Image, Linking, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
@@ -44,7 +44,7 @@ const ExamDetails = ({ route }: { route: any }) => {
         </View>
       )}
 
-      {(exam.image || exam.description) && <View />}
+      {(exam.image || exam.description) && <View style={ExamDetailsStyle.divider} />}
 
       {exam.description && (
         <Text style={ExamDetailsStyle.examDescription}>{formatDescription(exam.description)}</Text>
@@ -53,19 +53,19 @@ const ExamDetails = ({ route }: { route: any }) => {
       <View style={ExamDetailsStyle.infoContainer}>
         <DateInfo
           label="Inscrições:"
-          date={`${format(new Date(exam.registrationStart), 'dd/MM/yyyy')} a ${format(
-            new Date(exam.registrationEnd),
+          date={`${format(parseISO(exam.registrationStart), 'dd/MM/yyyy')} a ${format(
+            parseISO(exam.registrationEnd),
             'dd/MM/yyyy',
           )}`}
         />
         <View style={ExamDetailsStyle.provaContainer}>
-          <DateInfo label="Prova 1:" date={format(new Date(exam.exam1Date), 'dd/MM/yyyy')} />
+          <DateInfo label="Prova 1:" date={format(parseISO(exam.exam1Date), 'dd/MM/yyyy')} />
           {exam.exam2Date && (
-            <DateInfo label="  Prova 2:" date={format(new Date(exam.exam2Date), 'dd/MM/yyyy')} />
+            <DateInfo label="  Prova 2:" date={format(parseISO(exam.exam2Date), 'dd/MM/yyyy')} />
           )}
         </View>
         {exam.resultDate && (
-          <DateInfo label="Resultado:" date={format(new Date(exam.resultDate), 'dd/MM/yyyy')} />
+          <DateInfo label="Resultado:" date={format(parseISO(exam.resultDate), 'dd/MM/yyyy')} />
         )}
 
         {exam.linkEnrollment && (

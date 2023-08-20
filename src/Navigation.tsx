@@ -152,7 +152,7 @@ const TabNavigation = () => {
         name="Discipline"
         component={Discipline}
         options={({ navigation }) => ({
-          title: 'Matêrias',
+          title: 'Matérias',
           headerTintColor: '#FFF',
           headerStyle: { backgroundColor: '#007AFF' },
           // eslint-disable-next-line react/no-unstable-nested-components

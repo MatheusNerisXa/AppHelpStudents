@@ -1,5 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
+import { isAfter } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 import React, { useEffect, useState } from 'react';
 import { RefreshControl, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
@@ -74,42 +76,59 @@ const ExamComponent = () => {
             </Text>
           </View>
         ) : (
-          filteredExams.map((exam) => (
-            <TouchableOpacity
-              key={exam.id}
-              style={ExamsStyle.examContainer}
-              onPress={() => navigation.navigate('ExamDetails', { exam })}
-            >
-              <Text style={ExamsStyle.examTitle}>{exam.title}</Text>
-              <View style={ExamsStyle.dateInfoContainer}>
-                <DateInfo
-                  label="Inscrição:"
-                  date={`${format(new Date(exam.registrationStart), 'dd/MM/yyyy')} a ${format(
-                    new Date(exam.registrationEnd),
-                    'dd/MM/yyyy',
-                  )}`}
-                />
-                <View style={ExamsStyle.provaContainer}>
-                  <DateInfo
-                    label="Prova 1:"
-                    date={format(new Date(exam.exam1Date), 'dd/MM/yyyy')}
-                  />
-                  {exam.exam2Date && (
+          filteredExams.map((exam) => {
+            const today = new Date();
+            const isExam2DateValid = !exam.exam2Date || isAfter(parseISO(exam.exam2Date), today);
+            const isResultDateValid = !exam.resultDate || isAfter(parseISO(exam.resultDate), today);
+
+            if (isExam2DateValid && isResultDateValid) {
+              return (
+                <TouchableOpacity
+                  key={exam.id}
+                  style={ExamsStyle.examContainer}
+                  onPress={() => navigation.navigate('ExamDetails', { exam })}
+                >
+                  <Text style={ExamsStyle.examTitle}>{exam.title}</Text>
+                  <View style={ExamsStyle.dateInfoContainer}>
                     <DateInfo
-                      label="Prova 2:"
-                      date={format(new Date(exam.exam2Date), 'dd/MM/yyyy')}
+                      label="Inscrição:"
+                      date={`${format(parseISO(exam.registrationStart), 'dd/MM/yyyy', {
+                        locale: ptBR,
+                      })} a ${format(parseISO(exam.registrationEnd), 'dd/MM/yyyy', {
+                        locale: ptBR,
+                      })}`}
                     />
-                  )}
-                </View>
-                {exam.resultDate && (
-                  <DateInfo
-                    label="Resultado:"
-                    date={format(new Date(exam.resultDate), 'dd/MM/yyyy')}
-                  />
-                )}
-              </View>
-            </TouchableOpacity>
-          ))
+                    <View style={ExamsStyle.provaContainer}>
+                      <DateInfo
+                        label="Prova 1:"
+                        date={format(parseISO(exam.exam1Date), 'dd/MM/yyyy', {
+                          locale: ptBR,
+                        })}
+                      />
+                      {exam.exam2Date && (
+                        <DateInfo
+                          label="Prova 2:"
+                          date={format(parseISO(exam.exam2Date), 'dd/MM/yyyy', {
+                            locale: ptBR,
+                          })}
+                        />
+                      )}
+                    </View>
+                    {exam.resultDate && (
+                      <DateInfo
+                        label="Resultado:"
+                        date={format(parseISO(exam.resultDate), 'dd/MM/yyyy', {
+                          locale: ptBR,
+                        })}
+                      />
+                    )}
+                  </View>
+                </TouchableOpacity>
+              );
+            } else {
+              return null;
+            }
+          })
         )}
       </ScrollView>
     </View>
