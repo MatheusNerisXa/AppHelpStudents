@@ -44,7 +44,7 @@ const ExamDetails = ({ route }: { route: any }) => {
         </View>
       )}
 
-      {(exam.image || exam.description) && <View style={ExamDetailsStyle.divider} />}
+      {(exam.image || exam.description) && <View />}
 
       {exam.description && (
         <Text style={ExamDetailsStyle.examDescription}>{formatDescription(exam.description)}</Text>
