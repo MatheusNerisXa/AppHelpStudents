@@ -10,11 +10,12 @@ const newsDetailsStyle = StyleSheet.create({
     paddingTop: 32,
     paddingBottom: 64,
   },
-  image: {
-    width: '100%',
-    height: 250,
+  imageContainer: {
     borderRadius: 12,
     marginBottom: 24,
+  },
+  imageShadow: {
+    borderRadius: 12,
     shadowColor: '#000000',
     shadowOffset: {
       width: 0,
@@ -23,6 +24,12 @@ const newsDetailsStyle = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 5,
+    backgroundColor: 'white',
+  },
+  image: {
+    width: '100%',
+    height: 250,
+    borderRadius: 12,
   },
   title: {
     fontSize: 20,

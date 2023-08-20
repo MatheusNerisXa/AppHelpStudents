@@ -11,11 +11,15 @@ const NewsDetailsScreen = ({ route }) => {
   return (
     <View style={newsDetailsStyle.container}>
       <ScrollView contentContainerStyle={newsDetailsStyle.scrollContainer}>
-        <Image
-          source={{ uri: newsItem.imageUrl }}
-          style={newsDetailsStyle.image}
-          resizeMode="cover"
-        />
+        <View style={newsDetailsStyle.imageContainer}>
+          <View style={newsDetailsStyle.imageShadow}>
+            <Image
+              source={{ uri: newsItem.imageUrl }}
+              style={newsDetailsStyle.image}
+              resizeMode="cover"
+            />
+          </View>
+        </View>
         <Text style={newsDetailsStyle.title}>{newsItem.title}</Text>
         <Text style={newsDetailsStyle.descriptionText}>{newsItem.description}</Text>
         <Text style={newsDetailsStyle.date}>Publicado em: {formattedDate}</Text>
