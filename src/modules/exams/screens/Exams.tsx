@@ -47,14 +47,16 @@ const ExamComponent = () => {
 
   return (
     <View style={ExamsStyle.container}>
-      <TextInput
-        style={ExamsStyle.searchInput}
-        placeholder="Buscar universidade ou escola"
-        placeholderTextColor="#AAA"
-        value={searchText}
-        onChangeText={handleSearch}
-        autoFocus
-      />
+      <View style={ExamsStyle.searchContainer}>
+        <TextInput
+          style={ExamsStyle.searchInput}
+          placeholder="Buscar universidade ou escola"
+          placeholderTextColor="#FFF"
+          value={searchText}
+          onChangeText={handleSearch}
+          autoFocus
+        />
+      </View>
       <ScrollView
         contentContainerStyle={ExamsStyle.contentContainer}
         showsVerticalScrollIndicator={false}
@@ -72,11 +74,27 @@ const ExamComponent = () => {
           filteredExams.map((exam) => (
             <View key={exam.id} style={ExamsStyle.examContainer}>
               <Text style={ExamsStyle.examTitle}>{exam.title}</Text>
-              <View style={ExamsStyle.dateRow}>
-                <DateInfo label="Inscrição" date={exam.registrationStart} />
-                <DateInfo label="1ª Fase" date={exam.exam1Date} />
-                {exam.exam2Date && <DateInfo label="2ª Fase" date={exam.exam2Date} />}
-                {exam.resultDate && <DateInfo label="Resultado" date={exam.resultDate} />}
+              <View style={ExamsStyle.dateInfoContainer}>
+                <DateInfo
+                  label="Inscrição:"
+                  date={`${format(new Date(exam.registrationStart), 'dd/MM/yyyy')} a ${format(
+                    new Date(exam.registrationEnd),
+                    'dd/MM/yyyy',
+                  )}`}
+                />
+                <DateInfo label="Prova 1:" date={format(new Date(exam.exam1Date), 'dd/MM/yyyy')} />
+                {exam.exam2Date && (
+                  <DateInfo
+                    label="Prova 2:"
+                    date={format(new Date(exam.exam2Date), 'dd/MM/yyyy')}
+                  />
+                )}
+                {exam.resultDate && (
+                  <DateInfo
+                    label="Resultado:"
+                    date={format(new Date(exam.resultDate), 'dd/MM/yyyy')}
+                  />
+                )}
               </View>
             </View>
           ))
@@ -88,9 +106,9 @@ const ExamComponent = () => {
 
 const DateInfo = ({ label, date }: { label: string; date: string }) => (
   <View style={ExamsStyle.dateInfo}>
-    <Text style={ExamsStyle.dateLabel}>{label}:</Text>
-    <Text style={ExamsStyle.dateText}>{format(new Date(date), 'dd/MM/yyyy')}</Text>
+    <Text>
+      <Text style={ExamsStyle.dateLabelBold}>{label}</Text> {date}
+    </Text>
   </View>
 );
-
 export default ExamComponent;
