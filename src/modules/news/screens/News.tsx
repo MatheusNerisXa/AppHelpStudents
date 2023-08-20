@@ -43,7 +43,7 @@ const NewsItem = ({ news }: { news: News }) => {
       <View style={newsStyle.textContainer}>
         <Text style={newsStyle.title}>{news.title}</Text>
         <Text style={newsStyle.postedAtText}>
-          Publicado em {formatBrazilianDate(news.postedAt)}
+          Publicado em: {formatBrazilianDate(news.postedAt)}
         </Text>
       </View>
     </TouchableOpacity>

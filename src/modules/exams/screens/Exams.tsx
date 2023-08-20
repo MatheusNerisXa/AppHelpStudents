@@ -82,13 +82,18 @@ const ExamComponent = () => {
                     'dd/MM/yyyy',
                   )}`}
                 />
-                <DateInfo label="Prova 1:" date={format(new Date(exam.exam1Date), 'dd/MM/yyyy')} />
-                {exam.exam2Date && (
+                <View style={ExamsStyle.provaContainer}>
                   <DateInfo
-                    label="Prova 2:"
-                    date={format(new Date(exam.exam2Date), 'dd/MM/yyyy')}
+                    label="Prova 1:"
+                    date={format(new Date(exam.exam1Date), 'dd/MM/yyyy')}
                   />
-                )}
+                  {exam.exam2Date && (
+                    <DateInfo
+                      label="Prova 2:"
+                      date={format(new Date(exam.exam2Date), 'dd/MM/yyyy')}
+                    />
+                  )}
+                </View>
                 {exam.resultDate && (
                   <DateInfo
                     label="Resultado:"
@@ -107,8 +112,14 @@ const ExamComponent = () => {
 const DateInfo = ({ label, date }: { label: string; date: string }) => (
   <View style={ExamsStyle.dateInfo}>
     <Text>
-      <Text style={ExamsStyle.dateLabelBold}>{label}</Text> {date}
+      <Text style={ExamsStyle.dateLabelBold}>{label}</Text>
+      {label === 'Prova 1:' ? (
+        <Text style={ExamsStyle.provaDate}> {date}</Text>
+      ) : (
+        <Text style={ExamsStyle.prova2Date}> {date}</Text>
+      )}
     </Text>
   </View>
 );
+
 export default ExamComponent;

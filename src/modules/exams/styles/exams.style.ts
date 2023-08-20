@@ -60,6 +60,21 @@ const ExamsStyle = StyleSheet.create({
   },
   dateInfo: {
     flex: 1,
+    marginTop: 5,
+  },
+  provaContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 5,
+  },
+  provaDate: {
+    marginLeft: 10,
+  },
+  prova2Date: {
+    marginLeft: 10,
+  },
+  provaText: {
+    marginRight: 2,
   },
   dateLabel: {
     color: '#555',
