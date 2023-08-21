@@ -1,7 +1,9 @@
+import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, RefreshControl, ScrollView, Text, TextInput, View } from 'react-native';
 
 import Button from '../../../shared/components/button/Button';
+import { URL_USER_ID } from '../../../shared/constants/urls';
 import { useRequest } from '../../../shared/hooks/useRequest';
 import profileStyle from '../styles/profile.style';
 
@@ -18,6 +20,9 @@ const Profile = () => {
 
   const onRefresh = async () => {
     setRefreshing(true);
+    // Fetch updated user data
+    const updatedUser = await fetchUpdatedUserData();
+    setUser(updatedUser);
     setRefreshing(false);
   };
 
@@ -28,7 +33,6 @@ const Profile = () => {
       useNativeDriver: true,
     }).start();
 
-    // Initialize the input fields with user data
     if (user) {
       setName(user.name);
       setEmail(user.email);
@@ -38,17 +42,44 @@ const Profile = () => {
   }, [animation, user]);
 
   const handleSaveChanges = async () => {
-    // Update user data and perform API call
-    // ...
+    try {
+      console.log('Saving changes...');
+      const updatedFields = {};
+      if (name !== user.name) {
+        updatedFields.name = name;
+      }
+      if (email !== user.email) {
+        updatedFields.email = email;
+      }
+      if (cpf !== user.cpf) {
+        updatedFields.cpf = cpf;
+      }
+      if (phone !== user.phone) {
+        updatedFields.phone = phone;
+      }
 
-    // Set the updated user data in state
-    setUser({
-      ...user,
-      name: name,
-      email: email,
-      cpf: cpf,
-      phone: phone,
-    });
+      const response = await axios.put(URL_USER_ID + `${user.id}`, updatedFields, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      console.log(response);
+
+      if (response.ok) {
+        console.log('Profile updated successfully.');
+        // Atualize o estado do usuário com os novos dados
+        const updatedUserData = {
+          ...user,
+          ...updatedFields,
+        };
+        setUser(updatedUserData);
+      } else {
+        console.error('Error updating user profile:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error updating user profile:', error);
+    }
   };
 
   return (
