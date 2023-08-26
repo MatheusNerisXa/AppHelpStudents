@@ -36,7 +36,7 @@ export const menuStyles = StyleSheet.create({
   },
   cardText: {
     fontSize: 16,
-    color: '#333',
+    color: '#FFF',
     marginTop: 8,
   },
 });
