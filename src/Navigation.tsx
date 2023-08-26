@@ -9,6 +9,7 @@ import DisciplineCreationScreen from './modules/createDiscipline';
 import CreateUser from './modules/createUser';
 import Dashboard from './modules/dashboards';
 import Discipline from './modules/discipline';
+import EventScreen from './modules/event';
 import Exams from './modules/exams';
 import ExamDetails from './modules/examsDetails';
 import Home from './modules/home';
@@ -44,6 +45,9 @@ const TabNavigation = () => {
         break;
       case 'Dashboards':
         iconName = 'stats-bars2';
+        break;
+      case 'Event':
+        iconName = 'calendar';
         break;
       default:
         iconName = 'profile';
@@ -91,6 +95,15 @@ const TabNavigation = () => {
         component={ChatGPT}
         options={{
           title: 'Chat',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: '#007AFF' },
+        }}
+      />
+      <Tab.Screen
+        name="Event"
+        component={EventScreen}
+        options={{
+          title: 'Agenda',
           headerTintColor: '#FFF',
           headerStyle: { backgroundColor: '#007AFF' },
         }}
@@ -151,23 +164,25 @@ const TabNavigation = () => {
       <Tab.Screen
         name="Discipline"
         component={Discipline}
-        options={({ navigation }) => ({
-          title: 'Matérias',
-          headerTintColor: '#FFF',
-          headerStyle: { backgroundColor: '#007AFF' },
-          // eslint-disable-next-line react/no-unstable-nested-components
-          headerLeft: () => (
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={navigationStyle.headerLeftContainer}
-            >
-              <Text style={navigationStyle.headerLeftText}>
-                <Icon name="arrow-left2" color="#FFF" size={23} />
-              </Text>
-            </TouchableOpacity>
-          ),
-          tabBarButton: () => null,
-        })}
+        options={({ navigation }) => {
+          return {
+            title: 'Matérias',
+            headerTintColor: '#FFF',
+            headerStyle: { backgroundColor: '#007AFF' },
+            // eslint-disable-next-line react/no-unstable-nested-components
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => navigation.goBack()}
+                style={navigationStyle.headerLeftContainer}
+              >
+                <Text style={navigationStyle.headerLeftText}>
+                  <Icon name="arrow-left2" color="#FFF" size={23} />
+                </Text>
+              </TouchableOpacity>
+            ),
+            tabBarButton: () => null,
+          };
+        }}
       />
 
       <Tab.Screen
