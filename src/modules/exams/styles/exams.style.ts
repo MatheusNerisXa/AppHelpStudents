@@ -65,7 +65,8 @@ const ExamsStyle = StyleSheet.create({
   provaContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 5,
+    textAlign: 'center',
+    justifyContent: 'center',
   },
   provaDate: {
     marginLeft: 10,
@@ -85,10 +86,24 @@ const ExamsStyle = StyleSheet.create({
   },
   dateInfoContainer: {
     marginTop: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   dateLabelBold: {
     color: '#555',
     fontWeight: 'bold',
+  },
+  calendarButton: {
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    marginTop: 10,
+    alignSelf: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  calendarIcon: {
+    marginRight: 5,
   },
 });
 

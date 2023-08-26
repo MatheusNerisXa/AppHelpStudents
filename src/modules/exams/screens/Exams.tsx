@@ -3,8 +3,19 @@ import { format, parseISO } from 'date-fns';
 import { isAfter } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import React, { useEffect, useState } from 'react';
-import { RefreshControl, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  Platform,
+  RefreshControl,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { PermissionsAndroid } from 'react-native';
+import CalendarEvents from 'react-native-calendar-events';
 
+import { Icon } from '../../../shared/components/icon/Icon';
 import { URL_EXAM } from '../../../shared/constants/urls';
 import ExamsStyle from '../styles/exams.style';
 
@@ -44,6 +55,75 @@ const ExamComponent = () => {
 
   const handleSearch = (text: string) => {
     setSearchText(text);
+  };
+
+  const addToCalendarIOS = async (eventTitle: string, startDate: Date) => {
+    try {
+      await CalendarEvents.requestPermissions();
+
+      const utcStartDate = new Date(startDate.getTime() + startDate.getTimezoneOffset() * 60000);
+
+      await CalendarEvents.saveEvent(eventTitle, {
+        startDate: utcStartDate.toISOString(),
+        endDate: new Date(utcStartDate.getTime() + 1 * 60 * 60 * 1000).toISOString(),
+      });
+
+      console.log('Evento adicionado ao calendário (iOS).');
+    } catch (error) {
+      console.error('Erro ao adicionar evento ao calendário (iOS):', error);
+    }
+  };
+
+  const addToCalendarAndroid = async (eventTitle: string, startDate: Date) => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_CALENDAR,
+        {
+          title: 'Permissão para Adicionar ao Calendário',
+          message: 'Esta aplicação precisa de permissão para adicionar eventos ao calendário.',
+          buttonPositive: 'Permitir',
+        },
+      );
+
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        const eventDetails = {
+          title: eventTitle,
+          startDate: startDate.toISOString(),
+          endDate: new Date(startDate.getTime() + 1 * 60 * 60 * 1000).toISOString(),
+        };
+
+        const eventID = await CalendarEvents.saveEvent(eventDetails);
+
+        console.log('Evento adicionado ao calendário (Android) com ID:', eventID);
+      } else {
+        console.log('Permissão do calendário não concedida (Android).');
+      }
+    } catch (error) {
+      console.error('Erro ao adicionar evento ao calendário (Android):', error);
+    }
+  };
+
+  const handleAcompanharClick = (exam: Exam) => {
+    const { registrationStart, exam1Date, exam2Date, resultDate, title } = exam;
+
+    const eventDetails = [
+      { date: registrationStart, title: `Início da Inscrição - ${title}` },
+      { date: exam1Date, title: `Prova 1 - ${title}` },
+      { date: exam2Date, title: `Prova 2 - ${title}` },
+      { date: resultDate, title: `Resultado - ${title}` },
+    ];
+
+    for (const detail of eventDetails) {
+      if (detail.date) {
+        const startDate = new Date(detail.date);
+
+        if (Platform.OS === 'ios') {
+          addToCalendarIOS(detail.title, startDate);
+        } else if (Platform.OS === 'android') {
+          addToCalendarAndroid(detail.title, startDate);
+        }
+      }
+    }
   };
 
   const filteredExams = exams.filter((exam) =>
@@ -99,19 +179,23 @@ const ExamComponent = () => {
                       })}`}
                     />
                     <View style={ExamsStyle.provaContainer}>
-                      <DateInfo
-                        label="Prova 1:"
-                        date={format(parseISO(exam.exam1Date), 'dd/MM/yyyy', {
-                          locale: ptBR,
-                        })}
-                      />
-                      {exam.exam2Date && (
+                      <View style={ExamsStyle.provaColumn}>
                         <DateInfo
-                          label="Prova 2:"
-                          date={format(parseISO(exam.exam2Date), 'dd/MM/yyyy', {
+                          label="Prova 1:"
+                          date={format(parseISO(exam.exam1Date), 'dd/MM/yyyy', {
                             locale: ptBR,
                           })}
                         />
+                      </View>
+                      {exam.exam2Date && (
+                        <View style={ExamsStyle.provaColumn}>
+                          <DateInfo
+                            label=" Prova 2:"
+                            date={format(parseISO(exam.exam2Date), 'dd/MM/yyyy', {
+                              locale: ptBR,
+                            })}
+                          />
+                        </View>
                       )}
                     </View>
                     {exam.resultDate && (
@@ -122,6 +206,18 @@ const ExamComponent = () => {
                         })}
                       />
                     )}
+                    <TouchableOpacity
+                      style={ExamsStyle.calendarButton}
+                      onPress={() => handleAcompanharClick(exam)}
+                    >
+                      <Icon
+                        name="calendar"
+                        size={20}
+                        color="#007AFF"
+                        style={ExamsStyle.calendarIcon}
+                      />
+                      <Text style={ExamsStyle.acompanharButtonText}>Adicionar ao Calendário</Text>
+                    </TouchableOpacity>
                   </View>
                 </TouchableOpacity>
               );
@@ -139,11 +235,10 @@ const DateInfo = ({ label, date }: { label: string; date: string }) => (
   <View style={ExamsStyle.dateInfo}>
     <Text>
       <Text style={ExamsStyle.dateLabelBold}>{label}</Text>
-      {label === 'Prova 1:' ? (
-        <Text style={ExamsStyle.provaDate}> {date}</Text>
-      ) : (
-        <Text style={ExamsStyle.prova2Date}> {date}</Text>
-      )}
+      <Text style={label === 'Prova 1:' ? ExamsStyle.provaDate : ExamsStyle.prova2Date}>
+        {' '}
+        {date}
+      </Text>
     </Text>
   </View>
 );

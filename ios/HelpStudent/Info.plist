@@ -11,6 +11,8 @@
 		<string>Poppins-SemiBold.ttf</string>
 		<string>icomoon.ttf</string>
 	</array>
+	<key>NSCalendarsUsageDescription</key>
+    <string>Esta aplicação precisa de acesso ao calendário para adicionar eventos relacionados a vestibulares.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
