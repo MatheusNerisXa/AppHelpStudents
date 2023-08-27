@@ -4,11 +4,15 @@ const disciplineStyle = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    backgroundColor: '#F5F5F5',
+  },
+  header: {
+    marginTop: 20,
+    marginBottom: 16,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 16,
     textAlign: 'center',
   },
   searchContainer: {
@@ -40,6 +44,7 @@ const disciplineStyle = StyleSheet.create({
     padding: 16,
     marginBottom: 16,
     borderRadius: 8,
+    backgroundColor: '#FFF',
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },
@@ -52,18 +57,23 @@ const disciplineStyle = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 8,
   },
+  statusIndicatorContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   statusIndicator: {
     width: 10,
     height: 10,
     borderRadius: 5,
   },
   dateText: {
-    color: '#555',
+    color: '#000',
     fontSize: 14,
     marginBottom: 4,
   },
   statusText: {
     fontSize: 14,
+    marginLeft: 8,
   },
   addButton: {
     position: 'absolute',
@@ -86,6 +96,10 @@ const disciplineStyle = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#000',
+  },
+  statusAndLabel: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 

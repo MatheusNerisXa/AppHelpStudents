@@ -14,18 +14,23 @@ const statusMap = {
 };
 
 const Discipline = () => {
-  const [disciplines, setDisciplines] = useState([]);
   const { getUserFromStorage } = useRequest();
   const [userId, setUserId] = useState(null);
   const [searchText, setSearchText] = useState('');
   const [refreshing, setRefreshing] = useState(false);
+  const [disciplines, setDisciplines] = useState([]);
+  const isFocused = useIsFocused();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const navigation = useNavigation();
 
   const fetchDisciplines = () => {
-    fetch(URL_DISCIPLINE + `${userId}`)
-      .then((response) => response.json())
-      .then((data) => setDisciplines(data))
-      .catch((error) => console.error('Error fetching disciplines:', error))
-      .finally(() => setRefreshing(false));
+    if (userId) {
+      fetch(URL_DISCIPLINE + `${userId}`)
+        .then((response) => response.json())
+        .then((data) => setDisciplines(data))
+        .catch((error) => console.error('Error fetching disciplines:', error))
+        .finally(() => setRefreshing(false));
+    }
   };
 
   const handleRefresh = () => {
@@ -61,28 +66,23 @@ const Discipline = () => {
       >
         <View style={disciplineStyle.cardHeader}>
           <Text style={disciplineStyle.name}>{item.name}</Text>
-          <View
-            style={[
-              disciplineStyle.statusIndicator,
-              { backgroundColor: statusInfo.color || '#000' },
-            ]}
-          />
+          <View style={disciplineStyle.statusAndLabel}>
+            <View
+              style={[
+                disciplineStyle.statusIndicator,
+                { backgroundColor: statusInfo.color || '#000' },
+              ]}
+            />
+            <Text style={[disciplineStyle.statusText, { color: statusInfo.color || '#000' }]}>
+              {statusInfo.label || 'Sem Status'}
+            </Text>
+          </View>
         </View>
         <Text style={disciplineStyle.dateText}>
           Período: {formatBrazilianDate(item.dateStart)} até {formatBrazilianDate(item.dateEnd)}
         </Text>
-        <Text style={[disciplineStyle.statusText, { color: statusInfo.color || '#000' }]}>
-          {statusInfo.label || 'Sem Status'}
-        </Text>
       </TouchableOpacity>
     );
-  };
-
-  const navigation = useNavigation();
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleCreateDiscipline = () => {
-    navigation.navigate('DisciplineCreationScreen');
   };
 
   const handleSearch = (text) => {
@@ -92,8 +92,6 @@ const Discipline = () => {
   const filteredDisciplines = disciplines.filter((discipline) =>
     discipline.name.toLowerCase().includes(searchText.toLowerCase()),
   );
-
-  const isFocused = useIsFocused();
 
   const cardColors = [
     '#82C2E2',
