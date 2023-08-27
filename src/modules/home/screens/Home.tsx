@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ImageBackground, Text, View } from 'react-native';
 
+import { URL_BANNERS } from '../../../shared/constants/urls';
 import { useRequest } from '../../../shared/hooks/useRequest';
 import homeStyle from '../styles/home.style';
 
@@ -19,7 +20,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     async function fetchBanners() {
       try {
-        const response = await fetch('http://192.168.1.3:8080/banners');
+        const response = await fetch(URL_BANNERS);
         const data = await response.json();
         setBanners(data);
       } catch (error) {
