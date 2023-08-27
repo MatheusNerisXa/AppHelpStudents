@@ -80,6 +80,7 @@ const Discipline = () => {
 
   const navigation = useNavigation();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleCreateDiscipline = () => {
     navigation.navigate('DisciplineCreationScreen');
   };
@@ -132,10 +133,6 @@ const Discipline = () => {
           <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor="#007AFF" />
         }
       />
-
-      <TouchableOpacity style={disciplineStyle.addButton} onPress={handleCreateDiscipline}>
-        <Text style={disciplineStyle.addButtonText}>+</Text>
-      </TouchableOpacity>
     </View>
   );
 };

@@ -46,7 +46,7 @@ const Menu = () => {
   };
 
   const handleDisciplinePress = () => {
-    navigation.navigate(MenuUrl.Discipline);
+    navigation.navigate(MenuUrl.DisciplineMenu);
   };
 
   const handleTranslationPress = () => {

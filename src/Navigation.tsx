@@ -7,7 +7,7 @@ import { Text, TouchableOpacity } from 'react-native';
 import ChatGPT from './modules/chat/screens/Chat';
 import CreateUser from './modules/createUser';
 import Dashboard from './modules/dashboards';
-import { Discipline, DisciplineCreation } from './modules/discipline';
+import { Discipline, DisciplineCreation, DisciplineMenu } from './modules/discipline';
 import EventScreen from './modules/event';
 import { ExamDetails, Exams } from './modules/exams';
 import Home from './modules/home';
@@ -227,6 +227,28 @@ const TabNavigation = () => {
       />
 
       <Tab.Screen
+        name="DisciplineMenu"
+        component={DisciplineMenu}
+        options={({ navigation }) => ({
+          title: 'Matérias',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: '#007AFF' },
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={navigationStyle.headerLeftContainer}
+            >
+              <Text style={navigationStyle.headerLeftText}>
+                <Icon name="arrow-left2" color="#FFF" size={23} />
+              </Text>
+            </TouchableOpacity>
+          ),
+          tabBarButton: () => null,
+        })}
+      />
+
+      <Tab.Screen
         name="ExamDetails"
         component={ExamDetails}
         options={({ navigation }) => ({
@@ -252,7 +274,7 @@ const TabNavigation = () => {
         name="DisciplineCreationScreen"
         component={DisciplineCreation}
         options={({ navigation }) => ({
-          title: 'Cadastro de matérias',
+          title: 'Cadastrar matéria',
           headerTintColor: '#FFF',
           headerStyle: { backgroundColor: '#007AFF' },
           // eslint-disable-next-line react/no-unstable-nested-components
@@ -339,6 +361,11 @@ const Navigation = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen name={MenuUrl.Suport} component={Suport} options={{ headerShown: false }} />
+        <Stack.Screen
+          name={MenuUrl.DisciplineMenu}
+          component={DisciplineMenu}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name={MenuUrl.Discipline}
           component={Discipline}
