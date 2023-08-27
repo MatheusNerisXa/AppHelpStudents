@@ -1,3 +1,3 @@
 import News from './screens/News';
-
-export default News;
+import NewsDetails from './screens/NewsDetails';
+export { News, NewsDetails };

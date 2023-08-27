@@ -4,7 +4,7 @@ import { Image, ScrollView, Text, View } from 'react-native';
 
 import newsDetailsStyle from '../styles/newsDetails.style';
 
-const NewsDetailsScreen = ({ route }) => {
+const NewsDetails = ({ route }) => {
   const { newsItem } = route.params;
   const formattedDate = format(new Date(newsItem.postedAt), 'dd/MM/yyyy');
 
@@ -28,4 +28,4 @@ const NewsDetailsScreen = ({ route }) => {
   );
 };
 
-export default NewsDetailsScreen;
+export default NewsDetails;

@@ -15,7 +15,7 @@ const statusMap = {
   4: 'Sub',
 };
 
-const DisciplineCreationScreen = () => {
+const DisciplineCreation = () => {
   const [name, setName] = useState('');
   const [status, setStatus] = useState(3);
   const [startDate, setStartDate] = useState(new Date());
@@ -178,4 +178,4 @@ const DisciplineCreationScreen = () => {
   );
 };
 
-export default DisciplineCreationScreen;
+export default DisciplineCreation;

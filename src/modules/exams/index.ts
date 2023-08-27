@@ -1,3 +1,4 @@
 import Exams from './screens/Exams';
+import ExamDetails from './screens/ExamsDetails';
 
-export default Exams;
+export { ExamDetails, Exams };

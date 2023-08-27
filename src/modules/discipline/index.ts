@@ -1,3 +1,3 @@
+import DisciplineCreation from './screens/CreateDiscipline';
 import Discipline from './screens/Discipline';
-
-export default Discipline;
+export { Discipline, DisciplineCreation };

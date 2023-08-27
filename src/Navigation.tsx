@@ -5,18 +5,15 @@ import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 
 import ChatGPT from './modules/chat/screens/Chat';
-import DisciplineCreationScreen from './modules/createDiscipline';
 import CreateUser from './modules/createUser';
 import Dashboard from './modules/dashboards';
-import Discipline from './modules/discipline';
+import { Discipline, DisciplineCreation } from './modules/discipline';
 import EventScreen from './modules/event';
-import Exams from './modules/exams';
-import ExamDetails from './modules/examsDetails';
+import { ExamDetails, Exams } from './modules/exams';
 import Home from './modules/home';
 import Login from './modules/login';
 import Menu from './modules/menu';
-import News from './modules/news';
-import NewsDetailsScreen from './modules/newsDetails';
+import { News, NewsDetails } from './modules/news';
 import Profile from './modules/profile';
 import Splash from './modules/splash';
 import Suport from './modules/suport';
@@ -253,7 +250,7 @@ const TabNavigation = () => {
 
       <Tab.Screen
         name="DisciplineCreationScreen"
-        component={DisciplineCreationScreen}
+        component={DisciplineCreation}
         options={({ navigation }) => ({
           title: 'Cadastro de matérias',
           headerTintColor: '#FFF',
@@ -275,7 +272,7 @@ const TabNavigation = () => {
 
       <Tab.Screen
         name="NewsDetails"
-        component={NewsDetailsScreen}
+        component={NewsDetails}
         options={({ navigation }) => ({
           title: 'Notícias',
           headerTintColor: '#FFF',
@@ -349,8 +346,8 @@ const Navigation = () => {
         />
 
         <Stack.Screen
-          name={MenuUrl.DisciplineCreationScreen}
-          component={DisciplineCreationScreen}
+          name={MenuUrl.DisciplineCreation}
+          component={DisciplineCreation}
           options={{ headerShown: false }}
         />
 
