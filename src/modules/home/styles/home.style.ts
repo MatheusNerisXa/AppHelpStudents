@@ -2,10 +2,10 @@ import { StyleSheet } from 'react-native';
 
 const homeStyle = StyleSheet.create({
   container: {
-    marginTop: 20,
+    paddingTop: 20,
     flexGrow: 1,
     padding: 16,
-    backgroundColor: '#F8F8F8',
+    backgroundColor: '#FFF',
   },
   bannerContainer: {
     width: '100%',
