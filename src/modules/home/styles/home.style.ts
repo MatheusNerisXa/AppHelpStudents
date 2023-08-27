@@ -4,18 +4,20 @@ const homeStyle = StyleSheet.create({
   container: {
     marginTop: 20,
     flexGrow: 1,
-    padding: 0,
+    padding: 16,
     backgroundColor: '#F8F8F8',
   },
   bannerContainer: {
+    width: '100%',
     height: 200,
-    borderRadius: 0,
+    borderRadius: 12,
     overflow: 'hidden',
     marginBottom: 16,
   },
   bannerImage: {
     width: '100%',
-    height: '100%',
+    height: 200,
+    borderRadius: 12,
   },
   headerContainer: {
     flexDirection: 'row',

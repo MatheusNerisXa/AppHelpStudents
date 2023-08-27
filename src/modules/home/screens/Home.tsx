@@ -1,37 +1,55 @@
-import React, { useEffect, useRef } from 'react';
-import { Image, ScrollView, Text, View } from 'react-native';
-import * as Animatable from 'react-native-animatable';
+import React, { useEffect, useState } from 'react';
+import { ImageBackground, Text, View } from 'react-native';
 
 import { useRequest } from '../../../shared/hooks/useRequest';
 import homeStyle from '../styles/home.style';
 
-const Home = () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const bannerRef = useRef<Animatable.View | number | undefined | any>(null);
+interface Banner {
+  id: number;
+  url_image: string;
+}
+
+const Home: React.FC = () => {
   const { user } = useRequest();
   const userName = user?.name;
+
+  const [banners, setBanners] = useState<Banner[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   useEffect(() => {
-    if (bannerRef.current) {
-      bannerRef.current.bounceIn(1500);
+    async function fetchBanners() {
+      try {
+        const response = await fetch('http://192.168.1.3:8080/banners');
+        const data = await response.json();
+        setBanners(data);
+      } catch (error) {
+        console.error('Erro ao buscar banners:', error);
+      }
     }
+
+    fetchBanners();
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [banners.length]);
+
+  const currentBanner = banners[currentIndex];
+
   return (
-    <ScrollView contentContainerStyle={homeStyle.container}>
+    <View style={homeStyle.container}>
       <View style={homeStyle.headerContainer}>
         <Text style={homeStyle.greetingText}>Olá,</Text>
         <Text style={homeStyle.userName}>{userName}!</Text>
       </View>
-      <Animatable.View ref={bannerRef} style={homeStyle.bannerContainer}>
-        <Image
-          source={{
-            uri: 'https://helpstudent.s3.amazonaws.com/banners/Apresentac%CC%A7a%CC%83o+Empresarial+Boas+Vindas+Esta%CC%81gio.jpg',
-          }}
-          style={homeStyle.bannerImage}
-          resizeMode="cover"
-        />
-      </Animatable.View>
-    </ScrollView>
+      <View style={homeStyle.bannerContainer}>
+        <ImageBackground source={{ uri: currentBanner?.url_image }} style={homeStyle.bannerImage} />
+      </View>
+    </View>
   );
 };
 
