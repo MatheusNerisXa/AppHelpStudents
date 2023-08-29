@@ -125,7 +125,7 @@ const TabNavigation = () => {
           // eslint-disable-next-line react/no-unstable-nested-components
           headerLeft: () => (
             <TouchableOpacity
-              onPress={() => navigation.goBack()}
+              onPress={() => navigation.navigate('Menu')}
               style={navigationStyle.headerLeftContainer}
             >
               <Text style={navigationStyle.headerLeftText}>
@@ -169,7 +169,7 @@ const TabNavigation = () => {
             // eslint-disable-next-line react/no-unstable-nested-components
             headerLeft: () => (
               <TouchableOpacity
-                onPress={() => navigation.goBack()}
+                onPress={() => navigation.navigate('DisciplineMenu')}
                 style={navigationStyle.headerLeftContainer}
               >
                 <Text style={navigationStyle.headerLeftText}>
@@ -192,7 +192,7 @@ const TabNavigation = () => {
           // eslint-disable-next-line react/no-unstable-nested-components
           headerLeft: () => (
             <TouchableOpacity
-              onPress={() => navigation.goBack()}
+              onPress={() => navigation.navigate('Menu')}
               style={navigationStyle.headerLeftContainer}
             >
               <Text style={navigationStyle.headerLeftText}>
@@ -214,7 +214,7 @@ const TabNavigation = () => {
           // eslint-disable-next-line react/no-unstable-nested-components
           headerLeft: () => (
             <TouchableOpacity
-              onPress={() => navigation.goBack()}
+              onPress={() => navigation.navigate('Menu')}
               style={navigationStyle.headerLeftContainer}
             >
               <Text style={navigationStyle.headerLeftText}>
@@ -236,7 +236,7 @@ const TabNavigation = () => {
           // eslint-disable-next-line react/no-unstable-nested-components
           headerLeft: () => (
             <TouchableOpacity
-              onPress={() => navigation.goBack()}
+              onPress={() => navigation.navigate('Menu')}
               style={navigationStyle.headerLeftContainer}
             >
               <Text style={navigationStyle.headerLeftText}>
@@ -258,7 +258,7 @@ const TabNavigation = () => {
           // eslint-disable-next-line react/no-unstable-nested-components
           headerLeft: () => (
             <TouchableOpacity
-              onPress={() => navigation.goBack()}
+              onPress={() => navigation.navigate('Exam')}
               style={navigationStyle.headerLeftContainer}
             >
               <Text style={navigationStyle.headerLeftText}>
@@ -280,7 +280,7 @@ const TabNavigation = () => {
           // eslint-disable-next-line react/no-unstable-nested-components
           headerLeft: () => (
             <TouchableOpacity
-              onPress={() => navigation.goBack()}
+              onPress={() => navigation.navigate('DisciplineMenu')}
               style={navigationStyle.headerLeftContainer}
             >
               <Text style={navigationStyle.headerLeftText}>
@@ -302,7 +302,7 @@ const TabNavigation = () => {
           // eslint-disable-next-line react/no-unstable-nested-components
           headerLeft: () => (
             <TouchableOpacity
-              onPress={() => navigation.goBack()}
+              onPress={() => navigation.navigate('News')}
               style={navigationStyle.headerLeftContainer}
             >
               <Text style={navigationStyle.headerLeftText}>

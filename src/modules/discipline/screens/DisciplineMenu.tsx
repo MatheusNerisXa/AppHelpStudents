@@ -21,15 +21,44 @@ const DisciplineMenu = () => {
     <ScrollView contentContainerStyle={menuStyles.container}>
       <View style={menuStyles.cardRow}>
         <MenuItem
-          icon="books"
-          text="Listar Matérias"
-          color="#827843"
+          icon="plus"
+          text="Adicionar Matéria"
+          color="#3498db" // Azul
+          onPress={handleCreateDiscipline}
+        />
+        <MenuItem
+          icon="book"
+          text="Ver Matérias"
+          color="#9b59b6" // Roxo
+          onPress={handleListDisciplines}
+        />
+      </View>
+      <View style={menuStyles.cardRow}>
+        <MenuItem
+          icon="stats-dots"
+          text="Relatórios"
+          color="#27ae60" // Vermelho
           onPress={handleListDisciplines}
         />
         <MenuItem
-          icon="plus"
-          text="Cadastrar Matéria"
-          color="#2ECC71"
+          icon="checkbox-checked"
+          text="Atividades"
+          color="#f39c12" // Verde
+          onPress={handleCreateDiscipline}
+        />
+      </View>
+
+      <View style={menuStyles.cardRow}>
+        <MenuItem
+          icon="folder-minus"
+          text="Arquivos & Fotos"
+          color="#7f8c8d"
+          onPress={handleListDisciplines}
+        />
+        <MenuItem
+          icon="cog"
+          text="Configurações"
+          color="#795548" // Verde
           onPress={handleCreateDiscipline}
         />
       </View>

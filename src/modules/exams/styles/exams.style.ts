@@ -105,6 +105,31 @@ const ExamsStyle = StyleSheet.create({
   calendarIcon: {
     marginRight: 5,
   },
+  detailsButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    backgroundColor: 'white',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#007AFF',
+    marginLeft: 10,
+    marginTop: 50,
+  },
+  detailsIcon: {
+    marginRight: 5,
+  },
+  detailsButtonText: {
+    color: '#007AFF',
+    fontWeight: 'bold',
+  },
+
+  buttonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+  },
 });
 
 export default ExamsStyle;
