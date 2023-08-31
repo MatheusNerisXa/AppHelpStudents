@@ -13,6 +13,10 @@ const DisciplineMenu = () => {
     navigation.navigate('Discipline');
   };
 
+  const handleFilesAndPhotos = () => {
+    navigation.navigate('FilePhotos');
+  };
+
   const handleCreateDiscipline = () => {
     navigation.navigate('DisciplineCreationScreen');
   };
@@ -53,7 +57,7 @@ const DisciplineMenu = () => {
           icon="folder-minus"
           text="Arquivos & Fotos"
           color="#7f8c8d"
-          onPress={handleListDisciplines}
+          onPress={handleFilesAndPhotos}
         />
         <MenuItem
           icon="cog"

@@ -15,4 +15,5 @@ export enum MenuUrl {
   DisciplineMenu = 'DisciplineMenu',
   Dashboard = 'Dashboard',
   ExamDetails = 'ExamDetails',
+  FilesAndPhotos = 'FilePhotos',
 }

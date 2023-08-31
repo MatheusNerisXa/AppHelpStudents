@@ -10,6 +10,7 @@ import Dashboard from './modules/dashboards';
 import { Discipline, DisciplineCreation, DisciplineMenu } from './modules/discipline';
 import EventScreen from './modules/event';
 import { ExamDetails, Exams } from './modules/exams';
+import FilesAndPhotos from './modules/filesphotos';
 import Home from './modules/home';
 import Login from './modules/login';
 import Menu from './modules/menu';
@@ -164,6 +165,30 @@ const TabNavigation = () => {
         options={({ navigation }) => {
           return {
             title: 'Matérias',
+            headerTintColor: '#FFF',
+            headerStyle: { backgroundColor: '#007AFF' },
+            // eslint-disable-next-line react/no-unstable-nested-components
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate('DisciplineMenu')}
+                style={navigationStyle.headerLeftContainer}
+              >
+                <Text style={navigationStyle.headerLeftText}>
+                  <Icon name="arrow-left2" color="#FFF" size={23} />
+                </Text>
+              </TouchableOpacity>
+            ),
+            tabBarButton: () => null,
+          };
+        }}
+      />
+
+      <Tab.Screen
+        name="FilePhotos"
+        component={FilesAndPhotos}
+        options={({ navigation }) => {
+          return {
+            title: 'Arquivos',
             headerTintColor: '#FFF',
             headerStyle: { backgroundColor: '#007AFF' },
             // eslint-disable-next-line react/no-unstable-nested-components
@@ -364,6 +389,11 @@ const Navigation = () => {
         <Stack.Screen
           name={MenuUrl.DisciplineMenu}
           component={DisciplineMenu}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={MenuUrl.FilesAndPhotos}
+          component={FilesAndPhotos}
           options={{ headerShown: false }}
         />
         <Stack.Screen
