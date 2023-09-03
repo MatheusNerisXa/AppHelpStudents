@@ -1,3 +1,4 @@
+import { StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
 
 export const ContainerSplash = styled.View`
@@ -19,3 +20,11 @@ export const StyledText = styled.Text`
   color: #fff;
   margin-top: 16px;
 `;
+
+export const splash = StyleSheet.create({
+  text: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+});
