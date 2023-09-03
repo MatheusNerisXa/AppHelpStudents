@@ -12,7 +12,7 @@ export const ContainerLogin = styled.View`
 `;
 
 export const Imagelogo = styled.Image`
-  width: 400px;
+  width: 250px;
   height: 200px;
   margin-bottom: 24px;
 `;

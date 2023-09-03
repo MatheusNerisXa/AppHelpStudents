@@ -8596,7 +8596,7 @@ prompts@^2.0.1, prompts@^2.4.0:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@*, prop-types@^15.5.10, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1, prop-types@15.8.1:
+prop-types@*, prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1, prop-types@15.8.1:
   version "15.8.1"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -8986,10 +8986,22 @@ react-native-tab-view@^3.5.2:
   dependencies:
     use-latest-callback "^0.1.5"
 
+react-native-text-ticker@^1.14.0:
+  version "1.14.0"
+  resolved "https://registry.npmjs.org/react-native-text-ticker/-/react-native-text-ticker-1.14.0.tgz"
+  integrity sha512-8TNGTcW43dfnCqIuXVA7F1Ny8SKGrw0pIrNS5nM7eda+6AsuPTZh3JQ2CwmSRYfsrlnS4QFrpyo5ykpI8nvtCw==
+
 react-native-tts@^4.1.0:
   version "4.1.0"
   resolved "https://registry.npmjs.org/react-native-tts/-/react-native-tts-4.1.0.tgz"
   integrity sha512-tvf3lQ6u9MqztUie37qoPw5YQPqi0ql1lPhDsBBs/RRA6A/H1J9X9H/qb1A0Hx0ZpjavrEdtVSqQQ2JDZvZCTQ==
+
+react-native-typewriter@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.npmjs.org/react-native-typewriter/-/react-native-typewriter-0.7.0.tgz"
+  integrity sha512-lwlo8TemtZHgYH/EctYaCT5xMkgIk9ZQVyFm7qaY5b3MxveOd1v5g58oHNAkC9+vRJfdef+3dZoTJ9bM/+75/w==
+  dependencies:
+    prop-types "^15.5.7"
 
 react-native-vector-icons@^9.2.0:
   version "9.2.0"

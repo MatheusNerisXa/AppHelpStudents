@@ -139,7 +139,7 @@ export const useRequest = () => {
 
       dispatch({
         type: 'REQUEST_FAILURE',
-        payload: 'A autenticação falhou. Verifique suas credenciais.',
+        payload: 'Usuário ou senha incorretos.',
       });
     }
   };

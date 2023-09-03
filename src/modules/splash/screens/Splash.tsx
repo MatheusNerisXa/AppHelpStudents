@@ -1,5 +1,8 @@
 import { NavigationProp, ParamListBase, useNavigation } from '@react-navigation/native';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { StyleSheet } from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import Typewriter from 'react-native-typewriter'; // Importe o Typewriter
 
 import { MethodEnum } from '../../../enums/methods.enum';
 import { URL_USER } from '../../../shared/constants/urls';
@@ -16,6 +19,7 @@ const Splash = () => {
   const { reset } = useNavigation<NavigationProp<ParamListBase>>();
   const { request } = useRequest();
   const { setUser } = useUserReducer();
+
   useEffect(() => {
     const findUser = async (): Promise<undefined | UserType> => {
       let returnUser;
@@ -48,13 +52,34 @@ const Splash = () => {
         });
       }
     };
-    verifyLogin();
+
+    // Inicie a animação após um pequeno atraso
+    setTimeout(() => {
+      verifyLogin();
+    }, 1000);
   }, []);
+
   return (
     <ContainerSplash>
-      <ImagelogoSplash resizeMode="cover" source={require('../../../assets/images/logo.png')} />
+      <Animatable.View animation="fadeIn" duration={2000}>
+        <ImagelogoSplash resizeMode="cover" source={require('../../../assets/images/logo.png')} />
+      </Animatable.View>
+      {/* Use o Typewriter para animar o texto */}
+      <Animatable.View animation="fadeIn" duration={2000}>
+        <Typewriter style={styles.text} typing={1} maxDelay={100} fixed={true}>
+          HelpStudents
+        </Typewriter>
+      </Animatable.View>
     </ContainerSplash>
   );
 };
 
 export default Splash;
+
+const styles = StyleSheet.create({
+  text: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+});
