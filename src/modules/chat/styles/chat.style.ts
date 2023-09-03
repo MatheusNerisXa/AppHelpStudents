@@ -45,7 +45,7 @@ const chatStyle = StyleSheet.create({
     marginRight: 10,
   },
   sendButton: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#253494',
     padding: 10,
     borderRadius: 5,
   },
@@ -74,6 +74,13 @@ const chatStyle = StyleSheet.create({
   },
   dotBlue: {
     color: '#2196F3',
+  },
+  characterCount: {
+    fontSize: 12,
+    color: 'gray',
+    textAlign: 'center',
+    marginLeft: 15,
+    marginBottom: 15,
   },
 });
 

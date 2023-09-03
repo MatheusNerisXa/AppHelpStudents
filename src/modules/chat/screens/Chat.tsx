@@ -21,6 +21,7 @@ const Chat = () => {
   const [inputText, setInputText] = useState('');
   const [chatLog, setChatLog] = useState([]);
   const [isThinking, setIsThinking] = useState(false);
+  const [characterCount, setCharacterCount] = useState(0);
   const scrollViewRef = useRef(null);
 
   useEffect(() => {
@@ -31,6 +32,12 @@ const Chat = () => {
 
   const sendMessage = async () => {
     if (inputText.trim() === '') return;
+
+    if (characterCount + inputText.length > 4000) {
+      console.log('Limite de 4000 caracteres atingido!');
+      return;
+    }
+
     setChatLog((prevChatLog) => [...prevChatLog, { type: 'user', text: inputText }]);
     setInputText('');
     setIsThinking(true);
@@ -67,6 +74,10 @@ const Chat = () => {
       setIsThinking(false);
     }
   };
+
+  useEffect(() => {
+    setCharacterCount(inputText.length);
+  }, [inputText]);
 
   return (
     <KeyboardAvoidingView
@@ -131,11 +142,13 @@ const Chat = () => {
           multiline={true}
           numberOfLines={4}
           placeholder="Digite sua mensagem..."
+          maxLength={4000}
         />
         <TouchableOpacity style={chatStyle.sendButton} onPress={sendMessage}>
           <Text style={chatStyle.sendButtonText}>Enviar</Text>
         </TouchableOpacity>
       </View>
+      <Text style={chatStyle.characterCount}>{characterCount}/4000 caracteres</Text>
     </KeyboardAvoidingView>
   );
 };
