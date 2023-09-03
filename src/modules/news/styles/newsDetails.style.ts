@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const newsDetailsStyle = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F5F5F5',
   },
   scrollContainer: {
     paddingHorizontal: 32,
@@ -16,32 +16,30 @@ const newsDetailsStyle = StyleSheet.create({
   },
   imageShadow: {
     borderRadius: 12,
-    shadowColor: '#000000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 5,
+    shadowColor: '#253494',
+    shadowOpacity: 2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 3,
     backgroundColor: 'white',
   },
   image: {
     width: '100%',
-    height: 250,
+    height: 200,
     borderRadius: 12,
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    textAlign: 'justify',
+    textAlign: 'center',
     marginBottom: 16,
     color: '#333333',
   },
   date: {
     marginTop: 20,
     fontSize: 16,
-    color: '#000',
+    color: '#253494',
+    fontWeight: 'bold',
     marginBottom: 8,
   },
   descriptionText: {
