@@ -17,9 +17,9 @@ const newsDetailsStyle = StyleSheet.create({
   imageShadow: {
     borderRadius: 12,
     shadowColor: '#253494',
-    shadowOpacity: 2,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
+    shadowOpacity: 5,
+    shadowOffset: { width: 4, height: 4 },
+    shadowRadius: 0,
     elevation: 3,
     backgroundColor: 'white',
   },
@@ -33,7 +33,7 @@ const newsDetailsStyle = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 16,
-    color: '#333333',
+    color: '#253494',
   },
   date: {
     marginTop: 20,

@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const profileStyle = StyleSheet.create({
   pageContainer: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#F5F5F5',
   },
   container: {
     padding: 16,

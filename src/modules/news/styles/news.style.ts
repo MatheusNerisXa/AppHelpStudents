@@ -12,6 +12,7 @@ const newsStyle = StyleSheet.create({
   },
   title: {
     fontSize: 18,
+    color: '#253494',
     fontWeight: 'bold',
     marginBottom: 8,
     textAlign: 'center',
@@ -27,7 +28,7 @@ const newsStyle = StyleSheet.create({
   postedAtText: {
     marginTop: 10,
     fontSize: 12,
-    color: '#253494',
+    color: '#000',
     fontWeight: 'bold',
     marginLeft: 10,
   },

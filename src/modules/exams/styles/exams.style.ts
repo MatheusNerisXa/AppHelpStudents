@@ -90,6 +90,7 @@ const ExamsStyle = StyleSheet.create({
   },
   dateLabelBold: {
     color: '#000',
+    fontSize: 15,
     fontWeight: 'bold',
   },
   calendarButton: {
