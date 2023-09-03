@@ -100,7 +100,7 @@ const NewsComponent = () => {
           placeholderTextColor="#666"
           value={searchText}
           onChangeText={handleSearch}
-          autoFocus
+          autoFocus={false}
         />
       </View>
       <ScrollView
