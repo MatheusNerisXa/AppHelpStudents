@@ -8,6 +8,7 @@ import homeStyle from '../styles/home.style';
 interface Banner {
   id: number;
   url_image: string;
+  status: number;
 }
 
 const Home: React.FC = () => {
@@ -22,6 +23,7 @@ const Home: React.FC = () => {
       try {
         const response = await fetch(URL_BANNERS);
         const data = await response.json();
+
         setBanners(data);
       } catch (error) {
         console.error('Erro ao buscar banners:', error);
@@ -37,7 +39,7 @@ const Home: React.FC = () => {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [banners.length]);
+  }, [banners]);
 
   const currentBanner = banners[currentIndex];
 
@@ -47,9 +49,14 @@ const Home: React.FC = () => {
         <Text style={homeStyle.greetingText}>Olá,</Text>
         <Text style={homeStyle.userName}>{userName}!</Text>
       </View>
-      <View style={homeStyle.bannerContainer}>
-        <ImageBackground source={{ uri: currentBanner?.url_image }} style={homeStyle.bannerImage} />
-      </View>
+      {currentBanner && (
+        <View style={homeStyle.bannerContainer}>
+          <ImageBackground
+            source={{ uri: currentBanner.url_image }}
+            style={homeStyle.bannerImage}
+          />
+        </View>
+      )}
     </View>
   );
 };
