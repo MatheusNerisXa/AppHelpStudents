@@ -7,13 +7,6 @@ export const translationStyles = StyleSheet.create({
     paddingTop: 20,
     backgroundColor: '#F4F5F7',
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 16,
-    color: '#333',
-    textAlign: 'center',
-  },
   languageContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -30,32 +23,43 @@ export const translationStyles = StyleSheet.create({
     backgroundColor: 'white',
   },
   languageLabel: {
+    fontSize: 15,
     marginRight: 8,
-    color: '#333',
+    color: '#000',
   },
   languageDropdown: {
     flex: 1,
   },
   languageDropdownText: {
-    fontSize: 16,
-    color: '#333',
+    fontSize: 20,
+    color: '#000',
   },
-  space: {
-    width: 16,
-  },
-  input: {
-    height: 120,
-    borderColor: '#ccc',
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     borderWidth: 1,
+    borderColor: '#253494',
     borderRadius: 8,
     paddingHorizontal: 8,
     marginBottom: 16,
     backgroundColor: 'white',
-    color: '#333',
+    color: '#000',
+  },
+  input: {
+    flex: 1,
+    height: 120,
     textAlignVertical: 'top',
+    fontSize: 16,
+  },
+  closeIcon: {
+    padding: 8,
+    position: 'absolute',
+    right: 8,
+    top: 1,
+    zIndex: 1,
   },
   button: {
-    backgroundColor: '#007BFF',
+    backgroundColor: '#253494',
     borderRadius: 8,
     paddingVertical: 12,
     alignItems: 'center',
@@ -72,11 +76,14 @@ export const translationStyles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 8,
     padding: 16,
+    borderColor: '#253494',
+    borderWidth: 1,
+    paddingHorizontal: 8,
   },
   outputLabel: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#000',
     marginBottom: 8,
   },
   outputText: {
@@ -98,9 +105,27 @@ export const translationStyles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
   },
+  closeKeyboardButton: {
+    backgroundColor: '#3498db',
+    borderRadius: 8,
+    paddingVertical: 12,
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  closeKeyboardButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginLeft: 20,
+    marginRight: 20,
+  },
   buttonContainer: {
+    marginTop: 15,
     flexDirection: 'row',
     justifyContent: 'center',
     marginBottom: 20,
+  },
+  closeIconText: {
+    fontSize: 13,
   },
 });

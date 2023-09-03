@@ -211,7 +211,7 @@ const TabNavigation = () => {
         name="Translation"
         component={Translation}
         options={({ navigation }) => ({
-          title: 'Traduções',
+          title: 'Help Tradutor',
           headerTintColor: '#FFF',
           headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
           // eslint-disable-next-line react/no-unstable-nested-components

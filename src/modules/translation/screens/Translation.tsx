@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 
 import { KEY_TRANSLATION } from '../../../../config';
@@ -50,6 +50,10 @@ const Translation = () => {
     setTargetText('');
   };
 
+  const handleCloseKeyboard = () => {
+    Keyboard.dismiss();
+  };
+
   return (
     <View style={translationStyles.container}>
       <View style={translationStyles.languageContainer}>
@@ -70,7 +74,6 @@ const Translation = () => {
           <Text style={translationStyles.languageLabel}>Para:</Text>
           <ModalDropdown
             style={translationStyles.languageDropdown}
-            dropdownStyle={translationStyles.dropdown}
             options={languageOptions.map((option) => option.label)}
             onSelect={(index) => setTargetLanguage(languageOptions[index].value)}
           >
@@ -81,13 +84,25 @@ const Translation = () => {
         </View>
       </View>
 
-      <TextInput
-        style={translationStyles.input}
-        multiline
-        placeholder="Insira o texto para tradução"
-        value={sourceText}
-        onChangeText={setSourceText}
-      />
+      <View style={translationStyles.inputContainer}>
+        <TextInput
+          style={translationStyles.input}
+          multiline
+          placeholder="Insira o texto para tradução"
+          placeholderTextColor={'#000'}
+          value={sourceText}
+          onChangeText={setSourceText}
+          autoFocus={false}
+        />
+        <TouchableOpacity style={translationStyles.closeIcon} onPress={handleCloseKeyboard}>
+          <Text style={translationStyles.closeIconText}>X</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={translationStyles.resultContainer}>
+        <Text style={translationStyles.outputLabel}>Resultado:</Text>
+        <Text style={translationStyles.outputText}>{targetText}</Text>
+      </View>
 
       <View style={translationStyles.buttonContainer}>
         <TouchableOpacity style={translationStyles.button} onPress={handleTranslation}>
@@ -97,11 +112,6 @@ const Translation = () => {
         <TouchableOpacity style={translationStyles.clearButton} onPress={handleClearInput}>
           <Text style={translationStyles.clearButtonText}>Limpar</Text>
         </TouchableOpacity>
-      </View>
-
-      <View style={translationStyles.resultContainer}>
-        <Text style={translationStyles.outputLabel}>Resultado:</Text>
-        <Text style={translationStyles.outputText}>{targetText}</Text>
       </View>
     </View>
   );
