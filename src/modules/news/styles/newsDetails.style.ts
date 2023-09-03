@@ -37,7 +37,7 @@ const newsDetailsStyle = StyleSheet.create({
   },
   date: {
     marginTop: 20,
-    fontSize: 16,
+    fontSize: 14,
     color: '#253494',
     fontWeight: 'bold',
     marginBottom: 8,

@@ -31,7 +31,7 @@ export const translationStyles = StyleSheet.create({
     flex: 1,
   },
   languageDropdownText: {
-    fontSize: 20,
+    fontSize: 16,
     color: '#000',
   },
   inputContainer: {

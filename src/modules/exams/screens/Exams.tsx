@@ -136,7 +136,7 @@ const ExamComponent = () => {
         <TextInput
           style={ExamsStyle.searchInput}
           placeholder="Buscar universidade ou escola"
-          placeholderTextColor="#FFF"
+          placeholderTextColor="#666"
           value={searchText}
           onChangeText={handleSearch}
           autoFocus
@@ -146,7 +146,7 @@ const ExamComponent = () => {
         contentContainerStyle={ExamsStyle.contentContainer}
         showsVerticalScrollIndicator={false}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor="#007AFF" />
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor="#253494" />
         }
       >
         {filteredExams.length === 0 && searchText.length > 0 ? (
