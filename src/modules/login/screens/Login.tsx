@@ -87,6 +87,7 @@ const Login = () => {
               errorMessage={errorMessage}
               margin="0px 0px 8px 0px"
               placeholder="Digite seu email"
+              placeholderTextColor="#000"
               title="Email:"
               onChange={handleOnChangeEmail}
             />
@@ -95,6 +96,7 @@ const Login = () => {
               value={password}
               secureTextEntry
               placeholder="Digite sua senha"
+              placeholderTextColor="#000"
               title="Senha:"
               onChange={handleOnChangePassword}
             />

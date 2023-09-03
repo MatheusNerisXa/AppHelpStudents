@@ -14,6 +14,7 @@ export const mainTheme = {
 
 export const turquesaTheme = {
   turquesa80: '#00D2FF',
+  turquesa: '#0ddcca',
 };
 
 export const purpleTheme = {
@@ -21,5 +22,5 @@ export const purpleTheme = {
 };
 
 export const blueTheme = {
-  blue80: '#007AFF',
+  blue80: '#14104a',
 };

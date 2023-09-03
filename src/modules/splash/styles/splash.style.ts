@@ -23,7 +23,7 @@ export const StyledText = styled.Text`
 
 export const splash = StyleSheet.create({
   text: {
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: 'bold',
     color: '#fff',
   },
