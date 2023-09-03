@@ -27,27 +27,22 @@ const DisciplineMenu = () => {
         <MenuItem
           icon="plus"
           text="Adicionar Matéria"
-          color="#3498db" // Azul
+          color="#0066CC"
           onPress={handleCreateDiscipline}
         />
-        <MenuItem
-          icon="book"
-          text="Ver Matérias"
-          color="#9b59b6" // Roxo
-          onPress={handleListDisciplines}
-        />
+        <MenuItem icon="book" text="Ver Matérias" color="#6600CC" onPress={handleListDisciplines} />
       </View>
       <View style={menuStyles.cardRow}>
         <MenuItem
           icon="stats-dots"
           text="Relatórios"
-          color="#27ae60" // Vermelho
+          color="#006633"
           onPress={handleListDisciplines}
         />
         <MenuItem
           icon="checkbox-checked"
           text="Atividades"
-          color="#f39c12" // Verde
+          color="#FF6600"
           onPress={handleCreateDiscipline}
         />
       </View>
@@ -62,7 +57,7 @@ const DisciplineMenu = () => {
         <MenuItem
           icon="cog"
           text="Configurações"
-          color="#795548" // Verde
+          color="#CC3300"
           onPress={handleCreateDiscipline}
         />
       </View>
