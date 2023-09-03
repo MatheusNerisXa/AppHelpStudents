@@ -97,7 +97,7 @@ const NewsComponent = () => {
         <TextInput
           style={newsStyle.searchInput}
           placeholder="Digite o título da notícia"
-          placeholderTextColor="#FFF"
+          placeholderTextColor="#666"
           value={searchText}
           onChangeText={handleSearch}
           autoFocus
@@ -107,7 +107,7 @@ const NewsComponent = () => {
         contentContainerStyle={newsStyle.contentContainer}
         showsVerticalScrollIndicator={false}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor="#007AFF" />
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor="#253494" />
         }
       >
         {renderNews()}
