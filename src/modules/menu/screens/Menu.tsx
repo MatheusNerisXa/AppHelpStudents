@@ -60,30 +60,30 @@ const Menu = () => {
   return (
     <ScrollView contentContainerStyle={menuStyles.container}>
       <View style={menuStyles.cardRow}>
-        <MenuItem icon="books" text="Vestibulares" color="#F05454" onPress={handleExamPress} />
-        <MenuItem icon="newspaper" text="Notícias" color="#3498DB" onPress={handleNewsPress} />
+        <MenuItem icon="books" text="Vestibulares" color="#0066CC" onPress={handleExamPress} />
+        <MenuItem icon="newspaper" text="Notícias" color="#FF9933" onPress={handleNewsPress} />
       </View>
       <View style={menuStyles.cardRow}>
-        <MenuItem icon="book" text="Matérias" color="#827843" onPress={handleDisciplinePress} />
+        <MenuItem icon="book" text="Matérias" color="#6600CC" onPress={handleDisciplinePress} />
         <MenuItem
           icon="earth"
           text="Help Tradutor"
-          color="#2ECC71"
+          color="#FF6600"
           onPress={handleTranslationPress}
         />
       </View>
       <View style={menuStyles.cardRow}>
-        <MenuItem icon="question" text="Ajuda" color="#007AFF" onPress={handleSupportPress} />
-        <MenuItem icon="user" text="Perfil" color="#FFA500" onPress={handleProfilePress} />
+        <MenuItem icon="question" text="Ajuda" color="#006633" onPress={handleSupportPress} />
+        <MenuItem icon="user" text="Perfil" color="#CC3300" onPress={handleProfilePress} />
       </View>
       <View style={menuStyles.cardRow}>
         <MenuItem
           icon="checkbox-checked"
           text="Tarefas"
-          color="#F2994A"
+          color="#3366CC"
           onPress={handleSupportPress}
         />
-        <MenuItem icon="exit" text="Sair" color="#FF5733" onPress={handleLogout} />
+        <MenuItem icon="exit" text="Sair" color="#FF3333" onPress={handleLogout} />
       </View>
     </ScrollView>
   );
