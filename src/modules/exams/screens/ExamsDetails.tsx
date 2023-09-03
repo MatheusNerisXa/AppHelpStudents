@@ -50,6 +50,8 @@ const ExamDetails = ({ route }: { route: any }) => {
         <Text style={ExamDetailsStyle.examDescription}>{formatDescription(exam.description)}</Text>
       )}
 
+      <View style={ExamDetailsStyle.divider} />
+
       <View style={ExamDetailsStyle.infoContainer}>
         <DateInfo
           label="Inscrições:"

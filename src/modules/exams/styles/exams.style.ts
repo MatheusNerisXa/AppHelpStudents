@@ -89,7 +89,7 @@ const ExamsStyle = StyleSheet.create({
     justifyContent: 'center',
   },
   dateLabelBold: {
-    color: '#555',
+    color: '#000',
     fontWeight: 'bold',
   },
   calendarButton: {

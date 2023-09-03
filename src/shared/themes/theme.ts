@@ -1,10 +1,11 @@
 import { buttonsTheme } from './buttons';
 import {
   blueTheme,
+  coral,
   grayTheme,
   mainTheme,
   neutralTheme,
-  purpleTheme,
+  pink,
   turquesaTheme,
 } from './colors';
 
@@ -14,7 +15,8 @@ export const theme = {
     neutralTheme,
     mainTheme,
     turquesaTheme,
-    purpleTheme,
+    coral,
+    pink,
     blueTheme,
   },
   buttons: {

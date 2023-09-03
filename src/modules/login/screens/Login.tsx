@@ -120,7 +120,7 @@ const Login = () => {
               <Text
                 margin="16px"
                 type={textTypes.PARAGRAPH_SEMI_BOLD}
-                color={theme.colors.mainTheme.primary}
+                color={theme.colors.blueTheme.blue80}
               >
                 Cadastrar usuário
               </Text>

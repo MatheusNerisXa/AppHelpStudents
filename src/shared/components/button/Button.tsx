@@ -59,7 +59,7 @@ const Button = ({ title, type, disabled, loading, margin, onPress, ...props }: B
           <GradientButton
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
-            colors={[theme.colors.turquesaTheme.turquesa, theme.colors.turquesaTheme.turquesa]}
+            colors={[theme.colors.coral.coral80, theme.colors.coral.coral80]}
           >
             {renderText(theme.colors.neutralTheme.white)}
           </GradientButton>

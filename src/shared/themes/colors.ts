@@ -18,8 +18,11 @@ export const turquesaTheme = {
   turquesa: '#0ddcca',
 };
 
-export const purpleTheme = {
-  purple80: '#512c85',
+export const coral = {
+  coral80: '#f09d5c',
+};
+export const pink = {
+  pink80: '#f907c7',
 };
 
 export const blueTheme = {

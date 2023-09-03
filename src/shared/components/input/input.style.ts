@@ -25,6 +25,7 @@ export const ContainerInput = styled.TextInput<ContainerInputProps>`
 
 export const IconEye = styled(Icon)`
   position: absolute;
+  color: ${theme.colors.pink.pink80};
   right: 16px;
   top: 12px;
 `;

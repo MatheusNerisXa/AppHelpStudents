@@ -139,7 +139,7 @@ const ExamComponent = () => {
           placeholderTextColor="#666"
           value={searchText}
           onChangeText={handleSearch}
-          autoFocus
+          autoFocus={false}
         />
       </View>
       <ScrollView
@@ -179,7 +179,7 @@ const ExamComponent = () => {
                       })}`}
                     />
                     <View style={ExamsStyle.provaContainer}>
-                      <View style={ExamsStyle.provaColumn}>
+                      <View>
                         <DateInfo
                           label="Prova 1:"
                           date={format(parseISO(exam.exam1Date), 'dd/MM/yyyy', {
