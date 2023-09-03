@@ -58,7 +58,7 @@ const TabNavigation = () => {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color }) => renderTabBarIcon(color, route),
-        tabBarActiveTintColor: theme.colors.grayTheme.gray80,
+        tabBarActiveTintColor: theme.colors.mainTheme.tab,
         tabBarInactiveTintColor: theme.colors.neutralTheme.white,
         tabBarLabelStyle: {
           marginBottom: 8,
@@ -76,7 +76,7 @@ const TabNavigation = () => {
         options={{
           title: 'Ínicio',
           headerTintColor: '#FFF',
-          headerStyle: { backgroundColor: '#007AFF' },
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
         }}
       />
       <Tab.Screen
@@ -85,7 +85,7 @@ const TabNavigation = () => {
         options={{
           title: 'Dash',
           headerTintColor: '#FFF',
-          headerStyle: { backgroundColor: '#007AFF' },
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
         }}
       />
       <Tab.Screen
@@ -94,7 +94,7 @@ const TabNavigation = () => {
         options={{
           title: 'Chat',
           headerTintColor: '#FFF',
-          headerStyle: { backgroundColor: '#007AFF' },
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
         }}
       />
       <Tab.Screen
@@ -103,7 +103,7 @@ const TabNavigation = () => {
         options={{
           title: 'Agenda',
           headerTintColor: '#FFF',
-          headerStyle: { backgroundColor: '#007AFF' },
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
         }}
       />
       <Tab.Screen
@@ -112,7 +112,7 @@ const TabNavigation = () => {
         options={{
           title: 'Perfil',
           headerTintColor: '#FFF',
-          headerStyle: { backgroundColor: '#007AFF' },
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
           tabBarButton: () => null,
         }}
       />
@@ -122,7 +122,7 @@ const TabNavigation = () => {
         options={({ navigation }) => ({
           title: 'Vestibulares',
           headerTintColor: '#FFF',
-          headerStyle: { backgroundColor: '#007AFF' },
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
           // eslint-disable-next-line react/no-unstable-nested-components
           headerLeft: () => (
             <TouchableOpacity
@@ -143,7 +143,7 @@ const TabNavigation = () => {
         options={({ navigation }) => ({
           title: 'Suporte',
           headerTintColor: '#FFF',
-          headerStyle: { backgroundColor: '#007AFF' },
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
           // eslint-disable-next-line react/no-unstable-nested-components
           headerLeft: () => (
             <TouchableOpacity
@@ -166,7 +166,7 @@ const TabNavigation = () => {
           return {
             title: 'Matérias',
             headerTintColor: '#FFF',
-            headerStyle: { backgroundColor: '#007AFF' },
+            headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
             // eslint-disable-next-line react/no-unstable-nested-components
             headerLeft: () => (
               <TouchableOpacity
@@ -190,7 +190,7 @@ const TabNavigation = () => {
           return {
             title: 'Arquivos',
             headerTintColor: '#FFF',
-            headerStyle: { backgroundColor: '#007AFF' },
+            headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
             // eslint-disable-next-line react/no-unstable-nested-components
             headerLeft: () => (
               <TouchableOpacity
@@ -213,7 +213,7 @@ const TabNavigation = () => {
         options={({ navigation }) => ({
           title: 'Traduções',
           headerTintColor: '#FFF',
-          headerStyle: { backgroundColor: '#007AFF' },
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
           // eslint-disable-next-line react/no-unstable-nested-components
           headerLeft: () => (
             <TouchableOpacity
@@ -235,7 +235,7 @@ const TabNavigation = () => {
         options={({ navigation }) => ({
           title: 'Notícias',
           headerTintColor: '#FFF',
-          headerStyle: { backgroundColor: '#007AFF' },
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
           // eslint-disable-next-line react/no-unstable-nested-components
           headerLeft: () => (
             <TouchableOpacity
@@ -257,7 +257,7 @@ const TabNavigation = () => {
         options={({ navigation }) => ({
           title: 'Matérias',
           headerTintColor: '#FFF',
-          headerStyle: { backgroundColor: '#007AFF' },
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
           // eslint-disable-next-line react/no-unstable-nested-components
           headerLeft: () => (
             <TouchableOpacity
@@ -279,7 +279,7 @@ const TabNavigation = () => {
         options={({ navigation }) => ({
           title: 'Vestibulares',
           headerTintColor: '#FFF',
-          headerStyle: { backgroundColor: '#007AFF' },
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
           // eslint-disable-next-line react/no-unstable-nested-components
           headerLeft: () => (
             <TouchableOpacity
@@ -301,7 +301,7 @@ const TabNavigation = () => {
         options={({ navigation }) => ({
           title: 'Cadastrar matéria',
           headerTintColor: '#FFF',
-          headerStyle: { backgroundColor: '#007AFF' },
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
           // eslint-disable-next-line react/no-unstable-nested-components
           headerLeft: () => (
             <TouchableOpacity
@@ -323,7 +323,7 @@ const TabNavigation = () => {
         options={({ navigation }) => ({
           title: 'Notícias',
           headerTintColor: '#FFF',
-          headerStyle: { backgroundColor: '#007AFF' },
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
           // eslint-disable-next-line react/no-unstable-nested-components
           headerLeft: () => (
             <TouchableOpacity
@@ -345,7 +345,7 @@ const TabNavigation = () => {
         options={{
           title: 'Menu',
           headerTintColor: '#FFF',
-          headerStyle: { backgroundColor: '#007AFF' },
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
         }}
       />
     </Tab.Navigator>
