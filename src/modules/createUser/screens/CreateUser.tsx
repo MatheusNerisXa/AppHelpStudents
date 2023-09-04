@@ -114,7 +114,7 @@ const CreateUser = () => {
             onPress={handleCreateUser}
             loading={loading}
             margin="0px 0px 32px 0px"
-            title="Criar usuário"
+            title="Criar conta"
           />
         </Animated.View>
       </CreateUserContainer>

@@ -8,7 +8,6 @@ import {
   ActivityIndicatorButton,
   ButtonContainer,
   ButtonDisabled,
-  ButtonSecondary,
   GradientButton,
 } from './button.style';
 
@@ -28,6 +27,11 @@ const Button = ({ title, type, disabled, loading, margin, onPress, ...props }: B
     }
   };
 
+  const buttonColor =
+    type === theme.buttons.buttonsTheme.secondary
+      ? theme.colors.mainTheme.primary
+      : theme.colors.coral.coral80;
+
   const renderText = (color: string) => (
     <>
       <Text type={textTypes.BUTTON_SEMI_BOLD} color={color}>
@@ -45,27 +49,17 @@ const Button = ({ title, type, disabled, loading, margin, onPress, ...props }: B
     );
   }
 
-  switch (type) {
-    case theme.buttons.buttonsTheme.secondary:
-      return (
-        <ButtonSecondary {...props} margin={margin} onPress={handleOnPress}>
-          {renderText(theme.colors.mainTheme.primary)}
-        </ButtonSecondary>
-      );
-    case theme.buttons.buttonsTheme.primary:
-    default:
-      return (
-        <ButtonContainer margin={margin} {...props} onPress={handleOnPress}>
-          <GradientButton
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            colors={[theme.colors.coral.coral80, theme.colors.coral.coral80]}
-          >
-            {renderText(theme.colors.neutralTheme.white)}
-          </GradientButton>
-        </ButtonContainer>
-      );
-  }
+  return (
+    <ButtonContainer margin={margin} {...props} onPress={handleOnPress}>
+      <GradientButton
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        colors={[buttonColor, buttonColor]}
+      >
+        {renderText(theme.colors.neutralTheme.white)}
+      </GradientButton>
+    </ButtonContainer>
+  );
 };
 
 export default Button;

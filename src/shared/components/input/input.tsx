@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import {
   NativeSyntheticEvent,
   TextInput,
@@ -30,6 +30,9 @@ const Input = forwardRef<TextInput, InputProps>(
     const handleOnChange = (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
       if (onChange) {
         let text = event.nativeEvent.text;
+
+        text = text.toLowerCase();
+
         switch (type) {
           case 'cpf':
             text = insertMaskCpf(text);
@@ -77,6 +80,7 @@ const Input = forwardRef<TextInput, InputProps>(
             isError={!!errorMessage}
             onChange={handleOnChange}
             ref={ref}
+            autoCapitalize="none"
           />
           {secureTextEntry && (
             <IconEye

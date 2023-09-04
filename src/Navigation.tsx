@@ -361,8 +361,24 @@ const Navigation = () => {
         <Stack.Screen
           name={MenuUrl.CREATE_USER}
           component={CreateUser}
-          options={{ title: 'Criar usuário' }}
+          options={({ navigation }) => ({
+            title: 'Criar usuário',
+            headerTintColor: '#FFF',
+            headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
+            // eslint-disable-next-line react/no-unstable-nested-components
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => navigation.goBack()}
+                style={navigationStyle.headerLeftContainer}
+              >
+                <Text style={navigationStyle.headerLeftText}>
+                  <Icon name="arrow-left2" color="#FFF" size={23} />
+                </Text>
+              </TouchableOpacity>
+            ),
+          })}
         />
+
         <Stack.Screen
           name={MenuUrl.HOME}
           component={TabNavigation}
