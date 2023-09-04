@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Clipboard, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 
 import { KEY_TRANSLATION } from '../../../../config';
+import { Icon } from '../../../shared/components/icon/Icon';
 import { URL_TRANSLATION } from '../../../shared/constants/urls';
 import { translationStyles } from '../styles/translation.style';
 
@@ -45,13 +46,14 @@ const Translation = () => {
     }
   };
 
-  const handleClearInput = () => {
+  const handleCloseKeyboard = () => {
+    Keyboard.dismiss();
     setSourceText('');
     setTargetText('');
   };
 
-  const handleCloseKeyboard = () => {
-    Keyboard.dismiss();
+  const handleCopyText = () => {
+    Clipboard.setString(targetText);
   };
 
   return (
@@ -101,16 +103,17 @@ const Translation = () => {
 
       <View style={translationStyles.resultContainer}>
         <Text style={translationStyles.outputLabel}>Resultado:</Text>
-        <Text style={translationStyles.outputText}>{targetText}</Text>
+        <View>
+          <Text style={translationStyles.outputText}>{targetText}</Text>
+          <TouchableOpacity onPress={handleCopyText} style={translationStyles.copyIconContainer}>
+            <Icon name="copy" size={20} color="#f09d5c" />
+          </TouchableOpacity>
+        </View>
       </View>
 
       <View style={translationStyles.buttonContainer}>
         <TouchableOpacity style={translationStyles.button} onPress={handleTranslation}>
           <Text style={translationStyles.buttonText}>Traduzir</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={translationStyles.clearButton} onPress={handleClearInput}>
-          <Text style={translationStyles.clearButtonText}>Limpar</Text>
         </TouchableOpacity>
       </View>
     </View>

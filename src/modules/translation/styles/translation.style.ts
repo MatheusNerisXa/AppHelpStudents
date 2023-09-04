@@ -59,6 +59,7 @@ export const translationStyles = StyleSheet.create({
     zIndex: 1,
   },
   button: {
+    marginTop: 5,
     backgroundColor: '#253494',
     borderRadius: 8,
     paddingVertical: 12,
@@ -90,35 +91,7 @@ export const translationStyles = StyleSheet.create({
     fontSize: 16,
     color: '#555',
   },
-  clearButton: {
-    backgroundColor: '#E74C3C',
-    borderRadius: 8,
-    paddingVertical: 12,
-    alignItems: 'center',
-    marginBottom: 16,
-    marginLeft: 4,
-  },
-  clearButtonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginLeft: 20,
-    marginRight: 20,
-  },
-  closeKeyboardButton: {
-    backgroundColor: '#3498db',
-    borderRadius: 8,
-    paddingVertical: 12,
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  closeKeyboardButtonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginLeft: 20,
-    marginRight: 20,
-  },
+
   buttonContainer: {
     marginTop: 15,
     flexDirection: 'row',
@@ -127,5 +100,12 @@ export const translationStyles = StyleSheet.create({
   },
   closeIconText: {
     fontSize: 13,
+    color: '#FF0000',
+    fontWeight: 'bold',
+  },
+  copyIconContainer: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
   },
 });
