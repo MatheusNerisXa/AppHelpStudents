@@ -57,6 +57,18 @@ const Home: React.FC = () => {
           />
         </View>
       )}
+      <View style={homeStyle.dotsContainer}>
+        {banners.map((_, index) => (
+          <View
+            key={index}
+            style={[
+              homeStyle.dot,
+              // eslint-disable-next-line react-native/no-inline-styles
+              { backgroundColor: index === currentIndex ? '#f907c7' : '#253494' },
+            ]}
+          />
+        ))}
+      </View>
     </View>
   );
 };

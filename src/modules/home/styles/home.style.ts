@@ -9,14 +9,15 @@ const homeStyle = StyleSheet.create({
   },
   bannerContainer: {
     width: '100%',
-    height: 200,
+    height: 220,
     borderRadius: 12,
     overflow: 'hidden',
     marginBottom: 16,
+    position: 'relative',
   },
   bannerImage: {
     width: '100%',
-    height: 200,
+    height: '100%',
     borderRadius: 12,
   },
   headerContainer: {
@@ -34,6 +35,18 @@ const homeStyle = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#007AFF',
+  },
+  dotsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 1,
+  },
+  dot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginHorizontal: 5,
   },
 });
 
