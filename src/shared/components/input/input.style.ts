@@ -20,12 +20,12 @@ export const ContainerInput = styled.TextInput<ContainerInputProps>`
     props.hasSecureTextEntry ? '52px' : '16px'};
   border-width: 1px;
   border-color: ${(props: { isError: unknown }) =>
-    props.isError ? theme.colors.blueTheme.blue80 : theme.colors.grayTheme.gray80};
+    props.isError ? theme.colors.red.red80 : theme.colors.blueTheme.blue80};
 `;
 
 export const IconEye = styled(Icon)`
   position: absolute;
-  color: ${theme.colors.pink.pink80};
+  color: ${theme.colors.blueTheme.blue80};
   right: 16px;
   top: 12px;
 `;

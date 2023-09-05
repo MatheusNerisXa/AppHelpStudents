@@ -12,6 +12,7 @@ import {
 import * as Animatable from 'react-native-animatable';
 
 import { KEY_CHAT } from '../../../../config';
+import { Icon } from '../../../shared/components/icon/Icon';
 import { URL_CHATGPT } from '../../../shared/constants/urls';
 import chatStyle from '../styles/chat.style';
 
@@ -142,13 +143,13 @@ const Chat = () => {
           multiline={true}
           numberOfLines={4}
           placeholder="Digite sua mensagem..."
-          maxLength={4000}
+          maxLength={500}
         />
         <TouchableOpacity style={chatStyle.sendButton} onPress={sendMessage}>
-          <Text style={chatStyle.sendButtonText}>Enviar</Text>
+          <Icon name="compass" style={chatStyle.sendButtonIcon} />
         </TouchableOpacity>
       </View>
-      <Text style={chatStyle.characterCount}>{characterCount}/4000 caracteres</Text>
+      <Text style={chatStyle.characterCount}>{characterCount}/500 caracteres</Text>
     </KeyboardAvoidingView>
   );
 };

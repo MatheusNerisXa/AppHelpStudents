@@ -6,6 +6,7 @@ import {
   mainTheme,
   neutralTheme,
   pink,
+  red,
   turquesaTheme,
 } from './colors';
 
@@ -17,6 +18,7 @@ export const theme = {
     turquesaTheme,
     coral,
     pink,
+    red,
     blueTheme,
   },
   buttons: {

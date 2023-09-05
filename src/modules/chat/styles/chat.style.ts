@@ -77,10 +77,14 @@ const chatStyle = StyleSheet.create({
   },
   characterCount: {
     fontSize: 12,
-    color: 'gray',
+    color: '#000',
     textAlign: 'center',
     marginLeft: 15,
     marginBottom: 15,
+  },
+  sendButtonIcon: {
+    fontSize: 15,
+    color: '#fff',
   },
 });
 

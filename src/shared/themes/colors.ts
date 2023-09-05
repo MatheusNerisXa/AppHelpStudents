@@ -25,6 +25,10 @@ export const pink = {
   pink80: '#f907c7',
 };
 
+export const red = {
+  red80: '#FF0000',
+};
+
 export const blueTheme = {
   blue80: '#253494',
 };

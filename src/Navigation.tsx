@@ -101,7 +101,7 @@ const TabNavigation = () => {
         name="Event"
         component={EventScreen}
         options={{
-          title: 'Agenda',
+          title: 'Calendário',
           headerTintColor: '#FFF',
           headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
         }}
