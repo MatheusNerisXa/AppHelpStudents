@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Alert, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { Alert, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import email from 'react-native-email';
 
 import suportStyle from '../styles/suport.style';
@@ -7,6 +7,7 @@ import suportStyle from '../styles/suport.style';
 const Support = () => {
   const [subject, setSubject] = useState('');
   const [description, setDescription] = useState('');
+  const subjectInputRef = useRef(null);
 
   const handleSendEmail = () => {
     if (!subject.trim() || !description.trim()) {
@@ -20,6 +21,14 @@ const Support = () => {
       subject,
       body: description,
     }).catch(console.error);
+
+    setSubject('');
+    setDescription('');
+
+    if (subjectInputRef.current) {
+      subjectInputRef.current.focus();
+      Keyboard.dismiss();
+    }
   };
 
   return (
@@ -27,11 +36,12 @@ const Support = () => {
       <Text style={suportStyle.headerText}>Precisa de ajuda?</Text>
       <View style={suportStyle.inputContainer}>
         <TextInput
+          ref={subjectInputRef}
           style={suportStyle.input}
           value={subject}
           onChangeText={setSubject}
           placeholder="Assunto"
-          placeholderTextColor="#a8a8a8"
+          placeholderTextColor="#000"
         />
       </View>
 
@@ -41,7 +51,7 @@ const Support = () => {
           value={description}
           onChangeText={setDescription}
           placeholder="Descreva seu problema ou dúvida"
-          placeholderTextColor="#a8a8a8"
+          placeholderTextColor="#000"
           multiline
         />
       </View>

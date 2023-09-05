@@ -4,20 +4,20 @@ const suportStyle = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: '#F5F5F5',
   },
   headerText: {
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 30,
-    color: '#007bff',
+    color: '#253494',
   },
   inputContainer: {
     marginBottom: 20,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#a8a8a8',
+    borderColor: '#253494',
     padding: 16,
     fontSize: 16,
     borderRadius: 8,
@@ -28,7 +28,7 @@ const suportStyle = StyleSheet.create({
     textAlignVertical: 'top',
   },
   button: {
-    backgroundColor: '#007bff',
+    backgroundColor: '#f09d5c',
     padding: 16,
     alignItems: 'center',
     borderRadius: 8,
