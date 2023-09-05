@@ -107,7 +107,7 @@ const Profile = () => {
           ]}
         >
           <View style={profileStyle.inputContainer}>
-            <Text style={profileStyle.label}>Nome</Text>
+            <Text style={profileStyle.label}>Nome:</Text>
             <TextInput
               value={name}
               onChangeText={setName}
@@ -116,7 +116,7 @@ const Profile = () => {
             />
           </View>
           <View style={profileStyle.inputContainer}>
-            <Text style={profileStyle.label}>Email</Text>
+            <Text style={profileStyle.label}>Email:</Text>
             <TextInput
               value={email}
               onChangeText={setEmail}
@@ -125,7 +125,7 @@ const Profile = () => {
             />
           </View>
           <View style={profileStyle.inputContainer}>
-            <Text style={profileStyle.label}>CPF</Text>
+            <Text style={profileStyle.label}>CPF:</Text>
             <TextInput
               value={cpf}
               onChangeText={setCpf}
@@ -134,7 +134,7 @@ const Profile = () => {
             />
           </View>
           <View style={profileStyle.inputContainer}>
-            <Text style={profileStyle.label}>Celular</Text>
+            <Text style={profileStyle.label}>Celular:</Text>
             <TextInput
               value={phone}
               onChangeText={setPhone}

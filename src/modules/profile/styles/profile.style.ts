@@ -19,12 +19,12 @@ const profileStyle = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    color: 'gray',
+    color: '#000',
     marginBottom: 8,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#253494',
     borderRadius: 8,
     paddingHorizontal: 12,
     paddingVertical: 8,

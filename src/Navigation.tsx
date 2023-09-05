@@ -109,13 +109,25 @@ const TabNavigation = () => {
       <Tab.Screen
         name="Profile"
         component={Profile}
-        options={{
+        options={({ navigation }) => ({
           title: 'Perfil',
           headerTintColor: '#FFF',
           headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Menu')}
+              style={navigationStyle.headerLeftContainer}
+            >
+              <Text style={navigationStyle.headerLeftText}>
+                <Icon name="arrow-left2" color="#FFF" size={23} />
+              </Text>
+            </TouchableOpacity>
+          ),
           tabBarButton: () => null,
-        }}
+        })}
       />
+
       <Tab.Screen
         name="Exam"
         component={Exams}

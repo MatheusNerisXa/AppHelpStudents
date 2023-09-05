@@ -94,14 +94,14 @@ const Discipline = () => {
   );
 
   const cardColors = [
-    '#82C2E2',
-    '#B8A8D3',
-    '#F5B090',
+    '#7d89d9',
+    '#f281db',
+    '#f09d5c',
     '#8AC6D0',
-    '#F3D250',
+    '#e4ce75',
     '#F0A3A3',
-    '#9CD7A9',
-    '#E6AF4B',
+    '#9ee8ae',
+    '#b7a481',
   ];
 
   return (
