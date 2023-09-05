@@ -48,6 +48,7 @@ const ExamDetailsStyle = StyleSheet.create({
     resizeMode: 'cover',
   },
   infoContainer: {
+    alignItems: 'center',
     marginBottom: 20,
   },
   dateInfo: {
