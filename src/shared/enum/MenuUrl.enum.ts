@@ -16,4 +16,5 @@ export enum MenuUrl {
   Dashboard = 'Dashboard',
   ExamDetails = 'ExamDetails',
   FilesAndPhotos = 'FilePhotos',
+  PasswordRecovery = 'PasswordRecovery',
 }

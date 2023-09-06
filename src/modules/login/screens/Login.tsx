@@ -138,7 +138,7 @@ const Login = () => {
               |
             </Text>
 
-            <TouchableOpacity onPress={() => navigation.navigate('RecuperarSenha')}>
+            <TouchableOpacity onPress={() => navigation.navigate('PasswordRecovery')}>
               <Animated.View
                 // eslint-disable-next-line react-native/no-inline-styles
                 style={{

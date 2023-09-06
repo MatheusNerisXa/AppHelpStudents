@@ -13,6 +13,7 @@ import { ExamDetails, Exams } from './modules/exams';
 import FilesAndPhotos from './modules/filesphotos';
 import Home from './modules/home';
 import Login from './modules/login';
+import PasswordRecoveryScreen from './modules/login/screens/PasswordRecoveryScreen';
 import Menu from './modules/menu';
 import { News, NewsDetails } from './modules/news';
 import Profile from './modules/profile';
@@ -375,6 +376,26 @@ const Navigation = () => {
           component={CreateUser}
           options={({ navigation }) => ({
             title: 'Criar usuário',
+            headerTintColor: '#FFF',
+            headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
+            // eslint-disable-next-line react/no-unstable-nested-components
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => navigation.goBack()}
+                style={navigationStyle.headerLeftContainer}
+              >
+                <Text style={navigationStyle.headerLeftText}>
+                  <Icon name="arrow-left2" color="#FFF" size={23} />
+                </Text>
+              </TouchableOpacity>
+            ),
+          })}
+        />
+        <Stack.Screen
+          name={MenuUrl.PasswordRecovery}
+          component={PasswordRecoveryScreen}
+          options={({ navigation }) => ({
+            title: 'Recuperação de Senha',
             headerTintColor: '#FFF',
             headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
             // eslint-disable-next-line react/no-unstable-nested-components
