@@ -20,7 +20,6 @@ const Profile = () => {
 
   const onRefresh = async () => {
     setRefreshing(true);
-    // Fetch updated user data
     const updatedUser = await fetchUpdatedUserData();
     setUser(updatedUser);
     setRefreshing(false);

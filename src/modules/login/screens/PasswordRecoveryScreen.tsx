@@ -30,7 +30,7 @@ const PasswordRecoveryScreen = () => {
       } else if (response.status === 404) {
         Alert.alert('Erro', 'Não foi possível recuperar a senha. Verifique o email fornecido.');
       } else {
-        Alert.alert('Sucesso', 'Verifique seu email para obter a nova senha.');
+        Alert.alert('Sucesso', `Senha enviada para o email ${email}`);
       }
     } catch (error) {
       console.error('Erro ao recuperar senha:', error);

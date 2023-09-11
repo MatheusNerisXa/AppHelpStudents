@@ -48,7 +48,8 @@ const CreateUser = () => {
             onChange={(event) => handleOnChangeInput(event, 'name')}
             margin="0px 0px 16px 0px"
             maxLength={150}
-            placeholder="Digite"
+            placeholder="Digite seu nome completo"
+            placeholderTextColor="#000"
             title="Nome Completo:"
             onSubmitEditing={() => phoneInput?.current?.focus()}
           />
@@ -58,7 +59,8 @@ const CreateUser = () => {
             type="cel-phone"
             maxLength={15}
             margin="0px 0px 16px 0px"
-            placeholder="Digite"
+            placeholder="Digite seu telefone"
+            placeholderTextColor="#000"
             title="Telefone:"
             keyboardType="number-pad"
             ref={phoneInput}
@@ -69,7 +71,8 @@ const CreateUser = () => {
             onChange={(event) => handleOnChangeInput(event, 'email')}
             margin="0px 0px 16px 0px"
             maxLength={254}
-            placeholder="Digite"
+            placeholder="Digite seu email"
+            placeholderTextColor="#000"
             title="Email:"
             keyboardType="email-address"
             ref={emailInput}
@@ -81,7 +84,8 @@ const CreateUser = () => {
             maxLength={12}
             type="cpf"
             margin="0px 0px 16px 0px"
-            placeholder="Digite"
+            placeholder="Digite seu CPF"
+            placeholderTextColor="#000"
             title="CPF:"
             keyboardType="number-pad"
             ref={cpfInput}
@@ -92,7 +96,8 @@ const CreateUser = () => {
             onChange={(event) => handleOnChangeInput(event, 'password')}
             margin="0px 0px 16px 0px"
             maxLength={20}
-            placeholder="Digite"
+            placeholder="Digite sua senha"
+            placeholderTextColor="#000"
             title="Senha:"
             secureTextEntry
             ref={passwordInput}
@@ -103,18 +108,20 @@ const CreateUser = () => {
             onChange={(event) => handleOnChangeInput(event, 'confirmPassword')}
             margin="0px 0px 16px 0px"
             maxLength={20}
-            placeholder="Digite"
+            placeholder="Confirme sua senha"
+            placeholderTextColor="#000"
             title="Confirmar senha:"
             secureTextEntry
             ref={confirmPasswordInput}
             onSubmitEditing={handleCreateUser}
           />
+
           <Button
             disabled={disabled}
             onPress={handleCreateUser}
             loading={loading}
             margin="0px 0px 32px 0px"
-            title="Criar conta"
+            title="Cadastrar"
           />
         </Animated.View>
       </CreateUserContainer>
