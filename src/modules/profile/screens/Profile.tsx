@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, RefreshControl, ScrollView, Text, TextInput, View } from 'react-native';
+import { Alert, Animated, RefreshControl, ScrollView, Text, TextInput, View } from 'react-native';
 
 import Button from '../../../shared/components/button/Button';
 import { URL_USER_ID } from '../../../shared/constants/urls';
@@ -18,10 +18,33 @@ const Profile = () => {
 
   const animation = useRef(new Animated.Value(0)).current;
 
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get(`${URL_USER_ID}${user.id}`);
+
+      if (response.status === 200) {
+        const updatedUser = response.data;
+        console.log('Dados atualizados:', updatedUser);
+
+        // Atualize o estado local com os novos valores
+        setName(updatedUser.name);
+        setEmail(updatedUser.email);
+        setCpf(updatedUser.cpf);
+        setPhone(updatedUser.phone);
+
+        // Atualize o estado global do usuário, se necessário
+        setUser(updatedUser);
+      } else {
+        throw new Error('Não foi possível buscar os dados atualizados do usuário.');
+      }
+    } catch (error) {
+      console.error('Erro ao buscar dados atualizados:', error);
+    }
+  };
+
   const onRefresh = async () => {
     setRefreshing(true);
-    const updatedUser = await fetchUpdatedUserData();
-    setUser(updatedUser);
+    await fetchUserData();
     setRefreshing(false);
   };
 
@@ -38,6 +61,9 @@ const Profile = () => {
       setCpf(user.cpf);
       setPhone(user.phone);
     }
+
+    // Carregue os dados do usuário ao carregar a página inicial
+    fetchUserData();
   }, [animation, user]);
 
   const handleSaveChanges = async () => {
@@ -63,21 +89,51 @@ const Profile = () => {
         },
       });
 
-      console.log(response);
-
-      if (response.ok) {
+      if (response.status === 200) {
         console.log('Profile updated successfully.');
-        // Atualize o estado do usuário com os novos dados
         const updatedUserData = {
           ...user,
           ...updatedFields,
         };
+
+        // Atualize o estado global do usuário, se necessário
         setUser(updatedUserData);
+
+        // Exibir mensagem de sucesso com botão "OK"
+        Alert.alert('Sucesso', 'Cadastro atualizado com sucesso.', [
+          {
+            text: 'OK',
+            onPress: () => {
+              console.log('OK Pressed');
+              // Coloque aqui qualquer ação adicional que você queira realizar após o OK
+            },
+          },
+        ]);
       } else {
         console.error('Error updating user profile:', response.statusText);
+        // Exibir mensagem de erro com botão "OK"
+        Alert.alert('Erro', 'Não foi possível atualizar o cadastro.', [
+          {
+            text: 'OK',
+            onPress: () => {
+              console.log('OK Pressed');
+              // Coloque aqui qualquer ação adicional que você queira realizar após o OK
+            },
+          },
+        ]);
       }
     } catch (error) {
       console.error('Error updating user profile:', error);
+      // Exibir mensagem de erro com botão "OK"
+      Alert.alert('Erro', 'Ocorreu um erro ao atualizar o cadastro.', [
+        {
+          text: 'OK',
+          onPress: () => {
+            console.log('OK Pressed');
+            // Coloque aqui qualquer ação adicional que você queira realizar após o OK
+          },
+        },
+      ]);
     }
   };
 
