@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { ImageBackground, Text, View } from 'react-native';
+import { ImageBackground, View } from 'react-native';
 
 import { URL_BANNERS } from '../../../shared/constants/urls';
-import { useRequest } from '../../../shared/hooks/useRequest';
+// import { useRequest } from '../../../shared/hooks/useRequest';
 import homeStyle from '../styles/home.style';
 
 interface Banner {
@@ -12,8 +12,8 @@ interface Banner {
 }
 
 const Home: React.FC = () => {
-  const { user } = useRequest();
-  const userName = user?.name;
+  // const { user } = useRequest();
+  // const [userName, setUserName] = useState<string | undefined>(user?.name);
 
   const [banners, setBanners] = useState<Banner[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -45,10 +45,6 @@ const Home: React.FC = () => {
 
   return (
     <View style={homeStyle.container}>
-      <View style={homeStyle.headerContainer}>
-        <Text style={homeStyle.greetingText}>Olá,</Text>
-        <Text style={homeStyle.userName}>{userName}!</Text>
-      </View>
       {currentBanner && (
         <View style={homeStyle.bannerContainer}>
           <ImageBackground

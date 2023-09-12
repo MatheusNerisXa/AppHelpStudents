@@ -1,4 +1,4 @@
-import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { FlatList, RefreshControl, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
@@ -20,8 +20,7 @@ const Discipline = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [disciplines, setDisciplines] = useState([]);
   const isFocused = useIsFocused();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
 
   const fetchDisciplines = () => {
     if (userId) {
@@ -89,9 +88,11 @@ const Discipline = () => {
     setSearchText(text);
   };
 
-  const filteredDisciplines = disciplines.filter((discipline) =>
-    discipline.name.toLowerCase().includes(searchText.toLowerCase()),
-  );
+  const filteredDisciplines = searchText
+    ? disciplines.filter((discipline) =>
+        discipline.name.toLowerCase().includes(searchText.toLowerCase()),
+      )
+    : disciplines;
 
   const cardColors = [
     '#7d89d9',
@@ -117,20 +118,22 @@ const Discipline = () => {
         />
       </View>
 
-      <FlatList
-        data={filteredDisciplines}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
-        // eslint-disable-next-line react/no-unstable-nested-components
-        ItemSeparatorComponent={() => <View style={disciplineStyle.separator} />}
-        // eslint-disable-next-line react/no-unstable-nested-components
-        ListEmptyComponent={() => (
-          <Text style={disciplineStyle.emptyText}>Nenhuma matéria encontrada.</Text>
-        )}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor="#007AFF" />
-        }
-      />
+      {isFocused && (
+        <FlatList
+          data={filteredDisciplines}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id.toString()}
+          // eslint-disable-next-line react/no-unstable-nested-components
+          ItemSeparatorComponent={() => <View style={disciplineStyle.separator} />}
+          // eslint-disable-next-line react/no-unstable-nested-components
+          ListEmptyComponent={() => (
+            <Text style={disciplineStyle.emptyText}>Nenhuma matéria encontrada.</Text>
+          )}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor="#007AFF" />
+          }
+        />
+      )}
     </View>
   );
 };
