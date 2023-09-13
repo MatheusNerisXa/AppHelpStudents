@@ -13,6 +13,7 @@ export enum MenuUrl {
   Discipline = 'Discipline',
   DisciplineCreation = 'DisciplineCreationScreen',
   DisciplineMenu = 'DisciplineMenu',
+  DisciplineDetails = 'DisciplineDetails',
   Dashboard = 'Dashboard',
   ExamDetails = 'ExamDetails',
   FilesAndPhotos = 'FilePhotos',

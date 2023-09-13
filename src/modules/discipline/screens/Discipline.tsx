@@ -1,4 +1,4 @@
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { FlatList, RefreshControl, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
@@ -20,7 +20,7 @@ const Discipline = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [disciplines, setDisciplines] = useState([]);
   const isFocused = useIsFocused();
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
 
   const fetchDisciplines = () => {
     if (userId) {
@@ -59,9 +59,13 @@ const Discipline = () => {
 
   const renderItem = ({ item, index }) => {
     const statusInfo = statusMap[item.status_discipline] || {};
+    const navigateToDetails = () => {
+      navigation.navigate('DisciplineDetails', { disciplineId: item.id });
+    };
     return (
       <TouchableOpacity
         style={[disciplineStyle.item, { backgroundColor: cardColors[index % cardColors.length] }]}
+        onPress={navigateToDetails}
       >
         <View style={disciplineStyle.cardHeader}>
           <Text style={disciplineStyle.name}>{item.name}</Text>

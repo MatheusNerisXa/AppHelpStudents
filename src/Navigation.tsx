@@ -8,6 +8,7 @@ import ChatGPT from './modules/chat/screens/Chat';
 import CreateUser from './modules/createUser';
 import Dashboard from './modules/dashboards';
 import { Discipline, DisciplineCreation, DisciplineMenu } from './modules/discipline';
+import DisciplineDetails from './modules/discipline/screens/DisciplineDetails';
 import EventScreen from './modules/event';
 import { ExamDetails, Exams } from './modules/exams';
 import FilesAndPhotos from './modules/filesphotos';
@@ -341,6 +342,28 @@ const TabNavigation = () => {
           headerLeft: () => (
             <TouchableOpacity
               onPress={() => navigation.navigate('News')}
+              style={navigationStyle.headerLeftContainer}
+            >
+              <Text style={navigationStyle.headerLeftText}>
+                <Icon name="arrow-left2" color="#FFF" size={23} />
+              </Text>
+            </TouchableOpacity>
+          ),
+          tabBarButton: () => null,
+        })}
+      />
+
+      <Tab.Screen
+        name="DisciplineDetails"
+        component={DisciplineDetails}
+        options={({ navigation }) => ({
+          title: 'Detalhes da matéria',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Discipline')}
               style={navigationStyle.headerLeftContainer}
             >
               <Text style={navigationStyle.headerLeftText}>
