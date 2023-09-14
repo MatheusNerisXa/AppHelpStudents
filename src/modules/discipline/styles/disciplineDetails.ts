@@ -4,7 +4,7 @@ const disciplineDetailsStyle = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: '#F5F5F5',
   },
   header: {
     alignItems: 'center',
@@ -15,7 +15,9 @@ const disciplineDetailsStyle = StyleSheet.create({
     fontWeight: 'bold',
   },
   details: {
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#253494',
     padding: 16,
     borderRadius: 8,
   },

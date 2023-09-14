@@ -4,7 +4,7 @@ const CreateDisciplineStyle = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: 'white',
+    backgroundColor: '#F5F5F5',
   },
   inputContainer: {
     marginBottom: 16,
@@ -16,7 +16,7 @@ const CreateDisciplineStyle = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#253494',
     borderRadius: 4,
     padding: 8,
     color: '#000',
@@ -32,18 +32,21 @@ const CreateDisciplineStyle = StyleSheet.create({
     borderRadius: 4,
   },
   selectedStatus: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#f09d5c',
   },
   statusText: {
     fontSize: 16,
     color: '#FFF',
   },
   datePicker: {
+    borderWidth: 1,
+    borderColor: '#253494',
+    borderRadius: 4,
     width: '100%',
     marginBottom: 16,
   },
   addButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#253494',
     paddingVertical: 12,
     alignItems: 'center',
     borderRadius: 4,
