@@ -48,7 +48,7 @@ const disciplineDetailsStyle = StyleSheet.create({
     fontSize: 16,
   },
   button: {
-    backgroundColor: '#f09d5c',
+    backgroundColor: '#253494',
     borderRadius: 8,
     padding: 12,
     marginTop: 16,

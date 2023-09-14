@@ -28,7 +28,7 @@ const suportStyle = StyleSheet.create({
     textAlignVertical: 'top',
   },
   button: {
-    backgroundColor: '#f09d5c',
+    backgroundColor: '#253494',
     padding: 16,
     alignItems: 'center',
     borderRadius: 8,
