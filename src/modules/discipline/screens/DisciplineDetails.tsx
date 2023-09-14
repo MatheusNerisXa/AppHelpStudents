@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 
 import { URL_DISCIPLINEID } from '../../../shared/constants/urls';
+import disciplineDetailsStyle from '../styles/disciplineDetails';
 
 interface Discipline {
   id: number;
@@ -18,7 +19,7 @@ const statusMap = {
   4: { label: 'Sub', color: '#636302' },
 };
 
-const DisciplineDetails = ({ route }) => {
+const DisciplineDetails = ({ route, navigation }) => {
   const { disciplineId } = route.params;
   const [discipline, setDiscipline] = useState<Discipline | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -28,7 +29,6 @@ const DisciplineDetails = ({ route }) => {
       .then((response) => response.json())
       .then((data: Discipline) => {
         console.log('Dados da disciplina:', data);
-        // Mapeia o status para a string correspondente
         const statusInfo = statusMap[data.status_discipline] || {
           label: 'Desconhecido',
           color: '#000',
@@ -56,104 +56,86 @@ const DisciplineDetails = ({ route }) => {
     return <Text>Nenhum detalhe da disciplina encontrado.</Text>;
   }
 
-  // Função para formatar a data no formato brasileiro
   const formatBrazilianDate = (dateString) => {
     if (!dateString) {
-      return 'Data desconhecida'; // Trata datas ausentes
+      return 'Data desconhecida';
     }
 
     const date = new Date(dateString);
     const day = date.getUTCDate().toString().padStart(2, '0');
-    const month = (date.getUTCMonth() + 1).toString().padStart(2, '0'); // Mês começa em 0
+    const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
     const year = date.getUTCFullYear();
 
     return `${day}/${month}/${year}`;
   };
 
+  const handleAddGrade = () => {
+    navigation.navigate('CadastroNotaScreen', { disciplineId: discipline.id });
+  };
+
+  const handleAddAttendance = () => {
+    navigation.navigate('CadastroFaltaScreen', { disciplineId: discipline.id });
+  };
+
+  const handleConfigure = () => {
+    navigation.navigate('ConfiguracoesScreen');
+  };
+
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
+    <View style={disciplineDetailsStyle.container}>
+      <View style={disciplineDetailsStyle.header}>
         {/* <Text style={styles.headerText}>Detalhes da Disciplina</Text> */}
       </View>
 
-      <View style={styles.details}>
-        <View style={styles.detailItem}>
-          <Text style={styles.label}>Nome:</Text>
-          <Text style={styles.value}>{discipline.name}</Text>
+      <View style={disciplineDetailsStyle.details}>
+        <View style={disciplineDetailsStyle.detailItem}>
+          <Text style={disciplineDetailsStyle.label}>Nome:</Text>
+          <Text style={disciplineDetailsStyle.value}>{discipline.name}</Text>
         </View>
 
-        <View style={styles.detailItem}>
-          <Text style={styles.label}>Status:</Text>
-          <View style={styles.statusContainer}>
+        <View style={disciplineDetailsStyle.detailItem}>
+          <Text style={disciplineDetailsStyle.label}>Status:</Text>
+          <View style={disciplineDetailsStyle.statusContainer}>
             <View
               style={[
-                styles.statusColorIndicator,
+                disciplineDetailsStyle.statusColorIndicator,
                 { backgroundColor: discipline.status_color || '#000' },
               ]}
             />
-            <Text style={styles.statusValue}>{discipline.status_discipline || 'Desconhecido'}</Text>
+            <Text style={disciplineDetailsStyle.statusValue}>
+              {discipline.status_discipline || 'Desconhecido'}
+            </Text>
           </View>
         </View>
 
-        <View style={styles.detailItem}>
-          <Text style={styles.label}>Data de Início:</Text>
-          <Text style={styles.value}>{formatBrazilianDate(discipline.dateStart)}</Text>
+        <View style={disciplineDetailsStyle.detailItem}>
+          <Text style={disciplineDetailsStyle.label}>Data de Início:</Text>
+          <Text style={disciplineDetailsStyle.value}>
+            {formatBrazilianDate(discipline.dateStart)}
+          </Text>
         </View>
 
-        <View style={styles.detailItem}>
-          <Text style={styles.label}>Data de Término:</Text>
-          <Text style={styles.value}>{formatBrazilianDate(discipline.dateEnd)}</Text>
+        <View style={disciplineDetailsStyle.detailItem}>
+          <Text style={disciplineDetailsStyle.label}>Data de Término:</Text>
+          <Text style={disciplineDetailsStyle.value}>
+            {formatBrazilianDate(discipline.dateEnd)}
+          </Text>
         </View>
       </View>
+
+      <TouchableOpacity style={disciplineDetailsStyle.button} onPress={handleAddGrade}>
+        <Text style={disciplineDetailsStyle.buttonText}>Cadastrar Nota</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={disciplineDetailsStyle.button} onPress={handleAddAttendance}>
+        <Text style={disciplineDetailsStyle.buttonText}>Cadastrar Falta</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={disciplineDetailsStyle.button} onPress={handleConfigure}>
+        <Text style={disciplineDetailsStyle.buttonText}>Configurar Matéria</Text>
+      </TouchableOpacity>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#fff',
-  },
-  header: {
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  headerText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  details: {
-    backgroundColor: '#f5f5f5',
-    padding: 16,
-    borderRadius: 8,
-  },
-  detailItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  value: {
-    fontSize: 16,
-  },
-  statusContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  statusColorIndicator: {
-    width: 16,
-    height: 16,
-    marginRight: 8,
-    borderRadius: 8,
-  },
-  statusValue: {
-    fontSize: 16,
-  },
-});
 
 export default DisciplineDetails;
