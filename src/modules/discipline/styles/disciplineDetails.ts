@@ -20,6 +20,7 @@ const disciplineDetailsStyle = StyleSheet.create({
     borderColor: '#253494',
     padding: 16,
     borderRadius: 8,
+    marginBottom: 20,
   },
   detailItem: {
     flexDirection: 'row',

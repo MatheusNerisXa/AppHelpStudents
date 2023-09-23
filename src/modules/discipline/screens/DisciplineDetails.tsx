@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
+import { Icon } from '../../../shared/components/icon/Icon';
 import { URL_ABSENCES, URL_DISCIPLINEID } from '../../../shared/constants/urls';
+import { menuStyles } from '../../menu/styles/menu.style';
 import disciplineDetailsStyle from '../styles/disciplineDetails';
-
-interface Discipline {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  absences: any;
-  id: number;
-  name: string;
-  status_discipline: number;
-  dateStart: string;
-  dateEnd: string;
-}
 
 const statusMap = {
   1: { label: 'Aprovado', color: '#057a11' },
@@ -23,7 +16,7 @@ const statusMap = {
 
 const DisciplineDetails = ({ route, navigation }) => {
   const { disciplineId } = route.params;
-  const [discipline, setDiscipline] = useState<Discipline | null>({
+  const [discipline, setDiscipline] = useState({
     id: 0,
     name: '',
     status_discipline: 0,
@@ -88,16 +81,8 @@ const DisciplineDetails = ({ route, navigation }) => {
     return `${day}/${month}/${year}`;
   };
 
-  const handleAddGrade = () => {
-    navigation.navigate('CadastroNotaScreen', { disciplineId: discipline.id });
-  };
-
-  const handleAddAttendance = () => {
-    navigation.navigate('CadastroFaltaScreen', { disciplineId: discipline.id });
-  };
-
-  const handleConfigure = () => {
-    navigation.navigate('ConfiguracoesScreen');
+  const handleFilesAndPhotos = () => {
+    navigation.navigate('FilePhotos');
   };
 
   return (
@@ -150,20 +135,44 @@ const DisciplineDetails = ({ route, navigation }) => {
           </Text>
         </View>
       </View>
-
-      <TouchableOpacity style={disciplineDetailsStyle.button} onPress={handleAddGrade}>
-        <Text style={disciplineDetailsStyle.buttonText}>Cadastrar Nota</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={disciplineDetailsStyle.button} onPress={handleAddAttendance}>
-        <Text style={disciplineDetailsStyle.buttonText}>Cadastrar Falta</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={disciplineDetailsStyle.button} onPress={handleConfigure}>
-        <Text style={disciplineDetailsStyle.buttonText}>Configurar Matéria</Text>
-      </TouchableOpacity>
+      <View style={menuStyles.cardRow}>
+        <MenuItem
+          icon="plus"
+          text="Cadastrar falta"
+          color="#0066CC"
+          onPress={handleFilesAndPhotos}
+        />
+        <MenuItem
+          icon="book"
+          text="Cadastrar nota"
+          color="#6600CC"
+          onPress={handleFilesAndPhotos}
+        />
+      </View>
+      <View style={menuStyles.cardRow}>
+        <MenuItem
+          icon="stats-dots"
+          text="Relatório"
+          color="#006633"
+          onPress={handleFilesAndPhotos}
+        />
+        <MenuItem icon="cog" text="Configurar" color="#CC3300" onPress={handleFilesAndPhotos} />
+      </View>
     </View>
   );
 };
+
+const MenuItem = ({ onPress, icon, text, color }) => (
+  <TouchableOpacity onPress={onPress}>
+    <Animatable.View
+      animation="fadeInLeft"
+      duration={1000}
+      style={[menuStyles.cardContainer, { backgroundColor: color }]}
+    >
+      <Icon name={icon} size={32} color="#FFF" style={menuStyles.icon} />
+      <Text style={menuStyles.cardText}>{text}</Text>
+    </Animatable.View>
+  </TouchableOpacity>
+);
 
 export default DisciplineDetails;
