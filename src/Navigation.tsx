@@ -8,6 +8,7 @@ import ChatGPT from './modules/chat/screens/Chat';
 import CreateUser from './modules/createUser';
 import Dashboard from './modules/dashboards';
 import { Discipline, DisciplineCreation, DisciplineMenu } from './modules/discipline';
+import AbsencesScreen from './modules/discipline/screens/Absences';
 import DisciplineDetails from './modules/discipline/screens/DisciplineDetails';
 import EventScreen from './modules/event';
 import { ExamDetails, Exams } from './modules/exams';
@@ -129,7 +130,6 @@ const TabNavigation = () => {
           tabBarButton: () => null,
         })}
       />
-
       <Tab.Screen
         name="Exam"
         component={Exams}
@@ -172,7 +172,6 @@ const TabNavigation = () => {
           tabBarButton: () => null,
         })}
       />
-
       <Tab.Screen
         name="Discipline"
         component={Discipline}
@@ -196,7 +195,6 @@ const TabNavigation = () => {
           };
         }}
       />
-
       <Tab.Screen
         name="FilePhotos"
         component={FilesAndPhotos}
@@ -220,7 +218,6 @@ const TabNavigation = () => {
           };
         }}
       />
-
       <Tab.Screen
         name="Translation"
         component={Translation}
@@ -242,7 +239,6 @@ const TabNavigation = () => {
           tabBarButton: () => null,
         })}
       />
-
       <Tab.Screen
         name="News"
         component={News}
@@ -264,7 +260,6 @@ const TabNavigation = () => {
           tabBarButton: () => null,
         })}
       />
-
       <Tab.Screen
         name="DisciplineMenu"
         component={DisciplineMenu}
@@ -276,6 +271,32 @@ const TabNavigation = () => {
           headerLeft: () => (
             <TouchableOpacity
               onPress={() => navigation.navigate('Menu')}
+              style={navigationStyle.headerLeftContainer}
+            >
+              <Text style={navigationStyle.headerLeftText}>
+                <Icon name="arrow-left2" color="#FFF" size={23} />
+              </Text>
+            </TouchableOpacity>
+          ),
+          tabBarButton: () => null,
+        })}
+      />
+
+      <Tab.Screen
+        name="Absences"
+        component={AbsencesScreen}
+        options={({ navigation, route }) => ({
+          title: 'Cadastro de Faltas',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('DisciplineDetails', {
+                  disciplineId: route.params.disciplineId,
+                });
+              }}
               style={navigationStyle.headerLeftContainer}
             >
               <Text style={navigationStyle.headerLeftText}>
@@ -308,7 +329,6 @@ const TabNavigation = () => {
           tabBarButton: () => null,
         })}
       />
-
       <Tab.Screen
         name="DisciplineCreationScreen"
         component={DisciplineCreation}
@@ -330,7 +350,6 @@ const TabNavigation = () => {
           tabBarButton: () => null,
         })}
       />
-
       <Tab.Screen
         name="NewsDetails"
         component={NewsDetails}
@@ -352,7 +371,6 @@ const TabNavigation = () => {
           tabBarButton: () => null,
         })}
       />
-
       <Tab.Screen
         name="DisciplineDetails"
         component={DisciplineDetails}
@@ -374,7 +392,6 @@ const TabNavigation = () => {
           tabBarButton: () => null,
         })}
       />
-
       <Tab.Screen
         name="Menu"
         component={Menu}
@@ -461,6 +478,11 @@ const Navigation = () => {
         <Stack.Screen
           name={MenuUrl.DisciplineMenu}
           component={DisciplineMenu}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={MenuUrl.Absences}
+          component={AbsencesScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

@@ -11,3 +11,4 @@ export const URL_DISCIPLINE_CREATE = 'http://192.168.1.5:8080/discipline/';
 export const URL_TRANSLATION = 'https://text-translator2.p.rapidapi.com/translate';
 export const URL_CHATGPT = 'https://api.openai.com/v1/chat/completions';
 export const URL_ABSENCES = 'http://192.168.1.5:8080/absences/';
+export const URL_ABSENCES_TOTAL = 'http://192.168.1.5:8080/absences/total/';

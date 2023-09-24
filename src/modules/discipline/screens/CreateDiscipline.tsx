@@ -1,12 +1,31 @@
 /* eslint-disable react-native/no-inline-styles */
 import { useNavigation } from '@react-navigation/native';
+import { format, isDate } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { Modal, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import DatePicker from 'react-native-datepicker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import { URL_DISCIPLINE_CREATE } from '../../../shared/constants/urls';
 import { useRequest } from '../../../shared/hooks/useRequest';
 import CreateDisciplineStyle from '../styles/createDiscipline.style';
+
+const translateMonth = (month) => {
+  const months = {
+    1: 'Janeiro',
+    2: 'Fevereiro',
+    3: 'Março',
+    4: 'Abril',
+    5: 'Maio',
+    6: 'Junho',
+    7: 'Julho',
+    8: 'Agosto',
+    9: 'Setembro',
+    10: 'Outubro',
+    11: 'Novembro',
+    12: 'Dezembro',
+  };
+  return months[month];
+};
 
 const statusMap = {
   1: 'Aprovado',
@@ -23,6 +42,8 @@ const DisciplineCreation = () => {
   const { getUserFromStorage } = useRequest();
   const [userId, setUserId] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [isStartDatePickerVisible, setStartDatePickerVisibility] = useState(false);
+  const [isEndDatePickerVisible, setEndDatePickerVisibility] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -35,6 +56,36 @@ const DisciplineCreation = () => {
 
   const navigation = useNavigation();
   const [createdDisciplineName, setCreatedDisciplineName] = useState('');
+
+  const showStartDatePicker = () => {
+    setStartDatePickerVisibility(true);
+  };
+
+  const hideStartDatePicker = () => {
+    setStartDatePickerVisibility(false);
+  };
+
+  const handleStartDateConfirm = (date) => {
+    if (isDate(date)) {
+      hideStartDatePicker();
+      setStartDate(date);
+    }
+  };
+
+  const showEndDatePicker = () => {
+    setEndDatePickerVisibility(true);
+  };
+
+  const hideEndDatePicker = () => {
+    setEndDatePickerVisibility(false);
+  };
+
+  const handleEndDateConfirm = (date) => {
+    if (isDate(date)) {
+      hideEndDatePicker();
+      setEndDate(date);
+    }
+  };
 
   const handleCreate = async () => {
     const newDiscipline = {
@@ -69,24 +120,6 @@ const DisciplineCreation = () => {
     }
   };
 
-  const getMonthName = (month) => {
-    const months = [
-      'Janeiro',
-      'Fevereiro',
-      'Março',
-      'Abril',
-      'Maio',
-      'Junho',
-      'Julho',
-      'Agosto',
-      'Setembro',
-      'Outubro',
-      'Novembro',
-      'Dezembro',
-    ];
-    return months[month - 1];
-  };
-
   return (
     <View style={CreateDisciplineStyle.container}>
       <View style={CreateDisciplineStyle.inputContainer}>
@@ -102,32 +135,54 @@ const DisciplineCreation = () => {
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <View style={{ flex: 1, marginRight: 8 }}>
             <Text style={CreateDisciplineStyle.label}>Data de início:</Text>
-            <DatePicker
-              style={CreateDisciplineStyle.datePicker}
-              date={startDate}
+            <TouchableOpacity
+              style={CreateDisciplineStyle.datePickerButton}
+              onPress={showStartDatePicker}
+            >
+              <Text style={CreateDisciplineStyle.datePickerText}>
+                {format(startDate, 'dd/MM/yyyy')}
+              </Text>
+            </TouchableOpacity>
+            <DateTimePickerModal
+              isVisible={isStartDatePickerVisible}
               mode="date"
-              format="DD-MM-YYYY"
-              confirmBtnText="Confirmar"
-              cancelBtnText="Cancelar"
-              showIcon={false}
-              onDateChange={(date) => setStartDate(new Date(date))}
-              locale={'pt-br'}
-              renderMonth={(month) => <Text style={{ color: 'black' }}>{getMonthName(month)}</Text>}
+              onConfirm={handleStartDateConfirm}
+              onCancel={hideStartDatePicker}
+              locale="pt_BR"
+              headerTextIOS="Selecione uma data"
+              cancelTextIOS="Cancelar"
+              confirmTextIOS="Confirmar"
+              is24Hour
+              display="spinner"
+              minimumDate={new Date('2023-01-01')}
+              maximumDate={new Date('2050-12-31')}
+              datePickerModeAndroid="spinner"
+              monthNames={Array.from({ length: 12 }, (_, i) => translateMonth(i + 1))}
             />
           </View>
           <View style={{ flex: 1, marginLeft: 8 }}>
             <Text style={CreateDisciplineStyle.label}>Data de conclusão:</Text>
-            <DatePicker
-              style={CreateDisciplineStyle.datePicker}
-              date={endDate}
+            <TouchableOpacity
+              // style={CreateDisciplineStyle.datePickerButton}
+              onPress={showEndDatePicker}
+            >
+              <Text>{format(endDate, 'dd/MM/yyyy')}</Text>
+            </TouchableOpacity>
+            <DateTimePickerModal
+              isVisible={isEndDatePickerVisible}
               mode="date"
-              format="DD-MM-YYYY"
-              confirmBtnText="Confirmar"
-              cancelBtnText="Cancelar"
-              showIcon={false}
-              onDateChange={(date) => setEndDate(new Date(date))}
-              locale={'pt-br'}
-              renderMonth={(month) => <Text style={{ color: 'black' }}>{getMonthName(month)}</Text>}
+              onConfirm={handleEndDateConfirm}
+              onCancel={hideEndDatePicker}
+              locale="pt_BR"
+              headerTextIOS="Selecione uma data"
+              cancelTextIOS="Cancelar"
+              confirmTextIOS="Confirmar"
+              is24Hour
+              display="spinner"
+              minimumDate={new Date('2023-01-01')}
+              maximumDate={new Date('2050-12-31')}
+              datePickerModeAndroid="spinner"
+              monthNames={Array.from({ length: 12 }, (_, i) => translateMonth(i + 1))}
             />
           </View>
         </View>

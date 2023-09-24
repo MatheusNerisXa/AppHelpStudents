@@ -18,4 +18,5 @@ export enum MenuUrl {
   ExamDetails = 'ExamDetails',
   FilesAndPhotos = 'FilePhotos',
   PasswordRecovery = 'PasswordRecovery',
+  Absences = 'AbsencesScreen',
 }

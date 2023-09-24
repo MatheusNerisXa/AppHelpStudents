@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  RefreshControl,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
 import { Icon } from '../../../shared/components/icon/Icon';
-import { URL_ABSENCES, URL_DISCIPLINEID } from '../../../shared/constants/urls';
+import { URL_ABSENCES_TOTAL, URL_DISCIPLINEID } from '../../../shared/constants/urls';
 import { menuStyles } from '../../menu/styles/menu.style';
 import disciplineDetailsStyle from '../styles/disciplineDetails';
 
@@ -22,43 +29,55 @@ const DisciplineDetails = ({ route, navigation }) => {
     status_discipline: 0,
     dateStart: '',
     dateEnd: '',
-    absences: {
-      number_of_absences: 0,
-    },
   });
+  const [totalAbsences, setTotalAbsences] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
-  const fetchDisciplineDetails = () => {
+  const fetchDisciplineDetails = async () => {
     const disciplineUrl = URL_DISCIPLINEID + `${disciplineId}`;
-    const absencesUrl = URL_ABSENCES + `${disciplineId}`;
+    const absencesTotalUrl = URL_ABSENCES_TOTAL + `${disciplineId}`;
 
-    const fetchDiscipline = fetch(disciplineUrl).then((response) => response.json());
-    const fetchAbsences = fetch(absencesUrl).then((response) => response.json());
+    try {
+      const [disciplineResponse, totalAbsencesResponse] = await Promise.all([
+        fetch(disciplineUrl).then((response) => response.json()),
+        fetch(absencesTotalUrl).then((response) => response.json()),
+      ]);
 
-    Promise.all([fetchDiscipline, fetchAbsences])
-      .then(([disciplineData, absencesData]) => {
-        console.log('Dados da disciplina:', disciplineData);
-        console.log('Dados de faltas:', absencesData);
+      console.log('Dados da disciplina:', disciplineResponse);
+      console.log('Total de faltas:', totalAbsencesResponse);
 
-        const statusInfo = statusMap[disciplineData.status_discipline] || {
-          label: 'Desconhecido',
-          color: '#000',
-        };
-        disciplineData.status_discipline = statusInfo.label;
-        disciplineData.status_color = statusInfo.color;
-        disciplineData.absences = absencesData;
-        setDiscipline(disciplineData);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error('Erro ao buscar detalhes da disciplina:', error);
-        setIsLoading(false);
-      });
+      const statusInfo = statusMap[disciplineResponse.status_discipline] || {
+        label: 'Desconhecido',
+        color: '#000',
+      };
+      disciplineResponse.status_discipline = statusInfo.label;
+      disciplineResponse.status_color = statusInfo.color;
+      setDiscipline(disciplineResponse);
+
+      if (totalAbsencesResponse && totalAbsencesResponse !== undefined) {
+        setTotalAbsences(totalAbsencesResponse.toString());
+      } else {
+        setTotalAbsences('N/A');
+      }
+
+      setIsLoading(false);
+      setRefreshing(false);
+    } catch (error) {
+      console.error('Erro ao buscar detalhes da disciplina:', error);
+      setIsLoading(false);
+      setRefreshing(false);
+    }
   };
 
   useEffect(() => {
     fetchDisciplineDetails();
   }, [disciplineId]);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchDisciplineDetails();
+  };
 
   if (isLoading) {
     return <ActivityIndicator size="large" color="#007AFF" />;
@@ -85,11 +104,18 @@ const DisciplineDetails = ({ route, navigation }) => {
     navigation.navigate('FilePhotos');
   };
 
+  const handleAbsences = () => {
+    navigation.navigate('Absences', { disciplineId: discipline.id });
+  };
+
   return (
-    <View style={disciplineDetailsStyle.container}>
-      <View style={disciplineDetailsStyle.header}>
-        {/* <Text style={styles.headerText}>Detalhes da Disciplina</Text> */}
-      </View>
+    <ScrollView
+      style={disciplineDetailsStyle.container}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#007AFF" />
+      }
+    >
+      <View style={disciplineDetailsStyle.header} />
 
       <View style={disciplineDetailsStyle.details}>
         <View style={disciplineDetailsStyle.detailItem}>
@@ -128,20 +154,11 @@ const DisciplineDetails = ({ route, navigation }) => {
 
         <View style={disciplineDetailsStyle.detailItem}>
           <Text style={disciplineDetailsStyle.label}>Quantidade de Faltas:</Text>
-          <Text style={disciplineDetailsStyle.value}>
-            {Array.isArray(discipline.absences)
-              ? discipline.absences[0]?.number_of_absences || 'N/A'
-              : 'N/A'}
-          </Text>
+          <Text style={disciplineDetailsStyle.value}>{totalAbsences}</Text>
         </View>
       </View>
       <View style={menuStyles.cardRow}>
-        <MenuItem
-          icon="plus"
-          text="Cadastrar falta"
-          color="#0066CC"
-          onPress={handleFilesAndPhotos}
-        />
+        <MenuItem icon="plus" text="Cadastrar falta" color="#0066CC" onPress={handleAbsences} />
         <MenuItem
           icon="book"
           text="Cadastrar nota"
@@ -158,7 +175,7 @@ const DisciplineDetails = ({ route, navigation }) => {
         />
         <MenuItem icon="cog" text="Configurar" color="#CC3300" onPress={handleFilesAndPhotos} />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
