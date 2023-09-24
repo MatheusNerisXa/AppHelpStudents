@@ -41,7 +41,7 @@ const TabNavigation = () => {
       case 'Menu':
         iconName = 'menu';
         break;
-      case 'Chat':
+      case 'HelpGPT':
         iconName = 'bubbles4';
         break;
       case 'Dashboards':
@@ -92,10 +92,10 @@ const TabNavigation = () => {
         }}
       />
       <Tab.Screen
-        name="Chat"
+        name="HelpGPT"
         component={ChatGPT}
         options={{
-          title: 'Chat',
+          title: 'HelpGPT',
           headerTintColor: '#FFF',
           headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
         }}
