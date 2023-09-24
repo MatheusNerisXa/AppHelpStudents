@@ -4,11 +4,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 
+import AbsencesScreen from './modules/absences/screens/Absences';
 import ChatGPT from './modules/chat/screens/Chat';
 import CreateUser from './modules/createUser';
 import Dashboard from './modules/dashboards';
 import { Discipline, DisciplineCreation, DisciplineMenu } from './modules/discipline';
-import AbsencesScreen from './modules/discipline/screens/Absences';
 import DisciplineDetails from './modules/discipline/screens/DisciplineDetails';
 import EventScreen from './modules/event';
 import { ExamDetails, Exams } from './modules/exams';
