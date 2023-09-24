@@ -108,6 +108,13 @@ const DisciplineDetails = ({ route, navigation }) => {
     navigation.navigate('Absences', { disciplineId: discipline.id });
   };
 
+  const handleAbsencesMenu = () => {
+    navigation.navigate('AbsencesMenu', {
+      handleAbsences: handleAbsences,
+      disciplineId: discipline.id,
+    });
+  };
+
   return (
     <ScrollView
       style={disciplineDetailsStyle.container}
@@ -158,7 +165,7 @@ const DisciplineDetails = ({ route, navigation }) => {
         </View>
       </View>
       <View style={menuStyles.cardRow}>
-        <MenuItem icon="plus" text="Cadastrar falta" color="#0066CC" onPress={handleAbsences} />
+        <MenuItem icon="upload" text="Faltas" color="#0066CC" onPress={handleAbsencesMenu} />
         <MenuItem
           icon="book"
           text="Cadastrar nota"
