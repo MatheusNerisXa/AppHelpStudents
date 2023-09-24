@@ -1,6 +1,29 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
+
+const screenWidth = Dimensions.get('window').width;
+
+const cardWidth = (screenWidth - 34) / 1;
 
 const disciplineDetailsStyle = StyleSheet.create({
+  cardContainer: {
+    width: cardWidth,
+    backgroundColor: '#FFF',
+    borderRadius: 8,
+    padding: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  bin: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
   container: {
     flex: 1,
     padding: 16,

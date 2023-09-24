@@ -175,6 +175,9 @@ const DisciplineDetails = ({ route, navigation }) => {
         />
         <MenuItem icon="cog" text="Configurar" color="#CC3300" onPress={handleFilesAndPhotos} />
       </View>
+      <View style={menuStyles.cardRow}>
+        <Excluir icon="bin" text="Excluir" color="#FF0022" onPress={handleFilesAndPhotos} />
+      </View>
     </ScrollView>
   );
 };
@@ -185,6 +188,19 @@ const MenuItem = ({ onPress, icon, text, color }) => (
       animation="fadeInLeft"
       duration={1000}
       style={[menuStyles.cardContainer, { backgroundColor: color }]}
+    >
+      <Icon name={icon} size={32} color="#FFF" style={menuStyles.icon} />
+      <Text style={menuStyles.cardText}>{text}</Text>
+    </Animatable.View>
+  </TouchableOpacity>
+);
+
+const Excluir = ({ onPress, icon, text, color }) => (
+  <TouchableOpacity onPress={onPress}>
+    <Animatable.View
+      animation="fadeInLeft"
+      duration={1000}
+      style={[disciplineDetailsStyle.cardContainer, { backgroundColor: color }]}
     >
       <Icon name={icon} size={32} color="#FFF" style={menuStyles.icon} />
       <Text style={menuStyles.cardText}>{text}</Text>
