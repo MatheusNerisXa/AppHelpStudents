@@ -10,7 +10,7 @@ const chatStyle = StyleSheet.create({
     padding: 10,
   },
   userMessage: {
-    backgroundColor: '#64B5F6',
+    backgroundColor: '#253494',
     alignSelf: 'flex-start',
     borderRadius: 10,
     marginBottom: 10,
@@ -18,7 +18,7 @@ const chatStyle = StyleSheet.create({
     maxWidth: '70%',
   },
   aiMessage: {
-    backgroundColor: '#81C784',
+    backgroundColor: '#f09d5c',
     alignSelf: 'flex-end',
     borderRadius: 10,
     marginBottom: 10,
