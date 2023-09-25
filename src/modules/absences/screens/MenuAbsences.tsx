@@ -14,9 +14,9 @@ const AbsencesMenu = ({ route }) => {
     navigation.navigate('Absences', { disciplineId });
   }, [disciplineId, navigation]);
 
-  const handleListDisciplines = useCallback(() => {
-    navigation.navigate('Discipline');
-  }, [navigation]);
+  const handleAbsencesDetails = useCallback(() => {
+    navigation.navigate('AbsencesDetails', { disciplineId });
+  }, [disciplineId, navigation]);
 
   //   const handleCreateDiscipline = useCallback(() => {
   //     navigation.navigate('DisciplineCreationScreen');
@@ -26,7 +26,12 @@ const AbsencesMenu = ({ route }) => {
     <ScrollView contentContainerStyle={menuStyles.container}>
       <View style={menuStyles.cardRow}>
         <MenuItem icon="upload" text="Adicionar Falta" color="#0066CC" onPress={handleAbsences} />
-        <MenuItem icon="book" text="Ver Matérias" color="#6600CC" onPress={handleListDisciplines} />
+        <MenuItem
+          icon="book"
+          text="Relatório de faltas"
+          color="#6600CC"
+          onPress={handleAbsencesDetails}
+        />
       </View>
     </ScrollView>
   );

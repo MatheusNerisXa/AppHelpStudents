@@ -5,6 +5,7 @@ import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 
 import AbsencesScreen from './modules/absences/screens/Absences';
+import AbsencesDetails from './modules/absences/screens/AbsencesDetails';
 import AbsencesMenu from './modules/absences/screens/MenuAbsences';
 import ChatGPT from './modules/chat/screens/Chat';
 import CreateUser from './modules/createUser';
@@ -416,6 +417,27 @@ const TabNavigation = () => {
         })}
       />
       <Tab.Screen
+        name="AbsencesDetails"
+        component={AbsencesDetails}
+        options={({ navigation }) => ({
+          title: 'Detalhes das faltas',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Discipline')}
+              style={navigationStyle.headerLeftContainer}
+            >
+              <Text style={navigationStyle.headerLeftText}>
+                <Icon name="arrow-left2" color="#FFF" size={23} />
+              </Text>
+            </TouchableOpacity>
+          ),
+          tabBarButton: () => null,
+        })}
+      />
+      <Tab.Screen
         name="Menu"
         component={Menu}
         options={{
@@ -510,6 +532,11 @@ const Navigation = () => {
         />
         <Stack.Screen
           name={MenuUrl.Absences}
+          component={AbsencesScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={MenuUrl.AbsencesDetails}
           component={AbsencesScreen}
           options={{ headerShown: false }}
         />

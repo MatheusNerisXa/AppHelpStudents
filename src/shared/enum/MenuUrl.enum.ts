@@ -20,4 +20,5 @@ export enum MenuUrl {
   PasswordRecovery = 'PasswordRecovery',
   Absences = 'AbsencesScreen',
   AbsencesMenu = 'AbsencesMenu',
+  AbsencesDetails = 'AbsencesDetails',
 }
