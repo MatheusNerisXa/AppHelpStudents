@@ -25,13 +25,23 @@ const AbsencesDetailsStyle = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#253494',
   },
-  info: {
-    fontSize: 14,
+  infoContainer: {
     marginBottom: 8,
+  },
+  infoText: {
+    fontSize: 14,
     textAlign: 'center',
   },
   bold: {
     fontWeight: 'bold',
+  },
+  itemIcons: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  iconContainer: {
+    marginLeft: 6,
   },
 });
 
