@@ -50,10 +50,10 @@ const AbsencesScreen = ({ route }) => {
   const handleAbsenceSubmit = async () => {
     try {
       const response = await axios.post(URL_ABSENCES, {
-        numberOfAbsences: parseInt(numberOfAbsences),
+        numberOfAbsences: parseInt(numberOfAbsences, 10), //remover o 10
         disciplineId: disciplineId,
         date: format(selectedDate, 'dd/MM/yyyy'),
-        reason: reason, // Adicione o motivo aqui
+        reason: reason,
       });
 
       if (response.status === 201) {
@@ -72,7 +72,7 @@ const AbsencesScreen = ({ route }) => {
         onChangeText={(text) => setReason(text)}
         value={reason}
         placeholder="Digite o motivo da falta"
-        placeholderTextColor="#000" // Define a cor do placeholder para preto
+        placeholderTextColor="#000"
       />
       <Text style={AbsencesStyle.label}>Número de Faltas:</Text>
       <TextInput
@@ -81,7 +81,7 @@ const AbsencesScreen = ({ route }) => {
         value={numberOfAbsences}
         keyboardType="numeric"
         placeholder="Digite o número de faltas"
-        placeholderTextColor="#000" // Define a cor do placeholder para preto
+        placeholderTextColor="#000"
       />
       <Text style={AbsencesStyle.label}>Data da Falta:</Text>
       <TouchableOpacity style={AbsencesStyle.datePickerButton} onPress={showDatePicker}>
