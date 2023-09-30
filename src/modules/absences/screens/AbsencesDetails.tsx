@@ -2,6 +2,7 @@ import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Text, View } from 'react-native';
 
+import { URL_ABSENCES } from '../../../shared/constants/urls';
 import AbsencesDetailsStyle from '../styles/absencesDetails.style';
 
 interface AbsenceDetails {
@@ -29,7 +30,7 @@ const AbsencesDetails = () => {
 
   const fetchAbsenceDetails = useCallback(async () => {
     try {
-      const response = await fetch(`http://192.168.1.5:8080/absences/${disciplineId}`);
+      const response = await fetch(URL_ABSENCES + `${disciplineId}`);
       const data: AbsenceDetails[] = await response.json();
 
       data.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
@@ -73,7 +74,7 @@ const AbsencesDetails = () => {
               <Text style={AbsencesDetailsStyle.bold}>Motivo:</Text> {item.reason || 'N/A'}
             </Text>
             <Text style={AbsencesDetailsStyle.info}>
-              <Text style={AbsencesDetailsStyle.bold}>Total de Faltas:</Text>{' '}
+              <Text style={AbsencesDetailsStyle.bold}>Faltas no dia:</Text>{' '}
               {item.number_of_absences}
             </Text>
           </View>
