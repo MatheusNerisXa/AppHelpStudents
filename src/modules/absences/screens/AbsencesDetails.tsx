@@ -1,5 +1,5 @@
 import { useRoute } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Text, View } from 'react-native';
 
 import AbsencesDetailsStyle from '../styles/absencesDetails.style';
@@ -27,25 +27,28 @@ const AbsencesDetails = () => {
   const [totalFaltas, setTotalFaltas] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchAbsenceDetails = async () => {
-      try {
-        const response = await fetch(`http://192.168.1.5:8080/absences/${disciplineId}`);
-        const data: AbsenceDetails[] = await response.json();
-        setAbsenceDetails(data);
+  const fetchAbsenceDetails = useCallback(async () => {
+    try {
+      const response = await fetch(`http://192.168.1.5:8080/absences/${disciplineId}`);
+      const data: AbsenceDetails[] = await response.json();
 
-        const total = data.reduce((acc, item) => acc + item.number_of_absences, 0);
-        setTotalFaltas(total);
+      data.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Erro ao buscar detalhes da falta:', error);
-        setIsLoading(false);
-      }
-    };
+      setAbsenceDetails(data);
 
-    fetchAbsenceDetails();
+      const total = data.reduce((acc, item) => acc + item.number_of_absences, 0);
+      setTotalFaltas(total);
+
+      setIsLoading(false);
+    } catch (error) {
+      console.error('Erro ao buscar detalhes da falta:', error);
+      setIsLoading(false);
+    }
   }, [disciplineId]);
+
+  useEffect(() => {
+    fetchAbsenceDetails();
+  }, [fetchAbsenceDetails]);
 
   if (isLoading) {
     return <ActivityIndicator size="large" color="#007AFF" />;
@@ -60,7 +63,7 @@ const AbsencesDetails = () => {
       <Text style={AbsencesDetailsStyle.totalFaltas}>Faltas do dia: {totalFaltas}</Text>
       <FlatList
         data={absenceDetails}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View style={AbsencesDetailsStyle.item}>
             <Text style={AbsencesDetailsStyle.info}>

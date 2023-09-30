@@ -27,8 +27,8 @@ const AbsencesMenu = ({ route }) => {
       <View style={menuStyles.cardRow}>
         <MenuItem icon="upload" text="Adicionar Falta" color="#0066CC" onPress={handleAbsences} />
         <MenuItem
-          icon="book"
-          text="Relatório de faltas"
+          icon="file-text"
+          text="Listagem de faltas"
           color="#6600CC"
           onPress={handleAbsencesDetails}
         />

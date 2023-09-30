@@ -30,6 +30,7 @@ const AbsencesScreen = ({ route }) => {
   const [numberOfAbsences, setNumberOfAbsences] = useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [reason, setReason] = useState('');
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -49,10 +50,10 @@ const AbsencesScreen = ({ route }) => {
   const handleAbsenceSubmit = async () => {
     try {
       const response = await axios.post(URL_ABSENCES, {
-        // eslint-disable-next-line radix
         numberOfAbsences: parseInt(numberOfAbsences),
         disciplineId: disciplineId,
         date: format(selectedDate, 'dd/MM/yyyy'),
+        reason: reason, // Adicione o motivo aqui
       });
 
       if (response.status === 201) {
@@ -65,6 +66,14 @@ const AbsencesScreen = ({ route }) => {
 
   return (
     <View style={AbsencesStyle.container}>
+      <Text style={AbsencesStyle.label}>Motivo da Falta:</Text>
+      <TextInput
+        style={AbsencesStyle.input}
+        onChangeText={(text) => setReason(text)}
+        value={reason}
+        placeholder="Digite o motivo da falta"
+        placeholderTextColor="#000" // Define a cor do placeholder para preto
+      />
       <Text style={AbsencesStyle.label}>Número de Faltas:</Text>
       <TextInput
         style={AbsencesStyle.input}
@@ -72,11 +81,13 @@ const AbsencesScreen = ({ route }) => {
         value={numberOfAbsences}
         keyboardType="numeric"
         placeholder="Digite o número de faltas"
+        placeholderTextColor="#000" // Define a cor do placeholder para preto
       />
       <Text style={AbsencesStyle.label}>Data da Falta:</Text>
       <TouchableOpacity style={AbsencesStyle.datePickerButton} onPress={showDatePicker}>
         <Text style={AbsencesStyle.datePickerText}>{format(selectedDate, 'dd/MM/yyyy')}</Text>
       </TouchableOpacity>
+
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode="date"
