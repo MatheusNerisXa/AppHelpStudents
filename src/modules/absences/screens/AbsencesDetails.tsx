@@ -2,7 +2,9 @@ import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
+  Button,
   FlatList,
+  Modal,
   RefreshControl,
   Text,
   TouchableOpacity,
@@ -14,6 +16,7 @@ import { URL_ABSENCES } from '../../../shared/constants/urls';
 import AbsencesDetailsStyle from '../styles/absencesDetails.style';
 
 interface AbsenceDetails {
+  id: number;
   reason: string | null;
   created_at: string;
   number_of_absences: number;
@@ -29,18 +32,23 @@ const formatDate = (dateString: string) => {
 };
 
 const AbsencesDetails = () => {
-  const route = useRoute();
-  const { disciplineId } = route.params;
-
   const [absenceDetails, setAbsenceDetails] = useState<AbsenceDetails[]>([]);
   const [totalFaltas, setTotalFaltas] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [absenceToDelete, setAbsenceToDelete] = useState<AbsenceDetails | null>(null);
+
+  const route = useRoute();
+  const { disciplineId } = route.params;
+
   const fetchAbsenceDetails = useCallback(async () => {
     try {
       const response = await fetch(URL_ABSENCES + `${disciplineId}`);
       const data: AbsenceDetails[] = await response.json();
+
+      console.log('Received data from server:', data);
 
       data.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 
@@ -72,9 +80,36 @@ const AbsencesDetails = () => {
     // Implemente a lógica de edição aqui
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleDeleteAbsence = (item: AbsenceDetails) => {
-    // Implemente a lógica de exclusão aqui
+  const openDeleteModal = (item: AbsenceDetails) => {
+    setAbsenceToDelete(item);
+    setIsModalVisible(true);
+  };
+
+  const closeDeleteModal = () => {
+    setIsModalVisible(false);
+  };
+
+  const confirmDeleteAbsence = async () => {
+    if (absenceToDelete) {
+      try {
+        console.log('Deleting absence:', absenceToDelete);
+
+        await fetch(URL_ABSENCES + `${absenceToDelete.id}`, {
+          method: 'DELETE',
+        });
+
+        setAbsenceDetails((prevAbsenceDetails) =>
+          prevAbsenceDetails.filter((absence) => absence.id !== absenceToDelete.id),
+        );
+
+        setTotalFaltas((prevTotalFaltas) => prevTotalFaltas - absenceToDelete.number_of_absences);
+
+        setIsModalVisible(false);
+        setAbsenceToDelete(null);
+      } catch (error) {
+        console.error('Erro ao excluir ausência:', error);
+      }
+    }
   };
 
   if (isLoading) {
@@ -93,14 +128,14 @@ const AbsencesDetails = () => {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={AbsencesDetailsStyle.item}>
-            <View style={AbsencesDetailsStyle.itemInfo}>
-              <Text style={AbsencesDetailsStyle.info}>
+            <View>
+              <Text>
                 <Text style={AbsencesDetailsStyle.bold}>Data:</Text> {formatDate(item.created_at)}
               </Text>
-              <Text style={AbsencesDetailsStyle.info}>
+              <Text>
                 <Text style={AbsencesDetailsStyle.bold}>Motivo:</Text> {item.reason || 'N/A'}
               </Text>
-              <Text style={AbsencesDetailsStyle.info}>
+              <Text>
                 <Text style={AbsencesDetailsStyle.bold}>Faltas no dia:</Text>{' '}
                 {item.number_of_absences}
               </Text>
@@ -116,7 +151,7 @@ const AbsencesDetails = () => {
 
               <TouchableOpacity
                 style={AbsencesDetailsStyle.iconContainer}
-                onPress={() => handleDeleteAbsence(item)}
+                onPress={() => openDeleteModal(item)}
               >
                 <Icon name="bin" size={20} color="#FF0000" />
               </TouchableOpacity>
@@ -127,6 +162,25 @@ const AbsencesDetails = () => {
           <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor="#007AFF" />
         }
       />
+
+      <Modal visible={isModalVisible} transparent={true} animationType="slide">
+        <View style={AbsencesDetailsStyle.modalContainer}>
+          <View style={AbsencesDetailsStyle.modalBackground}>
+            <View style={AbsencesDetailsStyle.modalContent}>
+              <Text style={AbsencesDetailsStyle.modalTitle}>
+                Tem certeza que deseja excluir esta falta?
+              </Text>
+              <Text>Data: {absenceToDelete ? formatDate(absenceToDelete.created_at) : ''}</Text>
+              <Text>Motivo: {absenceToDelete ? absenceToDelete.reason || 'N/A' : ''}</Text>
+
+              <View style={AbsencesDetailsStyle.modalButtons}>
+                <Button title="Cancelar" onPress={closeDeleteModal} color="#FF0000" />
+                <Button title="Confirmar" onPress={confirmDeleteAbsence} color="#007AFF" />
+              </View>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
