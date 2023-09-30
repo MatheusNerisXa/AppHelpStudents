@@ -1,12 +1,18 @@
+/* eslint-disable no-catch-shadow */
+/* eslint-disable react-native/no-inline-styles */
 import { useRoute } from '@react-navigation/native';
+import { isValid, parse } from 'date-fns';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Button,
   FlatList,
+  KeyboardAvoidingView,
   Modal,
+  Platform,
   RefreshControl,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -31,6 +37,15 @@ const formatDate = (dateString: string) => {
   return `${day}/${month}/${year}`;
 };
 
+const formatDateForDatabase = (dateString: string) => {
+  const parts = dateString.split('/');
+  const day = parts[0];
+  const month = parts[1];
+  const year = parts[2];
+  const formattedDate = `${year}-${month}-${day}`;
+  return formattedDate;
+};
+
 const AbsencesDetails = () => {
   const [absenceDetails, setAbsenceDetails] = useState<AbsenceDetails[]>([]);
   const [totalFaltas, setTotalFaltas] = useState<number | null>(null);
@@ -39,6 +54,13 @@ const AbsencesDetails = () => {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [absenceToDelete, setAbsenceToDelete] = useState<AbsenceDetails | null>(null);
+
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const [editedAbsence, setEditedAbsence] = useState<AbsenceDetails | null>(null);
+  const [editedDate, setEditedDate] = useState('');
+  const [editedReason, setEditedReason] = useState('');
+  const [editedNumberOfAbsences, setEditedNumberOfAbsences] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
   const route = useRoute();
   const { disciplineId } = route.params;
@@ -59,6 +81,7 @@ const AbsencesDetails = () => {
 
       setIsLoading(false);
       setRefreshing(false);
+      // eslint-disable-next-line @typescript-eslint/no-shadow
     } catch (error) {
       console.error('Erro ao buscar detalhes da falta:', error);
       setIsLoading(false);
@@ -75,14 +98,98 @@ const AbsencesDetails = () => {
     fetchAbsenceDetails();
   }, [fetchAbsenceDetails]);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleEditAbsence = (item: AbsenceDetails) => {
-    // Implemente a lógica de edição aqui
+    setEditedAbsence(item);
+    setEditedDate(formatDate(item.created_at));
+    setEditedReason(item.reason || '');
+    setEditedNumberOfAbsences(item.number_of_absences.toString());
+    setIsEditModalVisible(true);
+  };
+
+  const saveEditedAbsence = async () => {
+    if (!editedAbsence) {
+      closeEditModal();
+      return;
+    }
+
+    const editedDateTrimmed = editedDate.trim();
+
+    if (editedDateTrimmed === '') {
+      setError('A data não pode ser vazia.');
+      return;
+    }
+
+    const editedReasonTrimmed = editedReason.trim();
+
+    if (editedReasonTrimmed === '' || editedReasonTrimmed.length < 3) {
+      setError('O motivo não pode estar em branco e deve ter pelo menos 3 caracteres.');
+      return;
+    }
+
+    const parsedDate = parse(editedDateTrimmed, 'dd/MM/yyyy', new Date());
+
+    if (!isValid(parsedDate)) {
+      setError('A data não é válida!');
+      return;
+    }
+
+    const formattedDateForDatabase = formatDateForDatabase(editedDate);
+    if (!isValidDate(formattedDateForDatabase)) {
+      setError('Data de formato inválido.');
+      return;
+    }
+
+    const editedNumberOfAbsencesTrimmed = editedNumberOfAbsences.trim();
+    if (editedNumberOfAbsencesTrimmed === '') {
+      setError('O número de faltas não pode ser vazio!');
+      return;
+    }
+
+    const numberOfAbsences = parseInt(editedNumberOfAbsencesTrimmed, 10);
+
+    if (isNaN(numberOfAbsences) || numberOfAbsences <= 0) {
+      setError('O número de faltas deve ser maior que 0!');
+      return;
+    }
+    try {
+      const updatedAbsence = {
+        ...editedAbsence,
+        created_at: formattedDateForDatabase,
+        reason: editedReason,
+        number_of_absences: numberOfAbsences,
+      };
+
+      console.log('Dados a serem enviados:', updatedAbsence);
+
+      await fetch(URL_ABSENCES + `${updatedAbsence.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedAbsence),
+      });
+
+      const updatedDetails = absenceDetails.map((item) =>
+        item.id === updatedAbsence.id ? updatedAbsence : item,
+      );
+
+      setAbsenceDetails(updatedDetails);
+      setIsEditModalVisible(false);
+      // eslint-disable-next-line @typescript-eslint/no-shadow
+    } catch (error) {
+      console.error('Erro ao atualizar a ausência:', error);
+      setError('Erro ao atualizar a ausência. Por favor, tente novamente.');
+    }
   };
 
   const openDeleteModal = (item: AbsenceDetails) => {
     setAbsenceToDelete(item);
     setIsModalVisible(true);
+  };
+
+  const closeEditModal = () => {
+    setIsEditModalVisible(false);
+    setError(null);
   };
 
   const closeDeleteModal = () => {
@@ -106,10 +213,16 @@ const AbsencesDetails = () => {
 
         setIsModalVisible(false);
         setAbsenceToDelete(null);
+        // eslint-disable-next-line @typescript-eslint/no-shadow
       } catch (error) {
         console.error('Erro ao excluir ausência:', error);
       }
     }
+  };
+
+  const isValidDate = (dateString: string) => {
+    const pattern = /^(\d{4})-(\d{2})-(\d{2})$/;
+    return pattern.test(dateString);
   };
 
   if (isLoading) {
@@ -146,7 +259,7 @@ const AbsencesDetails = () => {
                 style={AbsencesDetailsStyle.iconContainer}
                 onPress={() => handleEditAbsence(item)}
               >
-                <Icon name="pencil" size={20} color="#007AFF" />
+                <Icon name="pencil" size={20} color="#253494" />
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -162,7 +275,7 @@ const AbsencesDetails = () => {
           <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor="#007AFF" />
         }
       />
-
+      {/* Modal de exclusão */}
       <Modal visible={isModalVisible} transparent={true} animationType="slide">
         <View style={AbsencesDetailsStyle.modalContainer}>
           <View style={AbsencesDetailsStyle.modalBackground}>
@@ -180,6 +293,66 @@ const AbsencesDetails = () => {
             </View>
           </View>
         </View>
+      </Modal>
+      {/* Modal de edição */}
+      <Modal visible={isEditModalVisible} transparent={true} animationType="slide">
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
+        >
+          <View style={AbsencesDetailsStyle.modalContainerEdit}>
+            <View
+              style={[
+                AbsencesDetailsStyle.modalContentEdit,
+                { borderColor: error ? 'red' : '#253494' },
+              ]}
+            >
+              <Text style={AbsencesDetailsStyle.modalTitle}>Editar Falta</Text>
+
+              {/* Campo de Data */}
+              <View style={AbsencesDetailsStyle.inputContainer}>
+                <Text style={AbsencesDetailsStyle.inputLabel}>Data:</Text>
+                <TextInput
+                  style={AbsencesDetailsStyle.inputValue}
+                  placeholder="DD/MM/AAAA"
+                  value={editedDate}
+                  onChangeText={(text) => setEditedDate(text)}
+                  keyboardType="numeric"
+                />
+              </View>
+
+              {/* Campo de Motivo */}
+              <View style={AbsencesDetailsStyle.inputContainer}>
+                <Text style={AbsencesDetailsStyle.inputLabel}>Motivo:</Text>
+                <TextInput
+                  style={AbsencesDetailsStyle.inputValue}
+                  placeholder="Motivo"
+                  value={editedReason}
+                  onChangeText={(text) => setEditedReason(text)}
+                />
+              </View>
+
+              {/* Campo de Número de Faltas */}
+              <View style={AbsencesDetailsStyle.inputContainer}>
+                <Text style={AbsencesDetailsStyle.inputLabel}>Número de Faltas:</Text>
+                <TextInput
+                  style={AbsencesDetailsStyle.inputValue}
+                  placeholder="Número de faltas"
+                  value={editedNumberOfAbsences}
+                  onChangeText={(text) => setEditedNumberOfAbsences(text.replace(/[^0-9]/g, ''))}
+                  keyboardType="numeric"
+                />
+              </View>
+
+              {error && <Text style={{ color: 'red' }}>{error}</Text>}
+              <View style={AbsencesDetailsStyle.buttonContainer}>
+                <Button title="Cancelar" onPress={closeEditModal} color="#FF0000" />
+                <Button title="Salvar" onPress={saveEditedAbsence} />
+              </View>
+            </View>
+          </View>
+        </KeyboardAvoidingView>
       </Modal>
     </View>
   );
