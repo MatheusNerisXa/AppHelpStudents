@@ -58,6 +58,10 @@ const Discipline = () => {
   };
 
   const renderItem = ({ item, index }) => {
+    if (item.status_discipline === 5) {
+      return null;
+    }
+
     const statusInfo = statusMap[item.status_discipline] || {};
     const navigateToDetails = () => {
       navigation.navigate('DisciplineDetails', { disciplineId: item.id });

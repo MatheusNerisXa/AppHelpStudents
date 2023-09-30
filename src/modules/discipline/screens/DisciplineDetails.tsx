@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import {
-  ActivityIndicator,
-  RefreshControl,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Modal, RefreshControl, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
 import { Icon } from '../../../shared/components/icon/Icon';
-import { URL_ABSENCES_TOTAL, URL_DISCIPLINEID } from '../../../shared/constants/urls';
+import {
+  URL_ABSENCES_TOTAL,
+  URL_DISCIPLINE_CREATE,
+  URL_DISCIPLINEID,
+} from '../../../shared/constants/urls';
 import { menuStyles } from '../../menu/styles/menu.style';
 import disciplineDetailsStyle from '../styles/disciplineDetails';
+import modalStyle from '../styles/modal.style';
 
 const statusMap = {
   1: { label: 'Aprovado', color: '#057a11' },
@@ -31,8 +29,10 @@ const DisciplineDetails = ({ route, navigation }) => {
     dateEnd: '',
   });
   const [totalAbsences, setTotalAbsences] = useState(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const fetchDisciplineDetails = async () => {
     const disciplineUrl = URL_DISCIPLINEID + `${disciplineId}`;
@@ -79,27 +79,6 @@ const DisciplineDetails = ({ route, navigation }) => {
     fetchDisciplineDetails();
   };
 
-  if (isLoading) {
-    return <ActivityIndicator size="large" color="#007AFF" />;
-  }
-
-  if (!discipline) {
-    return <Text>Nenhum detalhe da disciplina encontrado.</Text>;
-  }
-
-  const formatBrazilianDate = (dateString) => {
-    if (!dateString) {
-      return 'Data desconhecida';
-    }
-
-    const date = new Date(dateString);
-    const day = date.getUTCDate().toString().padStart(2, '0');
-    const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
-    const year = date.getUTCFullYear();
-
-    return `${day}/${month}/${year}`;
-  };
-
   const handleFilesAndPhotos = () => {
     navigation.navigate('FilePhotos');
   };
@@ -113,6 +92,44 @@ const DisciplineDetails = ({ route, navigation }) => {
       handleAbsences: handleAbsences,
       disciplineId: discipline.id,
     });
+  };
+
+  const handleDeletePress = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    try {
+      const response = await fetch(URL_DISCIPLINE_CREATE + `${disciplineId}/update-status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.status === 200) {
+        console.log('Disciplina excluída com sucesso.');
+        setIsModalVisible(false);
+        navigation.navigate('Discipline');
+      } else {
+        console.error('Falha ao excluir disciplina.');
+      }
+    } catch (error) {
+      console.error('Erro ao excluir disciplina:', error);
+    }
+  };
+
+  const formatBrazilianDate = (dateString) => {
+    if (!dateString) {
+      return 'Data desconhecida';
+    }
+
+    const date = new Date(dateString);
+    const day = date.getUTCDate().toString().padStart(2, '0');
+    const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
+    const year = date.getUTCFullYear();
+
+    return `${day}/${month}/${year}`;
   };
 
   return (
@@ -183,8 +200,38 @@ const DisciplineDetails = ({ route, navigation }) => {
         <MenuItem icon="cog" text="Configurar" color="#CC3300" onPress={handleFilesAndPhotos} />
       </View>
       <View style={menuStyles.cardRow}>
-        <Excluir icon="bin" text="Excluir" color="#FF0022" onPress={handleFilesAndPhotos} />
+        <Excluir icon="bin" text="Excluir" color="#FF0022" onPress={handleDeletePress} />
       </View>
+
+      <Modal
+        visible={isModalVisible}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setIsModalVisible(false)}
+      >
+        <View style={modalStyle.container}>
+          <View style={modalStyle.modalContent}>
+            <Text style={modalStyle.modalText}>
+              Tem certeza que deseja excluir a matéria {'"'}
+              <Text style={modalStyle.boldText}>{discipline.name}</Text>"?
+            </Text>
+            <View style={modalStyle.modalButtons}>
+              <TouchableOpacity
+                style={[modalStyle.modalButton, modalStyle.cancelButton]}
+                onPress={() => setIsModalVisible(false)}
+              >
+                <Text style={modalStyle.buttonText}>Cancelar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[modalStyle.modalButton, modalStyle.confirmButton]}
+                onPress={handleConfirmDelete}
+              >
+                <Text style={modalStyle.buttonText}>Confirmar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 };
