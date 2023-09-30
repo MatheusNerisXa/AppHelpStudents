@@ -1,6 +1,6 @@
 import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, RefreshControl, Text, View } from 'react-native';
 
 import { URL_ABSENCES } from '../../../shared/constants/urls';
 import AbsencesDetailsStyle from '../styles/absencesDetails.style';
@@ -27,6 +27,7 @@ const AbsencesDetails = () => {
   const [absenceDetails, setAbsenceDetails] = useState<AbsenceDetails[]>([]);
   const [totalFaltas, setTotalFaltas] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   const fetchAbsenceDetails = useCallback(async () => {
     try {
@@ -41,11 +42,18 @@ const AbsencesDetails = () => {
       setTotalFaltas(total);
 
       setIsLoading(false);
+      setRefreshing(false);
     } catch (error) {
       console.error('Erro ao buscar detalhes da falta:', error);
       setIsLoading(false);
+      setRefreshing(false);
     }
   }, [disciplineId]);
+
+  const handleRefresh = () => {
+    setRefreshing(true);
+    fetchAbsenceDetails();
+  };
 
   useEffect(() => {
     fetchAbsenceDetails();
@@ -79,6 +87,9 @@ const AbsencesDetails = () => {
             </Text>
           </View>
         )}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor="#007AFF" />
+        }
       />
     </View>
   );

@@ -50,7 +50,7 @@ const AbsencesScreen = ({ route }) => {
   const handleAbsenceSubmit = async () => {
     try {
       const response = await axios.post(URL_ABSENCES, {
-        numberOfAbsences: parseInt(numberOfAbsences, 10), //remover o 10
+        numberOfAbsences: parseInt(numberOfAbsences, 10),
         disciplineId: disciplineId,
         date: format(selectedDate, 'dd/MM/yyyy'),
         reason: reason,
@@ -58,6 +58,8 @@ const AbsencesScreen = ({ route }) => {
 
       if (response.status === 201) {
         Alert.alert('Sucesso', 'Falta cadastrada com sucesso.');
+        setNumberOfAbsences('');
+        setReason('');
       }
     } catch (error) {
       Alert.alert('Erro', 'Ocorreu um erro ao cadastrar a falta.');
