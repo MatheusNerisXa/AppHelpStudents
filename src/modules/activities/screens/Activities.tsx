@@ -1,13 +1,22 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import { useNavigation, useRoute } from '@react-navigation/native';
 import axios from 'axios';
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Button,
+  Modal,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 
 import { Icon } from '../../../shared/components/icon/Icon';
-import { URL_ACTIVITIES, URL_ACTIVITIES_EDIT } from '../../../shared/constants/urls';
+import { URL_ACTIVITIES, URL_ACTIVITIES_DELETE } from '../../../shared/constants/urls';
 import { useRequest } from '../../../shared/hooks/useRequest';
 import ActivitiesStyle from '../styles/activities';
 
@@ -20,15 +29,15 @@ interface Activity {
 }
 
 const ActivitiesScreen: React.FC = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const route = useRoute();
   const { getUserFromStorage } = useRequest();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const navigation = useNavigation();
   const [activities, setActivities] = useState<Activity[]>([]);
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState<number | null>(null);
   const [searchText, setSearchText] = useState('');
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState<Activity | null>(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -67,20 +76,25 @@ const ActivitiesScreen: React.FC = () => {
     setSearchText(text);
   };
 
-  const handleToggleCompletion = async (activity: Activity) => {
-    try {
-      const updatedActivities = activities.map((item) =>
-        item.id === activity.id ? { ...item, isCompleted: !item.isCompleted } : item,
-      );
+  const openDeleteModal = (activity: Activity) => {
+    setItemToDelete(activity);
+    setIsDeleteModalVisible(true);
+  };
 
-      setActivities(updatedActivities);
+  const closeDeleteModal = () => {
+    setIsDeleteModalVisible(false);
+  };
 
-      await axios.put(URL_ACTIVITIES_EDIT + `${activity.id}`, {
-        isCompleted: !activity.isCompleted,
-      });
-    } catch (error) {
-      console.error('Erro ao atualizar atividade:', error);
-      setActivities(activities);
+  const confirmDeleteActivity = async () => {
+    if (itemToDelete) {
+      try {
+        await axios.delete(URL_ACTIVITIES_DELETE + `${itemToDelete.id}`);
+        const updatedActivities = activities.filter((item) => item.id !== itemToDelete.id);
+        setActivities(updatedActivities);
+        closeDeleteModal();
+      } catch (error) {
+        console.error('Error deleting activity:', error);
+      }
     }
   };
 
@@ -173,9 +187,7 @@ const ActivitiesScreen: React.FC = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={ActivitiesStyle.deleteButton}
-                onPress={() => {
-                  // Ação ao tocar em excluir
-                }}
+                onPress={() => openDeleteModal(item)}
               >
                 <Icon name="bin" size={24} color="white" />
               </TouchableOpacity>
@@ -186,8 +198,30 @@ const ActivitiesScreen: React.FC = () => {
           disableRightSwipe={true}
         />
       )}
+
+      <Modal visible={isDeleteModalVisible} transparent={true} animationType="slide">
+        <View style={ActivitiesStyle.modalContainer}>
+          <View style={ActivitiesStyle.modalBackground}>
+            <View style={ActivitiesStyle.modalContent}>
+              <Text style={ActivitiesStyle.modalTitle}>
+                Tem certeza que deseja excluir a atividade "
+                {itemToDelete ? itemToDelete.taskName : ''}"?
+              </Text>
+              <Text>Prazo: {itemToDelete ? formatDueDate(itemToDelete.dueDate) : ''}</Text>
+              <Text>Descrição: {itemToDelete ? itemToDelete.description || 'N/A' : ''}</Text>
+              <View style={ActivitiesStyle.modalButtons}>
+                <Button title="Cancelar" onPress={closeDeleteModal} color="#FF0000" />
+                <Button title="Confirmar" onPress={confirmDeleteActivity} color="#007AFF" />
+              </View>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
 
 export default ActivitiesScreen;
+function handleToggleCompletion(item: Activity): void {
+  throw new Error('Function not implemented.');
+}
