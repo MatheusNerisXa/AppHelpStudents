@@ -13,3 +13,4 @@ export const URL_CHATGPT = 'https://api.openai.com/v1/chat/completions';
 export const URL_ABSENCES = 'http://192.168.1.7:8080/absences/';
 export const URL_ABSENCES_TOTAL = 'http://192.168.1.7:8080/absences/total/';
 export const URL_ACTIVITIES = 'http://192.168.1.7:8080/activities/user/';
+export const URL_ACTIVITIES_EDIT = 'http://192.168.1.7:8080/activities/';

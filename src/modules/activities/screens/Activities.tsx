@@ -1,12 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import { useNavigation, useRoute } from '@react-navigation/native';
 import axios from 'axios';
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { SwipeListView } from 'react-native-swipe-list-view';
 
-import { URL_ACTIVITIES } from '../../../shared/constants/urls';
+import { Icon } from '../../../shared/components/icon/Icon';
+import { URL_ACTIVITIES, URL_ACTIVITIES_EDIT } from '../../../shared/constants/urls';
 import { useRequest } from '../../../shared/hooks/useRequest';
 import ActivitiesStyle from '../styles/activities';
 
@@ -19,8 +20,10 @@ interface Activity {
 }
 
 const ActivitiesScreen: React.FC = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const route = useRoute();
   const { getUserFromStorage } = useRequest();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const navigation = useNavigation();
   const [activities, setActivities] = useState<Activity[]>([]);
   const [loading, setLoading] = useState(true);
@@ -72,7 +75,7 @@ const ActivitiesScreen: React.FC = () => {
 
       setActivities(updatedActivities);
 
-      await axios.put(`http://192.168.1.7:8080/activities/${activity.id}`, {
+      await axios.put(URL_ACTIVITIES_EDIT + `${activity.id}`, {
         isCompleted: !activity.isCompleted,
       });
     } catch (error) {
@@ -102,11 +105,12 @@ const ActivitiesScreen: React.FC = () => {
       {loading ? (
         <ActivityIndicator size="large" color="#f09d5c" style={ActivitiesStyle.loadingIndicator} />
       ) : (
-        <FlatList
+        <SwipeListView
           data={filteredActivities}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <TouchableOpacity
+              activeOpacity={1}
               style={[
                 ActivitiesStyle.activityCard,
                 {
@@ -118,7 +122,9 @@ const ActivitiesScreen: React.FC = () => {
                 // Ação ao tocar em uma atividade (opcional)
               }}
             >
-              <Text style={ActivitiesStyle.activityTitle}>{item.taskName}</Text>
+              <View style={ActivitiesStyle.activityHeader}>
+                <Text style={ActivitiesStyle.activityTitle}>{item.taskName}</Text>
+              </View>
               <View style={ActivitiesStyle.descriptionContainer}>
                 <Text style={ActivitiesStyle.descriptionLabel}>Descrição: </Text>
                 <Text style={ActivitiesStyle.activityDescription}>{item.description}</Text>
@@ -147,17 +153,37 @@ const ActivitiesScreen: React.FC = () => {
                   </Text>
                 </View>
               </View>
-              {/* Caracteres de texto para representar o estado de conclusão */}
-              <TouchableOpacity
-                onPress={() => handleToggleCompletion(item)}
-                style={{ position: 'absolute', top: 10, right: 10 }}
-              >
-                <Text style={{ fontSize: 24, color: item.isCompleted ? 'green' : 'red' }}>
-                  {item.isCompleted ? '✔' : '◯'}
-                </Text>
-              </TouchableOpacity>
             </TouchableOpacity>
           )}
+          renderHiddenItem={({ item }) => (
+            <View style={ActivitiesStyle.rowBack}>
+              <TouchableOpacity
+                style={ActivitiesStyle.editButton}
+                onPress={() => {
+                  // Ação ao tocar em editar
+                }}
+              >
+                <Icon name="pencil" size={24} color="white" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={ActivitiesStyle.completeButton}
+                onPress={() => handleToggleCompletion(item)}
+              >
+                <Icon name={item.isCompleted ? 'checkmark' : 'cross'} size={24} color="white" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={ActivitiesStyle.deleteButton}
+                onPress={() => {
+                  // Ação ao tocar em excluir
+                }}
+              >
+                <Icon name="bin" size={24} color="white" />
+              </TouchableOpacity>
+            </View>
+          )}
+          leftOpenValue={150}
+          rightOpenValue={-190}
+          disableRightSwipe={true}
         />
       )}
     </View>

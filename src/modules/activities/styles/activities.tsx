@@ -33,11 +33,62 @@ const ActivitiesStyle = StyleSheet.create({
     elevation: 3,
     position: 'relative',
   },
+  activityHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   activityTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 8,
     color: '#253494',
+    marginBottom: 10,
+  },
+  iconsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 16,
+    right: 16,
+  },
+  icon: {
+    height: 24,
+    marginRight: 16,
+    marginTop: 0,
+  },
+  deleteButton: {
+    width: 60,
+    height: '50%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'red',
+  },
+  deleteText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  editButton: {
+    width: 60,
+    height: '50%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'blue',
+    marginLeft: 10,
+  },
+  editText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  completeButton: {
+    width: 60,
+    height: '50%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'green',
+  },
+  completeText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
   descriptionContainer: {
     marginBottom: 8,
@@ -70,6 +121,23 @@ const ActivitiesStyle = StyleSheet.create({
   infoText: {
     fontSize: 15,
     color: '#555',
+  },
+  rowBack: {
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  rowFront: {
+    backgroundColor: '#f5f5f5',
+    borderRadius: 10,
+    marginBottom: 16,
+    elevation: 3,
+    position: 'relative',
+  },
+  hiddenButtons: {
+    flexDirection: 'row',
   },
 });
 
