@@ -16,7 +16,11 @@ import {
 import { SwipeListView } from 'react-native-swipe-list-view';
 
 import { Icon } from '../../../shared/components/icon/Icon';
-import { URL_ACTIVITIES, URL_ACTIVITIES_DELETE } from '../../../shared/constants/urls';
+import {
+  URL_ACTIVITIES,
+  URL_ACTIVITIES_DELETE,
+  URL_ACTIVITIES_EDIT,
+} from '../../../shared/constants/urls';
 import { useRequest } from '../../../shared/hooks/useRequest';
 import ActivitiesStyle from '../styles/activities';
 
@@ -36,6 +40,8 @@ const ActivitiesScreen: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState<number | null>(null);
   const [searchText, setSearchText] = useState('');
+  const [expandedCard, setExpandedCard] = useState<number | null>(null);
+
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [itemToDelete, setItemToDelete] = useState<Activity | null>(null);
 
@@ -98,6 +104,32 @@ const ActivitiesScreen: React.FC = () => {
     }
   };
 
+  const handleToggleCompletion = async (item: Activity) => {
+    try {
+      const response = await axios.put(URL_ACTIVITIES_EDIT + `${item.id}`, {
+        isCompleted: !item.isCompleted,
+      });
+
+      if (response.status === 200) {
+        const updatedActivities = activities.map((activity) => {
+          if (activity.id === item.id) {
+            return {
+              ...activity,
+              isCompleted: !activity.isCompleted,
+            };
+          }
+          return activity;
+        });
+
+        setActivities(updatedActivities);
+
+        setExpandedCard(null);
+      }
+    } catch (error) {
+      console.error('Error toggling completion:', error);
+    }
+  };
+
   const filteredActivities = searchText
     ? activities.filter((activity) =>
         activity.taskName.toLowerCase().includes(searchText.toLowerCase()),
@@ -130,6 +162,7 @@ const ActivitiesScreen: React.FC = () => {
                 {
                   borderColor: item.isCompleted ? 'green' : 'red',
                   borderWidth: 2,
+                  transform: [{ translateX: expandedCard === item.id ? 150 : 0 }],
                 },
               ]}
               onPress={() => {
@@ -222,6 +255,3 @@ const ActivitiesScreen: React.FC = () => {
 };
 
 export default ActivitiesScreen;
-function handleToggleCompletion(item: Activity): void {
-  throw new Error('Function not implemented.');
-}
