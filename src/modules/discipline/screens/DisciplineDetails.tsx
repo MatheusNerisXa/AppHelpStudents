@@ -87,6 +87,10 @@ const DisciplineDetails = ({ route, navigation }) => {
     navigation.navigate('Absences', { disciplineId: discipline.id });
   };
 
+  const handleActivities = () => {
+    navigation.navigate('Activities', { disciplineId: discipline.id });
+  };
+
   const handleAbsencesMenu = () => {
     navigation.navigate('AbsencesMenu', {
       handleAbsences: handleAbsences,
@@ -197,11 +201,21 @@ const DisciplineDetails = ({ route, navigation }) => {
           color="#006633"
           onPress={handleFilesAndPhotos}
         />
-        <MenuItem icon="cog" text="Configurar" color="#CC3300" onPress={handleFilesAndPhotos} />
+        <MenuItem
+          icon="checkbox-checked"
+          text="Atividades"
+          color="#FF6600"
+          onPress={handleActivities}
+        />
       </View>
       <View style={menuStyles.cardRow}>
-        <Excluir icon="bin" text="Excluir" color="#FF0022" onPress={handleDeletePress} />
+        <MenuItem icon="cog" text="Configurar" color="#CC3300" onPress={handleFilesAndPhotos} />
+        <MenuItem icon="bin" text="Excluir" color="#FF0022" onPress={handleDeletePress} />
       </View>
+
+      {/* <View style={menuStyles.cardRow}>
+        <Excluir icon="bin" text="Excluir" color="#FF0022" onPress={handleDeletePress} />
+      </View> */}
 
       <Modal
         visible={isModalVisible}
@@ -242,19 +256,6 @@ const MenuItem = ({ onPress, icon, text, color }) => (
       animation="fadeInLeft"
       duration={1000}
       style={[menuStyles.cardContainer, { backgroundColor: color }]}
-    >
-      <Icon name={icon} size={32} color="#FFF" style={menuStyles.icon} />
-      <Text style={menuStyles.cardText}>{text}</Text>
-    </Animatable.View>
-  </TouchableOpacity>
-);
-
-const Excluir = ({ onPress, icon, text, color }) => (
-  <TouchableOpacity onPress={onPress}>
-    <Animatable.View
-      animation="fadeInLeft"
-      duration={1000}
-      style={[disciplineDetailsStyle.cardContainer, { backgroundColor: color }]}
     >
       <Icon name={icon} size={32} color="#FFF" style={menuStyles.icon} />
       <Text style={menuStyles.cardText}>{text}</Text>

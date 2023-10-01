@@ -7,12 +7,12 @@ import { Text, TouchableOpacity } from 'react-native';
 import AbsencesScreen from './modules/absences/screens/Absences';
 import AbsencesDetails from './modules/absences/screens/AbsencesDetails';
 import AbsencesMenu from './modules/absences/screens/MenuAbsences';
+import ActivitiesScreen from './modules/activities/screens/Activities';
 import ChatGPT from './modules/chat/screens/Chat';
 import CreateUser from './modules/createUser';
 import Dashboard from './modules/dashboards';
 import { Discipline, DisciplineCreation, DisciplineMenu } from './modules/discipline';
 import DisciplineDetails from './modules/discipline/screens/DisciplineDetails';
-import EventScreen from './modules/event';
 import { ExamDetails, Exams } from './modules/exams';
 import FilesAndPhotos from './modules/filesphotos';
 import Home from './modules/home';
@@ -49,8 +49,8 @@ const TabNavigation = () => {
       case 'Dashboards':
         iconName = 'stats-bars2';
         break;
-      case 'Event':
-        iconName = 'calendar';
+      case 'Tarefas':
+        iconName = 'checkbox-checked';
         break;
       default:
         iconName = 'profile';
@@ -93,6 +93,7 @@ const TabNavigation = () => {
           headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
         }}
       />
+
       <Tab.Screen
         name="HelpGPT"
         component={ChatGPT}
@@ -103,6 +104,15 @@ const TabNavigation = () => {
         }}
       />
       <Tab.Screen
+        name="Tarefas"
+        component={ActivitiesScreen}
+        options={{
+          title: 'Tarefas',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
+        }}
+      />
+      {/* <Tab.Screen
         name="Event"
         component={EventScreen}
         options={{
@@ -110,7 +120,7 @@ const TabNavigation = () => {
           headerTintColor: '#FFF',
           headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Profile"
         component={Profile}
@@ -538,6 +548,11 @@ const Navigation = () => {
         <Stack.Screen
           name={MenuUrl.AbsencesDetails}
           component={AbsencesScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={MenuUrl.Activities}
+          component={ActivitiesScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

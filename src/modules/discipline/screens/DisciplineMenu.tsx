@@ -18,7 +18,7 @@ const DisciplineMenu = () => {
   };
 
   const handleCreateDiscipline = () => {
-    navigation.navigate('DisciplineCreationScreen');
+    navigation.navigate('Activities');
   };
 
   return (

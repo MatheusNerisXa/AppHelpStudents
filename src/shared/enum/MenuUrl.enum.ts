@@ -21,4 +21,5 @@ export enum MenuUrl {
   Absences = 'AbsencesScreen',
   AbsencesMenu = 'AbsencesMenu',
   AbsencesDetails = 'AbsencesDetails',
+  Activities = 'Activities',
 }
