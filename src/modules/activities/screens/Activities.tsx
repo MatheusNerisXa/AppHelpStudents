@@ -198,9 +198,6 @@ const ActivitiesScreen: React.FC = () => {
                   transform: [{ translateX: expandedCard === item.id ? 150 : 0 }],
                 },
               ]}
-              onPress={() => {
-                // Ação ao tocar em uma atividade (opcional)
-              }}
             >
               <View style={ActivitiesStyle.activityHeader}>
                 <Text style={ActivitiesStyle.activityTitle}>{item.taskName}</Text>
@@ -270,7 +267,7 @@ const ActivitiesScreen: React.FC = () => {
       <View style={ActivitiesStyle.addButtonContainer}>
         <TouchableOpacity
           style={ActivitiesStyle.addButton}
-          onPress={() => setIsAddModalVisible(true)}
+          onPress={() => navigation.navigate('ActivitiesCreation')}
         >
           <Text style={ActivitiesStyle.addButtonText}>+</Text>
         </TouchableOpacity>

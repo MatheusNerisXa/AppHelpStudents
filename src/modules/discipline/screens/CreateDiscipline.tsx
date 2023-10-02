@@ -212,7 +212,7 @@ const DisciplineCreation = () => {
       </View>
 
       <TouchableOpacity style={CreateDisciplineStyle.addButton} onPress={handleCreate}>
-        <Text style={CreateDisciplineStyle.addButtonText}>Cadastrar Matéria</Text>
+        <Text style={CreateDisciplineStyle.addButtonText}>Cadastrar</Text>
       </TouchableOpacity>
 
       <Modal

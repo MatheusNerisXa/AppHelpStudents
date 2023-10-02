@@ -8,6 +8,7 @@ import AbsencesScreen from './modules/absences/screens/Absences';
 import AbsencesDetails from './modules/absences/screens/AbsencesDetails';
 import AbsencesMenu from './modules/absences/screens/MenuAbsences';
 import ActivitiesScreen from './modules/activities/screens/Activities';
+import ActivitiesCreation from './modules/activities/screens/ActivitiesCreation';
 import ChatGPT from './modules/chat/screens/Chat';
 import CreateUser from './modules/createUser';
 import Dashboard from './modules/dashboards';
@@ -49,7 +50,7 @@ const TabNavigation = () => {
       case 'Dashboards':
         iconName = 'stats-bars2';
         break;
-      case 'Tarefas':
+      case 'Activities':
         iconName = 'checkbox-checked';
         break;
       default:
@@ -104,7 +105,7 @@ const TabNavigation = () => {
         }}
       />
       <Tab.Screen
-        name="Tarefas"
+        name="Activities"
         component={ActivitiesScreen}
         options={{
           title: 'Tarefas',
@@ -305,6 +306,28 @@ const TabNavigation = () => {
           headerLeft: () => (
             <TouchableOpacity
               onPress={() => navigation.navigate('Menu')}
+              style={navigationStyle.headerLeftContainer}
+            >
+              <Text style={navigationStyle.headerLeftText}>
+                <Icon name="arrow-left2" color="#FFF" size={23} />
+              </Text>
+            </TouchableOpacity>
+          ),
+          tabBarButton: () => null,
+        })}
+      />
+
+      <Tab.Screen
+        name="ActivitiesCreation"
+        component={ActivitiesCreation}
+        options={({ navigation }) => ({
+          title: 'Cadastrar Tarefa',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Activities')}
               style={navigationStyle.headerLeftContainer}
             >
               <Text style={navigationStyle.headerLeftText}>
@@ -569,6 +592,12 @@ const Navigation = () => {
         <Stack.Screen
           name={MenuUrl.DisciplineCreation}
           component={DisciplineCreation}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name={MenuUrl.ActivitiesCreation}
+          component={ActivitiesCreation}
           options={{ headerShown: false }}
         />
 
