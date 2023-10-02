@@ -213,7 +213,7 @@ const ExamComponent = () => {
                       <Icon
                         name="calendar"
                         size={20}
-                        color="#007AFF"
+                        color="#253494"
                         style={ExamsStyle.calendarIcon}
                       />
                       <Text style={ExamsStyle.acompanharButtonText}>Adicionar ao Calendário</Text>

@@ -44,9 +44,7 @@ const ActivitiesCreation = ({ navigation }) => {
 
   const [disciplines, setDisciplines] = useState([]);
   const [selectedDiscipline, setSelectedDiscipline] = useState(null);
-  const [selectedDisciplineValue, setSelectedDisciplineValue] = useState(
-    'Selecione uma disciplina',
-  );
+  const [selectedDisciplineValue, setSelectedDisciplineValue] = useState('Selecione uma matéria');
 
   const [taskNameError, setTaskNameError] = useState(false);
   const [descriptionError, setDescriptionError] = useState(false);
@@ -198,7 +196,7 @@ const ActivitiesCreation = ({ navigation }) => {
         datePickerModeAndroid="spinner"
         monthNames={Array.from({ length: 12 }, (_, i) => translateMonth(i + 1))}
       />
-      <Text style={ActivitiesCreationStyle.label}>Disciplina:</Text>
+      <Text style={ActivitiesCreationStyle.label}>Matéria:</Text>
       <ModalDropdown
         options={disciplines.map((discipline) => discipline.name)}
         onSelect={(index) => {

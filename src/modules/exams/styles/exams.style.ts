@@ -42,7 +42,7 @@ const ExamsStyle = StyleSheet.create({
     shadowRadius: 4,
     elevation: 4,
     padding: 16,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: '#253494',
   },
   examTitle: {
@@ -113,7 +113,7 @@ const ExamsStyle = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#007AFF',
+    borderColor: '#253494',
     marginLeft: 10,
     marginTop: 50,
   },
@@ -121,7 +121,7 @@ const ExamsStyle = StyleSheet.create({
     marginRight: 5,
   },
   detailsButtonText: {
-    color: '#007AFF',
+    color: '#253494',
     fontWeight: 'bold',
   },
 
@@ -129,6 +129,10 @@ const ExamsStyle = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 10,
+  },
+  acompanharButtonText: {
+    fontWeight: 'bold',
+    color: '#253494',
   },
 });
 

@@ -10,7 +10,7 @@ export const neutralTheme = {
 
 export const mainTheme = {
   primary: '#8C29B0',
-  tab: '#f4ede6',
+  tab: '#0ddcca',
 };
 
 export const turquesaTheme = {
