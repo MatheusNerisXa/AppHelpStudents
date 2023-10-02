@@ -20,6 +20,7 @@ import {
   URL_ACTIVITIES,
   URL_ACTIVITIES_DELETE,
   URL_ACTIVITIES_EDIT,
+  URL_ADD_ACTIVITY,
 } from '../../../shared/constants/urls';
 import { useRequest } from '../../../shared/hooks/useRequest';
 import ActivitiesStyle from '../styles/activities';
@@ -44,6 +45,12 @@ const ActivitiesScreen: React.FC = () => {
 
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [itemToDelete, setItemToDelete] = useState<Activity | null>(null);
+
+  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+  const [taskName, setTaskName] = useState('');
+  const [description, setDescription] = useState('');
+  const [dueDate, setDueDate] = useState('');
+  const [isCompleted, setIsCompleted] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -74,6 +81,7 @@ const ActivitiesScreen: React.FC = () => {
     fetchUserActivities();
   }, [userId]);
 
+  // eslint-disable-next-line @typescript-eslint/no-shadow
   const formatDueDate = (dueDate: string) => {
     return format(new Date(dueDate), 'dd/MM/yyyy');
   };
@@ -136,6 +144,30 @@ const ActivitiesScreen: React.FC = () => {
       )
     : activities;
 
+  const addTask = async () => {
+    try {
+      const response = await axios.post(URL_ADD_ACTIVITY, {
+        taskName,
+        description,
+        dueDate,
+        isCompleted,
+        userId,
+      });
+
+      if (response.status === 201) {
+        const newActivity: Activity = response.data;
+        setActivities([...activities, newActivity]);
+        setIsAddModalVisible(false);
+        setTaskName('');
+        setDescription('');
+        setDueDate('');
+        setIsCompleted(false);
+      }
+    } catch (error) {
+      console.error('Error adding activity:', error);
+    }
+  };
+
   return (
     <View style={ActivitiesStyle.container}>
       <View style={ActivitiesStyle.searchContainer}>
@@ -148,6 +180,7 @@ const ActivitiesScreen: React.FC = () => {
           autoFocus={false}
         />
       </View>
+
       {loading ? (
         <ActivityIndicator size="large" color="#f09d5c" style={ActivitiesStyle.loadingIndicator} />
       ) : (
@@ -229,8 +262,19 @@ const ActivitiesScreen: React.FC = () => {
           leftOpenValue={150}
           rightOpenValue={-190}
           disableRightSwipe={true}
+          onRowOpen={(rowKey) => setExpandedCard(rowKey)}
+          onRowClose={() => setExpandedCard(null)}
         />
       )}
+
+      <View style={ActivitiesStyle.addButtonContainer}>
+        <TouchableOpacity
+          style={ActivitiesStyle.addButton}
+          onPress={() => setIsAddModalVisible(true)}
+        >
+          <Text style={ActivitiesStyle.addButtonText}>+</Text>
+        </TouchableOpacity>
+      </View>
 
       <Modal visible={isDeleteModalVisible} transparent={true} animationType="slide">
         <View style={ActivitiesStyle.modalContainer}>

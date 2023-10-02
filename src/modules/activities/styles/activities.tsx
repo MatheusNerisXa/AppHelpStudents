@@ -143,6 +143,7 @@ const ActivitiesStyle = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 1, // Adicione esta linha
   },
   modalBackground: {
     flex: 1,
@@ -162,6 +163,8 @@ const ActivitiesStyle = StyleSheet.create({
     shadowRadius: 4,
     borderWidth: 2,
     borderColor: '#253494',
+    width: '80%',
+    maxWidth: 400,
   },
   modalTitle: {
     fontSize: 15,
@@ -175,6 +178,24 @@ const ActivitiesStyle = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 20,
     marginHorizontal: 10,
+  },
+  addButtonContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+  },
+  addButton: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+    backgroundColor: '#253494',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  addButtonText: {
+    fontSize: 20,
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
 
