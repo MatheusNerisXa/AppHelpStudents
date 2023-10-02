@@ -143,7 +143,7 @@ const ActivitiesStyle = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 1, // Adicione esta linha
+    zIndex: 1,
   },
   modalBackground: {
     flex: 1,
@@ -196,6 +196,29 @@ const ActivitiesStyle = StyleSheet.create({
     fontSize: 20,
     color: 'white',
     fontWeight: 'bold',
+  },
+  filterButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 10,
+  },
+
+  filterButton: {
+    flex: 1,
+    paddingVertical: 10,
+    marginLeft: 2,
+    alignItems: 'center',
+    backgroundColor: '#666666',
+  },
+
+  activeFilterButton: {
+    backgroundColor: '#253494',
+  },
+
+  filterButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#FFF',
   },
 });
 

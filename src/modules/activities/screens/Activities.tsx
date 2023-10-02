@@ -42,6 +42,7 @@ const ActivitiesScreen: React.FC = () => {
   const [userId, setUserId] = useState<number | null>(null);
   const [searchText, setSearchText] = useState('');
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
+  const [showCompleted, setShowCompleted] = useState(false);
 
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [itemToDelete, setItemToDelete] = useState<Activity | null>(null);
@@ -144,6 +145,10 @@ const ActivitiesScreen: React.FC = () => {
       )
     : activities;
 
+  const filteredActivitiesByCompletion = showCompleted
+    ? filteredActivities.filter((activity) => activity.isCompleted)
+    : filteredActivities.filter((activity) => !activity.isCompleted);
+
   const addTask = async () => {
     try {
       const response = await axios.post(URL_ADD_ACTIVITY, {
@@ -181,11 +186,33 @@ const ActivitiesScreen: React.FC = () => {
         />
       </View>
 
+      {/* Botões de filtro para Concluídas e Não Concluídas */}
+      <View style={ActivitiesStyle.filterButtons}>
+        <TouchableOpacity
+          style={[
+            ActivitiesStyle.filterButton,
+            showCompleted ? ActivitiesStyle.activeFilterButton : null,
+          ]}
+          onPress={() => setShowCompleted(true)}
+        >
+          <Text style={ActivitiesStyle.filterButtonText}>Concluídas</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            ActivitiesStyle.filterButton,
+            !showCompleted ? ActivitiesStyle.activeFilterButton : null,
+          ]}
+          onPress={() => setShowCompleted(false)}
+        >
+          <Text style={ActivitiesStyle.filterButtonText}>Não Concluídas</Text>
+        </TouchableOpacity>
+      </View>
+
       {loading ? (
         <ActivityIndicator size="large" color="#f09d5c" style={ActivitiesStyle.loadingIndicator} />
       ) : (
         <SwipeListView
-          data={filteredActivities}
+          data={filteredActivitiesByCompletion}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <TouchableOpacity

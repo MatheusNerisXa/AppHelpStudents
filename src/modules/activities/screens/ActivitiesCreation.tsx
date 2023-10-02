@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable react-native/no-inline-styles */
 import axios from 'axios';
@@ -34,7 +35,6 @@ const ActivitiesCreation = ({ navigation }) => {
   const { getUserFromStorage } = useRequest();
 
   const [description, setDescription] = useState('');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [dueDate, setDueDate] = useState('');
   const [isCompleted, setIsCompleted] = useState(false);
   const [user, setUser] = useState(null);
@@ -44,6 +44,12 @@ const ActivitiesCreation = ({ navigation }) => {
 
   const [disciplines, setDisciplines] = useState([]);
   const [selectedDiscipline, setSelectedDiscipline] = useState(null);
+  const [selectedDisciplineValue, setSelectedDisciplineValue] = useState(
+    'Selecione uma disciplina',
+  );
+
+  const [taskNameError, setTaskNameError] = useState(false);
+  const [descriptionError, setDescriptionError] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -87,9 +93,6 @@ const ActivitiesCreation = ({ navigation }) => {
     hideDatePicker();
     setSelectedDate(date);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const isoFormattedDate = format(date, 'yyyy-MM-dd');
-
     const formattedDisplayDate = format(date, 'dd/MM/yyyy');
 
     setDueDate(formattedDisplayDate);
@@ -97,6 +100,20 @@ const ActivitiesCreation = ({ navigation }) => {
 
   const handleSaveActivity = async () => {
     try {
+      if (taskName.length < 3) {
+        setTaskNameError(true);
+        return;
+      } else {
+        setTaskNameError(false);
+      }
+
+      if (description.length < 3) {
+        setDescriptionError(true);
+        return;
+      } else {
+        setDescriptionError(false);
+      }
+
       const formattedDueDate = format(selectedDate, 'yyyy-MM-dd');
 
       const activityData = {
@@ -115,6 +132,7 @@ const ActivitiesCreation = ({ navigation }) => {
         setTaskName('');
         setDescription('');
         setSelectedDiscipline(null);
+        setSelectedDisciplineValue('Selecione uma disciplina');
       } else {
         console.error('Erro ao criar a atividade:', response.data);
       }
@@ -130,19 +148,36 @@ const ActivitiesCreation = ({ navigation }) => {
         placeholder="Digite o nome da tarefa"
         value={taskName}
         onChangeText={(text) => setTaskName(text)}
-        style={ActivitiesCreationStyle.inputField}
+        style={[
+          ActivitiesCreationStyle.inputField,
+          taskNameError ? { borderColor: 'red', borderWidth: 1 } : null,
+        ]}
         placeholderTextColor="#000"
       />
+
+      {taskNameError && (
+        <Text style={{ color: 'red' }}>O nome da tarefa deve ter pelo menos 3 caracteres.</Text>
+      )}
+
       <Text style={ActivitiesCreationStyle.label}>Descrição:</Text>
       <TextInput
         placeholder="Digite a descrição da tarefa"
         value={description}
         onChangeText={(text) => setDescription(text)}
-        style={[ActivitiesCreationStyle.inputField, { height: 'auto' }]}
+        style={[
+          ActivitiesCreationStyle.inputField,
+          { height: 'auto' },
+          descriptionError ? { borderColor: 'red', borderWidth: 1 } : null,
+        ]}
         multiline={true}
         numberOfLines={4}
         placeholderTextColor="#000"
       />
+
+      {descriptionError && (
+        <Text style={{ color: 'red' }}>A descrição deve ter pelo menos 3 caracteres.</Text>
+      )}
+
       <Text style={ActivitiesCreationStyle.label}>Data de Vencimento:</Text>
       <TouchableOpacity style={AbsencesStyle.datePickerButton} onPress={showDatePicker}>
         <Text style={AbsencesStyle.datePickerText}>{format(selectedDate, 'dd/MM/yyyy')}</Text>
@@ -169,9 +204,10 @@ const ActivitiesCreation = ({ navigation }) => {
         onSelect={(index) => {
           const selectedDiscipline = disciplines[index];
           setSelectedDiscipline(selectedDiscipline);
+          setSelectedDisciplineValue(selectedDiscipline.name);
           console.log('ID da disciplina selecionada:', selectedDiscipline.id);
         }}
-        defaultValue="Selecione uma disciplina"
+        defaultValue={selectedDisciplineValue}
         style={ActivitiesCreationStyle.dropdown}
         textStyle={ActivitiesCreationStyle.dropdownText}
         dropdownStyle={ActivitiesCreationStyle.dropdownContainer}
