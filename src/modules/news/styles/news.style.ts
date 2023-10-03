@@ -22,8 +22,8 @@ const newsStyle = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 16,
     elevation: 4,
-    borderWidth: 0.8,
-    borderColor: '#000',
+    borderWidth: 2,
+    borderColor: '#253494',
   },
   postedAtText: {
     marginTop: 10,
