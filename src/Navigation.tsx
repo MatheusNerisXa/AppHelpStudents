@@ -16,6 +16,7 @@ import { Discipline, DisciplineCreation, DisciplineMenu } from './modules/discip
 import DisciplineDetails from './modules/discipline/screens/DisciplineDetails';
 import { ExamDetails, Exams } from './modules/exams';
 import FilesAndPhotos from './modules/filesphotos';
+import FilesAndPhotosDetails from './modules/filesphotos/screens/FilesAndPhotosDetails';
 import Home from './modules/home';
 import Login from './modules/login';
 import PasswordRecoveryScreen from './modules/login/screens/PasswordRecoveryScreen';
@@ -340,6 +341,28 @@ const TabNavigation = () => {
       />
 
       <Tab.Screen
+        name="FilesAndPhotosDetails"
+        component={FilesAndPhotosDetails}
+        options={({ navigation }) => ({
+          title: 'Arquivos',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('FilePhotos')}
+              style={navigationStyle.headerLeftContainer}
+            >
+              <Text style={navigationStyle.headerLeftText}>
+                <Icon name="arrow-left2" color="#FFF" size={23} />
+              </Text>
+            </TouchableOpacity>
+          ),
+          tabBarButton: () => null,
+        })}
+      />
+
+      <Tab.Screen
         name="Absences"
         component={AbsencesScreen}
         options={({ navigation, route }) => ({
@@ -533,6 +556,11 @@ const Navigation = () => {
         <Stack.Screen
           name={MenuUrl.HOME}
           component={TabNavigation}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={MenuUrl.FilesAndPhotosDetails}
+          component={FilesAndPhotosDetails}
           options={{ headerShown: false }}
         />
         <Stack.Screen name={MenuUrl.Exam} component={Exams} options={{ headerShown: false }} />

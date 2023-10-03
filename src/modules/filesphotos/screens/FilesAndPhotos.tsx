@@ -1,4 +1,5 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable react/no-unstable-nested-components */
+import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { FlatList, RefreshControl, Text, TouchableOpacity, View } from 'react-native';
@@ -13,7 +14,8 @@ const FilesAndPhotos = () => {
   const [userId, setUserId] = useState(null);
   const [disciplineFolders, setDisciplineFolders] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-
+  const [selectedDiscipline, setSelectedDiscipline] = useState(null);
+  const navigation = useNavigation();
   const cardColors = [
     '#3498db',
     '#e74c3c',
@@ -111,8 +113,20 @@ const FilesAndPhotos = () => {
     }
   }, [userId]);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const navigateToFolderContents = (folderId, folderName, disciplineName) => {};
+  const handleDisciplineSelection = (discipline) => {
+    setSelectedDiscipline(discipline);
+  };
+
+  const navigateToFolderContents = (folderId, folderName) => {
+    if (selectedDiscipline) {
+      navigation.navigate('FilesAndPhotosDetails', {
+        folderId,
+        folderName,
+        disciplineName: selectedDiscipline.name,
+        disciplineId: selectedDiscipline.id,
+      });
+    }
+  };
 
   return (
     <View style={filesAndPhotosStyle.container}>
@@ -121,7 +135,10 @@ const FilesAndPhotos = () => {
         renderItem={({ item, index }) => (
           <TouchableOpacity
             style={filesAndPhotosStyle.folderItem}
-            onPress={() => navigateToFolderContents(item.id, item.folderName, item.disciplineName)}
+            onPress={() => {
+              handleDisciplineSelection(item);
+              navigateToFolderContents(item.id, item.folderName);
+            }}
           >
             <Icon
               name="folder"
@@ -143,9 +160,7 @@ const FilesAndPhotos = () => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#007AFF" />
         }
-        // eslint-disable-next-line react/no-unstable-nested-components
         ItemSeparatorComponent={() => <View style={filesAndPhotosStyle.separator} />}
-        // eslint-disable-next-line react/no-unstable-nested-components
         ListEmptyComponent={() => (
           <Text style={filesAndPhotosStyle.emptyText}>Nenhuma pasta encontrada.</Text>
         )}

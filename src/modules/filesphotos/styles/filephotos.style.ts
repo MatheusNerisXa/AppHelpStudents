@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const filesAndPhotosStyle = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#f9f9f9',
   },
   folderItem: {
     flexDirection: 'row',
@@ -22,7 +22,7 @@ const filesAndPhotosStyle = StyleSheet.create({
   },
   separator: {
     height: 1,
-    backgroundColor: '#ccc',
+    backgroundColor: '#253494',
   },
   emptyText: {
     textAlign: 'center',
