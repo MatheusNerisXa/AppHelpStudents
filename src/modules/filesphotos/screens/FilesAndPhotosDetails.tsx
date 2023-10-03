@@ -12,11 +12,13 @@ import {
 
 import filesAndPhotosDetailsStyle from '../styles/fileaAndPhotosDetails';
 
-const FilesAndPhotosDetails = ({ route }) => {
+const FilesAndPhotosDetails = ({ route, navigation }) => {
   const { disciplineId } = route.params;
   const [files, setFiles] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [showDownloadButton, setShowDownloadButton] = useState(false);
+  const [showAddButton, setShowAddButton] = useState(true);
 
   const fetchFiles = async () => {
     try {
@@ -46,6 +48,18 @@ const FilesAndPhotosDetails = ({ route }) => {
     Linking.openURL(imageUrl);
   };
 
+  const openImage = (imageUrl) => {
+    setSelectedImage(imageUrl);
+    setShowDownloadButton(true);
+    setShowAddButton(false);
+  };
+
+  const closeImage = () => {
+    setSelectedImage(null);
+    setShowDownloadButton(false);
+    setShowAddButton(true);
+  };
+
   return (
     <View style={filesAndPhotosDetailsStyle.container}>
       <FlatList
@@ -53,7 +67,7 @@ const FilesAndPhotosDetails = ({ route }) => {
         renderItem={({ item }) => (
           <View style={filesAndPhotosDetailsStyle.fileContainer} key={item.id}>
             <TouchableOpacity
-              onPress={() => setSelectedImage(item.fileUrl)}
+              onPress={() => openImage(item.fileUrl)}
               onLongPress={() => handleImageDownload(item.fileUrl)}
             >
               <Image
@@ -76,22 +90,35 @@ const FilesAndPhotosDetails = ({ route }) => {
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       />
       {selectedImage && (
-        <TouchableOpacity
-          style={filesAndPhotosDetailsStyle.overlay}
-          onPress={() => setSelectedImage(null)}
-        >
+        <View style={filesAndPhotosDetailsStyle.overlay}>
+          <TouchableOpacity style={filesAndPhotosDetailsStyle.closeButton} onPress={closeImage}>
+            <Text style={filesAndPhotosDetailsStyle.closeButtonText}>X</Text>
+          </TouchableOpacity>
           <Image
             source={{ uri: selectedImage }}
             style={filesAndPhotosDetailsStyle.selectedImage}
             resizeMode="contain"
           />
+          {showDownloadButton && (
+            <TouchableOpacity
+              style={filesAndPhotosDetailsStyle.downloadButton}
+              onPress={() => handleImageDownload(selectedImage)}
+            >
+              <Text style={filesAndPhotosDetailsStyle.downloadButtonText}>Baixar</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      )}
+
+      {showAddButton && (
+        <View style={filesAndPhotosDetailsStyle.addButtonContainer}>
           <TouchableOpacity
-            style={filesAndPhotosDetailsStyle.downloadButton}
-            onPress={() => handleImageDownload(selectedImage)}
+            style={filesAndPhotosDetailsStyle.addButton}
+            onPress={() => navigation.navigate('ActivitiesCreation')}
           >
-            <Text style={filesAndPhotosDetailsStyle.downloadButtonText}>Baixar</Text>
+            <Text style={filesAndPhotosDetailsStyle.addButtonText}>+</Text>
           </TouchableOpacity>
-        </TouchableOpacity>
+        </View>
       )}
     </View>
   );

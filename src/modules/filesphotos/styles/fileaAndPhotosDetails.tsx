@@ -51,6 +51,34 @@ const filesAndPhotosDetailsStyle = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
+  addButton: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+    backgroundColor: '#253494',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  addButtonText: {
+    fontSize: 20,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  addButtonContainer: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+  },
+  closeButtonText: {
+    fontSize: 20,
+    color: 'white',
+    fontWeight: 'bold',
+  },
 });
 
 export default filesAndPhotosDetailsStyle;
