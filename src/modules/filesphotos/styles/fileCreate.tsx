@@ -29,10 +29,19 @@ const fileCreateStyle = StyleSheet.create({
   },
   descriptionInput: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#253494',
+    borderRadius: 4,
     padding: 8,
     marginBottom: 16,
     width: '100%',
+  },
+  inputContainer: {
+    marginBottom: 16,
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 8,
+    color: '#000',
   },
   imageContainer: {
     marginTop: 20,

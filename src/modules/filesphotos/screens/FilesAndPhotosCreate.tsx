@@ -138,6 +138,7 @@ const FilesAndPhotosCreate = ({ route }) => {
     <ScrollView contentContainerStyle={fileCreateStyle.container}>
       <TextInput
         placeholder="Descrição do Arquivo (opcional)"
+        placeholderTextColor="#000"
         value={fileDescription}
         onChangeText={(text) => setFileDescription(text)}
         style={fileCreateStyle.descriptionInput}
