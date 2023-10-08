@@ -273,7 +273,7 @@ const ActivitiesScreen: React.FC = () => {
                 style={ActivitiesStyle.completeButton}
                 onPress={() => handleToggleCompletion(item)}
               >
-                <Icon name={item.isCompleted ? 'checkmark' : 'cross'} size={24} color="white" />
+                <Icon name={item.isCompleted ? 'cross' : 'checkmark'} size={24} color="white" />
               </TouchableOpacity>
               <TouchableOpacity
                 style={ActivitiesStyle.deleteButton}
