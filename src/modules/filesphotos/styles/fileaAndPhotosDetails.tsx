@@ -120,6 +120,42 @@ const filesAndPhotosDetailsStyle = StyleSheet.create({
     height: 100,
     borderRadius: 5,
   },
+
+  modalContent: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+  },
+  modalText: {
+    fontSize: 18,
+    marginBottom: 20,
+  },
+  modalButton: {
+    backgroundColor: '#253494',
+    padding: 10,
+    borderRadius: 5,
+  },
+  modalButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  searchContainer: {
+    backgroundColor: '#FFF',
+    borderRadius: 8,
+    marginBottom: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    shadowColor: '#253494',
+    shadowOpacity: 0.6,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  searchInput: {
+    color: '#333',
+    fontSize: 16,
+  },
 });
 
 export default filesAndPhotosDetailsStyle;

@@ -71,6 +71,7 @@ const FilesAndPhotosCreate = ({ route }) => {
 
     setIsUploading(true);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const formDataArray = selectedImages.map((image, index) => {
       const fileExtension = image.path.split('.').pop();
       const randomFileNameWithExtension = generateRandomFileName() + '.' + fileExtension;
@@ -83,7 +84,7 @@ const FilesAndPhotosCreate = ({ route }) => {
       });
       formData.append('file_url', randomFileNameWithExtension);
       formData.append('disciplineId', disciplineId);
-      formData.append('fileDescription', `${fileDescription} (${index + 1})`);
+      formData.append('fileDescription', `${fileDescription}`);
       formData.append('createdAt', getCurrentDateTime());
 
       return formData;
