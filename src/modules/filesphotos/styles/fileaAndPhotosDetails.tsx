@@ -120,7 +120,6 @@ const filesAndPhotosDetailsStyle = StyleSheet.create({
     height: 100,
     borderRadius: 5,
   },
-
   modalContent: {
     backgroundColor: 'white',
     borderRadius: 10,
