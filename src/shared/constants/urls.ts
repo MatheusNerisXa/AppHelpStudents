@@ -1,4 +1,4 @@
-export const URL_AUTH = 'http://192.168.1.7:8080/auth';
+export const URL_AUTH = 'http:/192.168.1.7:8080/auth';
 export const URL_USER = 'http://192.168.1.7:8080/user';
 export const URL_USER_ID = 'http://192.168.1.7:8080/user/';
 export const URL_EXAM = 'http://192.168.1.7:8080/exams';
@@ -16,3 +16,4 @@ export const URL_ACTIVITIES = 'http://192.168.1.7:8080/activities/user/';
 export const URL_ACTIVITIES_EDIT = 'http://192.168.1.7:8080/activities/';
 export const URL_ACTIVITIES_DELETE = 'http://192.168.1.7:8080/activities/';
 export const URL_ADD_ACTIVITY = 'http://192.168.1.7:8080/activities/user';
+export const SERVER_IP = 'http://192.168.1.7:8080';

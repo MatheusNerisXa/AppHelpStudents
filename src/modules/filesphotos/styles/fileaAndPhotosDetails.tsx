@@ -28,8 +28,9 @@ const filesAndPhotosDetailsStyle = StyleSheet.create({
     fontWeight: 'bold',
   },
   fileCreatedAt: {
+    marginTop: 10,
     fontSize: 14,
-    color: '#888',
+    color: '#000',
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
@@ -46,10 +47,6 @@ const filesAndPhotosDetailsStyle = StyleSheet.create({
     marginTop: 16,
     padding: 10,
     borderRadius: 5,
-  },
-  downloadButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
   },
   addButton: {
     width: 50,
@@ -71,13 +68,57 @@ const filesAndPhotosDetailsStyle = StyleSheet.create({
   },
   closeButton: {
     position: 'absolute',
-    top: 20,
-    right: 20,
+    top: 150,
+    paddingRight: 20,
+    right: 10,
+    zIndex: 1,
   },
   closeButtonText: {
     fontSize: 20,
     color: 'white',
     fontWeight: 'bold',
+  },
+
+  saveButton: {
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+    alignItems: 'center',
+  },
+  saveButtonText: {
+    color: 'blue',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#000',
+  },
+  modalImage: {
+    width: '90%',
+    height: '50%',
+  },
+  openInBrowserButton: {
+    position: 'absolute',
+    bottom: '15%',
+    alignSelf: 'center',
+    backgroundColor: '#253494',
+    padding: 10,
+    borderRadius: 5,
+  },
+  openInBrowserButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  thumbnail: {
+    marginTop: 10,
+    width: 100,
+    height: 100,
+    borderRadius: 5,
   },
 });
 

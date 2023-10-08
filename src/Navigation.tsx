@@ -16,6 +16,7 @@ import { Discipline, DisciplineCreation, DisciplineMenu } from './modules/discip
 import DisciplineDetails from './modules/discipline/screens/DisciplineDetails';
 import { ExamDetails, Exams } from './modules/exams';
 import FilesAndPhotos from './modules/filesphotos';
+import FilesAndPhotosCreate from './modules/filesphotos/screens/FilesAndPhotosCreate';
 import FilesAndPhotosDetails from './modules/filesphotos/screens/FilesAndPhotosDetails';
 import Home from './modules/home';
 import Login from './modules/login';
@@ -344,7 +345,29 @@ const TabNavigation = () => {
         name="FilesAndPhotosDetails"
         component={FilesAndPhotosDetails}
         options={({ navigation }) => ({
-          title: 'Arquivos',
+          title: 'Fotos',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('FilePhotos')}
+              style={navigationStyle.headerLeftContainer}
+            >
+              <Text style={navigationStyle.headerLeftText}>
+                <Icon name="arrow-left2" color="#FFF" size={23} />
+              </Text>
+            </TouchableOpacity>
+          ),
+          tabBarButton: () => null,
+        })}
+      />
+
+      <Tab.Screen
+        name="FilesAndPhotosCreate"
+        component={FilesAndPhotosCreate}
+        options={({ navigation }) => ({
+          title: 'Adicionar Arquivos',
           headerTintColor: '#FFF',
           headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
           // eslint-disable-next-line react/no-unstable-nested-components
@@ -614,6 +637,12 @@ const Navigation = () => {
         <Stack.Screen
           name={MenuUrl.Discipline}
           component={Discipline}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name={MenuUrl.FilesAndPhotosCreate}
+          component={FilesAndPhotosCreate}
           options={{ headerShown: false }}
         />
 

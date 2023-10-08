@@ -3,30 +3,40 @@ import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Image,
-  Linking,
+  Modal,
   RefreshControl,
   Text,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
+import { SERVER_IP } from '../../../shared/constants/urls';
 import filesAndPhotosDetailsStyle from '../styles/fileaAndPhotosDetails';
 
 const FilesAndPhotosDetails = ({ route, navigation }) => {
   const { disciplineId } = route.params;
   const [files, setFiles] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [showDownloadButton, setShowDownloadButton] = useState(false);
-  const [showAddButton, setShowAddButton] = useState(true);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [isImageViewerVisible, setIsImageViewerVisible] = useState(false);
+  const [isPreviewVisible, setIsPreviewVisible] = useState(false);
 
   const fetchFiles = async () => {
     try {
       console.log('Fetching files for disciplineId:', disciplineId);
-      const response = await axios.get(
-        `http://192.168.1.7:8080/files-and-photos/${disciplineId}/files`,
-      );
-      setFiles(response.data);
+      const response = await axios.get(`${SERVER_IP}/files-and-photos/${disciplineId}/files`);
+      const formattedFiles = response.data.map((file) => {
+        // console.log('fileUrl:', file.fileUrl);
+        const fileName = file.fileUrl.split('FilesAndPhotos/')[1];
+        return {
+          ...file,
+          fileName: fileName,
+          fileUri: `${SERVER_IP}/static/${fileName}`,
+        };
+      });
+      setFiles(formattedFiles);
     } catch (error) {
       console.error('Error fetching files:', error);
     } finally {
@@ -44,82 +54,80 @@ const FilesAndPhotosDetails = ({ route, navigation }) => {
     fetchFiles();
   }, [disciplineId]);
 
-  const handleImageDownload = (imageUrl) => {
-    Linking.openURL(imageUrl);
+  // const openImageViewer = (index) => {
+  //   setSelectedImageIndex(index);
+  //   setIsImageViewerVisible(true);
+  // };
+
+  const closeImageViewer = () => {
+    setIsImageViewerVisible(false);
   };
 
-  const openImage = (imageUrl) => {
-    setSelectedImage(imageUrl);
-    setShowDownloadButton(true);
-    setShowAddButton(false);
+  const openImagePreview = (index) => {
+    setSelectedImageIndex(index);
+    setIsPreviewVisible(true);
   };
 
-  const closeImage = () => {
-    setSelectedImage(null);
-    setShowDownloadButton(false);
-    setShowAddButton(true);
+  const closeImagePreview = () => {
+    setIsPreviewVisible(false);
   };
+
+  const renderImageItem = ({ item, index }) => (
+    <TouchableOpacity onPress={() => openImagePreview(index)}>
+      <View style={filesAndPhotosDetailsStyle.fileContainer}>
+        <Text style={filesAndPhotosDetailsStyle.fileName}>{item.fileDescription}</Text>
+        <Image source={{ uri: item.fileUri }} style={filesAndPhotosDetailsStyle.thumbnail} />
+        <Text style={filesAndPhotosDetailsStyle.fileCreatedAt}>Criado em: {item.createdAt}</Text>
+      </View>
+    </TouchableOpacity>
+  );
 
   return (
     <View style={filesAndPhotosDetailsStyle.container}>
       <FlatList
         data={files}
-        renderItem={({ item }) => (
-          <View style={filesAndPhotosDetailsStyle.fileContainer} key={item.id}>
-            <TouchableOpacity
-              onPress={() => openImage(item.fileUrl)}
-              onLongPress={() => handleImageDownload(item.fileUrl)}
-            >
-              <Image
-                source={{ uri: item.fileUrl }}
-                style={filesAndPhotosDetailsStyle.image}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-            <View style={filesAndPhotosDetailsStyle.fileInfo}>
-              <Text style={filesAndPhotosDetailsStyle.fileName}>
-                Nome do Arquivo: {item.fileName}
-              </Text>
-              <Text style={filesAndPhotosDetailsStyle.fileCreatedAt}>
-                Criado em: {item.createdAt}
-              </Text>
-            </View>
-          </View>
-        )}
+        renderItem={renderImageItem}
         keyExtractor={(item) => item.id.toString()}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       />
-      {selectedImage && (
-        <View style={filesAndPhotosDetailsStyle.overlay}>
-          <TouchableOpacity style={filesAndPhotosDetailsStyle.closeButton} onPress={closeImage}>
-            <Text style={filesAndPhotosDetailsStyle.closeButtonText}>X</Text>
-          </TouchableOpacity>
-          <Image
-            source={{ uri: selectedImage }}
-            style={filesAndPhotosDetailsStyle.selectedImage}
-            resizeMode="contain"
-          />
-          {showDownloadButton && (
-            <TouchableOpacity
-              style={filesAndPhotosDetailsStyle.downloadButton}
-              onPress={() => handleImageDownload(selectedImage)}
-            >
-              <Text style={filesAndPhotosDetailsStyle.downloadButtonText}>Baixar</Text>
-            </TouchableOpacity>
+      {isPreviewVisible && (
+        <Modal transparent={true} onRequestClose={closeImagePreview}>
+          <TouchableWithoutFeedback onPress={closeImagePreview}>
+            <View style={filesAndPhotosDetailsStyle.modalContainer}>
+              <Image
+                source={{ uri: files[selectedImageIndex].fileUri }}
+                style={filesAndPhotosDetailsStyle.modalImage}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
+      )}
+      {isImageViewerVisible && (
+        <ImageViewer
+          imageUrls={files.map((file) => ({ url: file.fileUri, props: file }))}
+          index={selectedImageIndex}
+          onClick={closeImageViewer}
+          enableSwipeDown
+          onSwipeDown={closeImageViewer}
+          enableImageZoom={true}
+          saveToLocalByLongPress={false}
+          onChange={(index) => setSelectedImageIndex(index)}
+          renderIndicator={(currentIndex, allSize) => (
+            // eslint-disable-next-line react-native/no-inline-styles
+            <Text style={{ color: 'white' }}>
+              {currentIndex + 1} / {allSize}
+            </Text>
           )}
-        </View>
+        />
       )}
-
-      {showAddButton && (
-        <View style={filesAndPhotosDetailsStyle.addButtonContainer}>
-          <TouchableOpacity
-            style={filesAndPhotosDetailsStyle.addButton}
-            onPress={() => navigation.navigate('ActivitiesCreation')}
-          >
-            <Text style={filesAndPhotosDetailsStyle.addButtonText}>+</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+      <View style={filesAndPhotosDetailsStyle.addButtonContainer}>
+        <TouchableOpacity
+          style={filesAndPhotosDetailsStyle.addButton}
+          onPress={() => navigation.navigate('FilesAndPhotosCreate', { disciplineId })}
+        >
+          <Text style={filesAndPhotosDetailsStyle.addButtonText}>+</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
