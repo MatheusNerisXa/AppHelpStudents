@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -53,6 +54,9 @@ const ActivitiesScreen: React.FC = () => {
   const [dueDate, setDueDate] = useState('');
   const [isCompleted, setIsCompleted] = useState(false);
 
+  const [totalConcluidas, setTotalConcluidas] = useState(0);
+  const [totalNaoConcluidas, setTotalNaoConcluidas] = useState(0);
+
   useEffect(() => {
     const fetchUserData = async () => {
       const userData = await getUserFromStorage();
@@ -67,10 +71,18 @@ const ActivitiesScreen: React.FC = () => {
       if (userId) {
         try {
           const activitiesResponse = await axios.get(URL_ACTIVITIES + `${userId}`);
-
           const userActivities: Activity[] = activitiesResponse.data;
 
           setActivities(userActivities);
+
+          const totalConcluidas = userActivities.filter((activity) => activity.isCompleted).length;
+          const totalNaoConcluidas = userActivities.filter(
+            (activity) => !activity.isCompleted,
+          ).length;
+
+          setTotalConcluidas(totalConcluidas);
+          setTotalNaoConcluidas(totalNaoConcluidas);
+
           setLoading(false);
         } catch (error) {
           console.error('Erro ao buscar atividades:', error);
@@ -82,7 +94,6 @@ const ActivitiesScreen: React.FC = () => {
     fetchUserActivities();
   }, [userId]);
 
-  // eslint-disable-next-line @typescript-eslint/no-shadow
   const formatDueDate = (dueDate: string) => {
     return format(new Date(dueDate), 'dd/MM/yyyy');
   };
@@ -186,7 +197,6 @@ const ActivitiesScreen: React.FC = () => {
         />
       </View>
 
-      {/* Botões de filtro para Concluídas e Não Concluídas */}
       <View style={ActivitiesStyle.filterButtons}>
         <TouchableOpacity
           style={[
@@ -195,7 +205,7 @@ const ActivitiesScreen: React.FC = () => {
           ]}
           onPress={() => setShowCompleted(true)}
         >
-          <Text style={ActivitiesStyle.filterButtonText}>Concluídas</Text>
+          <Text style={ActivitiesStyle.filterButtonText}>Concluídas ({totalConcluidas})</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[
@@ -204,7 +214,7 @@ const ActivitiesScreen: React.FC = () => {
           ]}
           onPress={() => setShowCompleted(false)}
         >
-          <Text style={ActivitiesStyle.filterButtonText}>Não Concluídas</Text>
+          <Text style={ActivitiesStyle.filterButtonText}>Pendentes ({totalNaoConcluidas})</Text>
         </TouchableOpacity>
       </View>
 
