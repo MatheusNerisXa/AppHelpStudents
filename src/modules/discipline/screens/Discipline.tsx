@@ -57,6 +57,10 @@ const Discipline = () => {
     return new Date(dateString).toLocaleDateString('pt-BR', options);
   };
 
+  const handleCreateDiscipline = () => {
+    navigation.navigate('DisciplineCreationScreen');
+  };
+
   const renderItem = ({ item, index }) => {
     if (item.status_discipline === 5) {
       return null;
@@ -142,6 +146,11 @@ const Discipline = () => {
           }
         />
       )}
+      <TouchableOpacity style={disciplineStyle.addButton1} onPress={handleCreateDiscipline}>
+        <View style={disciplineStyle.addCircle}>
+          <Text style={disciplineStyle.addText}>+</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };

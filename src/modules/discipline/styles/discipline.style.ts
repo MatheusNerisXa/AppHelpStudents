@@ -75,18 +75,6 @@ const disciplineStyle = StyleSheet.create({
     fontSize: 14,
     marginLeft: 8,
   },
-  addButton: {
-    position: 'absolute',
-    bottom: 24,
-    right: 24,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: '#007AFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 5,
-  },
   addButtonText: {
     fontSize: 28,
     fontWeight: 'bold',
@@ -100,6 +88,23 @@ const disciplineStyle = StyleSheet.create({
   statusAndLabel: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  addButton1: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+  },
+  addCircle: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#253494',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  addText: {
+    fontSize: 24,
+    color: '#FFF',
   },
 });
 
