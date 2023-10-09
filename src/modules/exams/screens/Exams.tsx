@@ -4,11 +4,13 @@ import { isAfter } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import React, { useEffect, useState } from 'react';
 import {
+  Modal,
   Platform,
   RefreshControl,
   ScrollView,
   Text,
   TextInput,
+  TouchableHighlight,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -34,6 +36,7 @@ const ExamComponent = () => {
   const [exams, setExams] = useState<Exam[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const [searchText, setSearchText] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
 
   const navigation = useNavigation();
 
@@ -68,7 +71,7 @@ const ExamComponent = () => {
         endDate: new Date(utcStartDate.getTime() + 1 * 60 * 60 * 1000).toISOString(),
       });
 
-      console.log('Evento adicionado ao calendário (iOS).');
+      showSuccessModal();
     } catch (error) {
       console.error('Erro ao adicionar evento ao calendário (iOS):', error);
     }
@@ -95,12 +98,22 @@ const ExamComponent = () => {
         const eventID = await CalendarEvents.saveEvent(eventDetails);
 
         console.log('Evento adicionado ao calendário (Android) com ID:', eventID);
+
+        showSuccessModal();
       } else {
         console.log('Permissão do calendário não concedida (Android).');
       }
     } catch (error) {
       console.error('Erro ao adicionar evento ao calendário (Android):', error);
     }
+  };
+
+  const showSuccessModal = () => {
+    setModalVisible(true);
+  };
+
+  const hideModal = () => {
+    setModalVisible(false);
   };
 
   const handleAcompanharClick = (exam: Exam) => {
@@ -227,6 +240,21 @@ const ExamComponent = () => {
           })
         )}
       </ScrollView>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={hideModal}
+      >
+        <View style={ExamsStyle.modalContainer}>
+          <View style={ExamsStyle.modalContent}>
+            <Text style={ExamsStyle.modalText}>Evento adicionado ao calendário com sucesso!</Text>
+            <TouchableHighlight style={ExamsStyle.modalButton} onPress={hideModal}>
+              <Text style={ExamsStyle.modalButtonText}>Fechar</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
