@@ -263,13 +263,13 @@ const ExamComponent = () => {
                       <Icon
                         name="calendar"
                         size={20}
-                        color={addedToCalendar.includes(exam.id) ? '#8C29B0' : '#253494'}
+                        color={addedToCalendar.includes(exam.id) ? '#929898' : '#253494'}
                         style={ExamsStyle.calendarIcon}
                       />
                       <Text
                         style={{
                           ...ExamsStyle.acompanharButtonText,
-                          color: addedToCalendar.includes(exam.id) ? '#8C29B0' : '#253494',
+                          color: addedToCalendar.includes(exam.id) ? '#929898' : '#253494',
                         }}
                       >
                         {addedToCalendar.includes(exam.id)

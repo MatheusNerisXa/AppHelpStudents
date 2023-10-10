@@ -150,6 +150,7 @@ const Profile = () => {
             <TextInput
               value={cpf}
               onChangeText={setCpf}
+              editable={false}
               style={profileStyle.input}
               placeholder="Enter your CPF"
             />
@@ -163,7 +164,7 @@ const Profile = () => {
               placeholder="Enter your phone number"
             />
           </View>
-          <Button title="Save Changes" onPress={handleSaveChanges} />
+          <Button title="Salvar" onPress={handleSaveChanges} />
         </Animated.View>
       </ScrollView>
     </View>
