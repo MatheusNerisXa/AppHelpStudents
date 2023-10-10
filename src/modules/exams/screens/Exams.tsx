@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-inline-styles */
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { format, parseISO } from 'date-fns';
 import { isAfter } from 'date-fns';
@@ -37,6 +39,7 @@ const ExamComponent = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [addedToCalendar, setAddedToCalendar] = useState<number[]>([]);
 
   const navigation = useNavigation();
 
@@ -49,6 +52,17 @@ const ExamComponent = () => {
 
   useEffect(() => {
     fetchData();
+
+    AsyncStorage.getItem('addedToCalendar')
+      .then((data) => {
+        if (data) {
+          const parsedData = JSON.parse(data);
+          setAddedToCalendar(parsedData);
+        }
+      })
+      .catch((error) => {
+        console.error('Erro ao recuperar os exames adicionados ao calendário:', error);
+      });
   }, []);
 
   const handleRefresh = () => {
@@ -117,7 +131,7 @@ const ExamComponent = () => {
   };
 
   const handleAcompanharClick = (exam: Exam) => {
-    const { registrationStart, exam1Date, exam2Date, resultDate, title } = exam;
+    const { id, registrationStart, exam1Date, exam2Date, resultDate, title } = exam;
 
     const eventDetails = [
       { date: registrationStart, title: `Início da Inscrição - ${title}` },
@@ -130,13 +144,31 @@ const ExamComponent = () => {
       if (detail.date) {
         const startDate = new Date(detail.date);
 
-        if (Platform.OS === 'ios') {
-          addToCalendarIOS(detail.title, startDate);
-        } else if (Platform.OS === 'android') {
-          addToCalendarAndroid(detail.title, startDate);
+        if (!addedToCalendar.includes(id)) {
+          if (Platform.OS === 'ios') {
+            addToCalendarIOS(detail.title, startDate);
+          } else if (Platform.OS === 'android') {
+            addToCalendarAndroid(detail.title, startDate);
+          }
+
+          setAddedToCalendar([...addedToCalendar, id]);
+
+          AsyncStorage.setItem('addedToCalendar', JSON.stringify([...addedToCalendar, id]))
+            .then(() => {
+              console.log('Exame adicionado ao calendário e salvo no AsyncStorage.');
+            })
+            .catch((error) => {
+              console.error('Erro ao salvar o exame no AsyncStorage:', error);
+            });
+        } else {
+          showAlreadyAddedModal();
         }
       }
     }
+  };
+
+  const showAlreadyAddedModal = () => {
+    setModalVisible(true);
   };
 
   const filteredExams = exams.filter((exam) =>
@@ -221,15 +253,29 @@ const ExamComponent = () => {
                     )}
                     <TouchableOpacity
                       style={ExamsStyle.calendarButton}
-                      onPress={() => handleAcompanharClick(exam)}
+                      onPress={() => {
+                        if (!addedToCalendar.includes(exam.id)) {
+                          handleAcompanharClick(exam);
+                        }
+                      }}
+                      disabled={addedToCalendar.includes(exam.id)}
                     >
                       <Icon
                         name="calendar"
                         size={20}
-                        color="#253494"
+                        color={addedToCalendar.includes(exam.id) ? '#8C29B0' : '#253494'}
                         style={ExamsStyle.calendarIcon}
                       />
-                      <Text style={ExamsStyle.acompanharButtonText}>Adicionar ao Calendário</Text>
+                      <Text
+                        style={{
+                          ...ExamsStyle.acompanharButtonText,
+                          color: addedToCalendar.includes(exam.id) ? '#8C29B0' : '#253494',
+                        }}
+                      >
+                        {addedToCalendar.includes(exam.id)
+                          ? 'Adicionado ao Calendário'
+                          : 'Adicionar ao Calendário'}
+                      </Text>
                     </TouchableOpacity>
                   </View>
                 </TouchableOpacity>
