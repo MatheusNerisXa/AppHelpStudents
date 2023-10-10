@@ -164,6 +164,7 @@ export const useRequest = () => {
     setErrorMessage,
     authRequest,
     getUserFromStorage,
+    setUser,
     user: state.user,
   };
 };

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
-import { Alert, Animated, RefreshControl, ScrollView, Text, TextInput, View } from 'react-native';
+import { Alert, Animated, ScrollView, Text, TextInput, View } from 'react-native';
 
 import Button from '../../../shared/components/button/Button';
 import { URL_USER_ID } from '../../../shared/constants/urls';
@@ -9,7 +9,6 @@ import profileStyle from '../styles/profile.style';
 
 const Profile = () => {
   const { user, setUser } = useRequest();
-  const [refreshing, setRefreshing] = useState(false);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -26,26 +25,20 @@ const Profile = () => {
         const updatedUser = response.data;
         console.log('Dados atualizados:', updatedUser);
 
-        // Atualize o estado local com os novos valores
         setName(updatedUser.name);
         setEmail(updatedUser.email);
         setCpf(updatedUser.cpf);
         setPhone(updatedUser.phone);
 
-        // Atualize o estado global do usuário, se necessário
         setUser(updatedUser);
       } else {
-        throw new Error('Não foi possível buscar os dados atualizados do usuário.');
+        console.error('Falha ao buscar os dados atualizados do usuário.');
+        Alert.alert('Erro', 'Falha ao buscar os dados atualizados do usuário.');
       }
     } catch (error) {
-      console.error('Erro ao buscar dados atualizados:', error);
+      console.error('Erro ao buscar os dados atualizados:', error);
+      Alert.alert('Erro', 'Ocorreu um erro ao buscar os dados atualizados do usuário.');
     }
-  };
-
-  const onRefresh = async () => {
-    setRefreshing(true);
-    await fetchUserData();
-    setRefreshing(false);
   };
 
   useEffect(() => {
@@ -60,15 +53,14 @@ const Profile = () => {
       setEmail(user.email);
       setCpf(user.cpf);
       setPhone(user.phone);
-    }
 
-    // Carregue os dados do usuário ao carregar a página inicial
-    fetchUserData();
+      fetchUserData();
+    }
   }, [animation, user]);
 
   const handleSaveChanges = async () => {
     try {
-      console.log('Saving changes...');
+      console.log('Salvando alterações...');
       const updatedFields = {};
       if (name !== user.name) {
         updatedFields.name = name;
@@ -90,61 +82,35 @@ const Profile = () => {
       });
 
       if (response.status === 200) {
-        console.log('Profile updated successfully.');
+        console.log('Perfil atualizado com sucesso.');
         const updatedUserData = {
           ...user,
           ...updatedFields,
         };
 
-        // Atualize o estado global do usuário, se necessário
         setUser(updatedUserData);
 
-        // Exibir mensagem de sucesso com botão "OK"
-        Alert.alert('Sucesso', 'Cadastro atualizado com sucesso.', [
+        Alert.alert('Sucesso', 'Perfil atualizado com sucesso.', [
           {
             text: 'OK',
             onPress: () => {
-              console.log('OK Pressed');
-              // Coloque aqui qualquer ação adicional que você queira realizar após o OK
+              console.log('OK Pressionado');
             },
           },
         ]);
       } else {
-        console.error('Error updating user profile:', response.statusText);
-        // Exibir mensagem de erro com botão "OK"
-        Alert.alert('Erro', 'Não foi possível atualizar o cadastro.', [
-          {
-            text: 'OK',
-            onPress: () => {
-              console.log('OK Pressed');
-              // Coloque aqui qualquer ação adicional que você queira realizar após o OK
-            },
-          },
-        ]);
+        console.error('Erro ao atualizar o perfil do usuário:', response.statusText);
+        Alert.alert('Erro', 'Falha ao atualizar o perfil.');
       }
     } catch (error) {
-      console.error('Error updating user profile:', error);
-      // Exibir mensagem de erro com botão "OK"
-      Alert.alert('Erro', 'Ocorreu um erro ao atualizar o cadastro.', [
-        {
-          text: 'OK',
-          onPress: () => {
-            console.log('OK Pressed');
-            // Coloque aqui qualquer ação adicional que você queira realizar após o OK
-          },
-        },
-      ]);
+      console.error('Erro ao atualizar o perfil do usuário:', error);
+      Alert.alert('Erro', 'Ocorreu um erro ao atualizar o perfil.');
     }
   };
 
   return (
     <View style={profileStyle.pageContainer}>
-      <ScrollView
-        contentContainerStyle={profileStyle.container}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#007AFF" />
-        }
-      >
+      <ScrollView contentContainerStyle={profileStyle.container}>
         <Animated.View
           style={[
             profileStyle.contentContainer,
@@ -162,12 +128,12 @@ const Profile = () => {
           ]}
         >
           <View style={profileStyle.inputContainer}>
-            <Text style={profileStyle.label}>Nome:</Text>
+            <Text style={profileStyle.label}>Name:</Text>
             <TextInput
               value={name}
               onChangeText={setName}
               style={profileStyle.input}
-              placeholder="Digite o seu nome"
+              placeholder="Enter your name"
             />
           </View>
           <View style={profileStyle.inputContainer}>
@@ -176,7 +142,7 @@ const Profile = () => {
               value={email}
               onChangeText={setEmail}
               style={profileStyle.input}
-              placeholder="Digite o seu email"
+              placeholder="Enter your email"
             />
           </View>
           <View style={profileStyle.inputContainer}>
@@ -185,26 +151,19 @@ const Profile = () => {
               value={cpf}
               onChangeText={setCpf}
               style={profileStyle.input}
-              placeholder="Digite o seu CPF"
+              placeholder="Enter your CPF"
             />
           </View>
           <View style={profileStyle.inputContainer}>
-            <Text style={profileStyle.label}>Celular:</Text>
+            <Text style={profileStyle.label}>Phone:</Text>
             <TextInput
               value={phone}
               onChangeText={setPhone}
               style={profileStyle.input}
-              placeholder="Digite o seu número de celular"
+              placeholder="Enter your phone number"
             />
           </View>
-          <Button
-            title="Salvar"
-            onPress={handleSaveChanges}
-            style={profileStyle.button}
-            loading={false}
-          >
-            Salvar Alterações
-          </Button>
+          <Button title="Save Changes" onPress={handleSaveChanges} />
         </Animated.View>
       </ScrollView>
     </View>
