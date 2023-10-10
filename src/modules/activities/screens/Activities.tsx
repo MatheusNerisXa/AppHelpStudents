@@ -201,20 +201,20 @@ const ActivitiesScreen: React.FC = () => {
         <TouchableOpacity
           style={[
             ActivitiesStyle.filterButton,
-            showCompleted ? ActivitiesStyle.activeFilterButton : null,
-          ]}
-          onPress={() => setShowCompleted(true)}
-        >
-          <Text style={ActivitiesStyle.filterButtonText}>Concluídas ({totalConcluidas})</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            ActivitiesStyle.filterButton,
             !showCompleted ? ActivitiesStyle.activeFilterButton : null,
           ]}
           onPress={() => setShowCompleted(false)}
         >
           <Text style={ActivitiesStyle.filterButtonText}>Pendentes ({totalNaoConcluidas})</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            ActivitiesStyle.filterButton,
+            showCompleted ? ActivitiesStyle.activeFilterButton : null,
+          ]}
+          onPress={() => setShowCompleted(true)}
+        >
+          <Text style={ActivitiesStyle.filterButtonText}>Concluídas ({totalConcluidas})</Text>
         </TouchableOpacity>
       </View>
 
