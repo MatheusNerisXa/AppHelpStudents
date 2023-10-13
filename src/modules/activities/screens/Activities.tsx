@@ -143,6 +143,16 @@ const ActivitiesScreen: React.FC = () => {
 
         setActivities(updatedActivities);
 
+        const updatedTotalConcluidas = updatedActivities.filter(
+          (activity) => activity.isCompleted,
+        ).length;
+        const updatedTotalNaoConcluidas = updatedActivities.filter(
+          (activity) => !activity.isCompleted,
+        ).length;
+
+        setTotalConcluidas(updatedTotalConcluidas);
+        setTotalNaoConcluidas(updatedTotalNaoConcluidas);
+
         setExpandedCard(null);
       }
     } catch (error) {

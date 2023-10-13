@@ -93,7 +93,7 @@ const ActivitiesCreation = ({ navigation }) => {
 
     const formattedDisplayDate = format(date, 'dd/MM/yyyy');
 
-    setDueDate(formattedDisplayDate);
+    setDueDate(formattedDueDate);
   };
 
   const handleSaveActivity = async () => {
@@ -199,6 +199,7 @@ const ActivitiesCreation = ({ navigation }) => {
       <Text style={ActivitiesCreationStyle.label}>Matéria:</Text>
       <ModalDropdown
         options={disciplines.map((discipline) => discipline.name)}
+        defaultIndex={0}
         onSelect={(index) => {
           const selectedDiscipline = disciplines[index];
           setSelectedDiscipline(selectedDiscipline);
