@@ -45,6 +45,10 @@ const Menu = () => {
     navigation.navigate(MenuUrl.Suport);
   };
 
+  const handleCoursesPress = () => {
+    navigation.navigate(MenuUrl.Courses);
+  };
+
   const handleDisciplinePress = () => {
     navigation.navigate(MenuUrl.DisciplineMenu);
   };
@@ -73,16 +77,16 @@ const Menu = () => {
         />
       </View>
       <View style={menuStyles.cardRow}>
-        <MenuItem icon="question" text="Ajuda" color="#006633" onPress={handleSupportPress} />
+        <MenuItem
+          icon="calculator"
+          text="Cursos Online"
+          color="#344874"
+          onPress={handleCoursesPress}
+        />
         <MenuItem icon="user" text="Perfil" color="#CC3300" onPress={handleProfilePress} />
       </View>
       <View style={menuStyles.cardRow}>
-        <MenuItem
-          icon="checkbox-checked"
-          text="Tarefas"
-          color="#3366CC"
-          onPress={handleSupportPress}
-        />
+        <MenuItem icon="question" text="Ajuda" color="#006633" onPress={handleSupportPress} />
         <MenuItem icon="exit" text="Sair" color="#FF3333" onPress={handleLogout} />
       </View>
     </ScrollView>
