@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Alert, Image, Modal, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -6,16 +5,12 @@ import { Avatar } from 'react-native-elements';
 import ImagePicker from 'react-native-image-crop-picker';
 
 import Button from '../../../shared/components/button/Button';
-import {
-  SERVER_IP,
-  URL_PROFILE_IMAGE,
-  URL_UPDATE_PROFILE_IMAGE,
-  URL_USER_ID,
-} from '../../../shared/constants/urls';
+import { URL_UPDATE_PROFILE_IMAGE, URL_USER_ID } from '../../../shared/constants/urls';
 import { useRequest } from '../../../shared/hooks/useRequest';
 import profileStyle from '../styles/profile.style';
 
 const Profile = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { user, setUser } = useRequest();
 
   const [name, setName] = useState('');
@@ -27,6 +22,7 @@ const Profile = () => {
   const [isUploading, setIsUploading] = useState(false);
 
   const [modalVisible, setModalVisible] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [modalImageUri, setModalImageUri] = useState('');
 
   const handleImageSelect = async (source) => {
@@ -93,7 +89,7 @@ const Profile = () => {
 
   const fetchProfileImage = () => {
     axios
-      .get(`${user.id}`)
+      .get(`http://192.168.1.7:8080/user/profile-image/${user.id}`)
       .then((response) => {
         if (response.data.ProfileImage) {
           setProfileImageUrl(response.data.ProfileImage);
@@ -169,7 +165,7 @@ const Profile = () => {
           setPhone(userData.phone);
 
           axios
-            .get(URL_PROFILE_IMAGE + `${user.id}`)
+            .get(`http://192.168.1.7:8080/user/profile-image/${user.id}`)
             .then((imageResponse) => {
               if (imageResponse.data.ProfileImage) {
                 setProfileImageUrl(imageResponse.data.ProfileImage);
@@ -193,7 +189,7 @@ const Profile = () => {
             size="xlarge"
             rounded
             source={{
-              uri: profileImageUrl || SERVER_IP + '/static/default.png',
+              uri: profileImageUrl || 'http://192.168.1.7:8080/static/default.png',
             }}
             onPress={() => {
               if (profileImageUrl) {
