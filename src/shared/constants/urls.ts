@@ -19,3 +19,4 @@ export const URL_ACTIVITIES_DELETE = 'http://192.168.1.7:8080/activities/';
 export const URL_ADD_ACTIVITY = 'http://192.168.1.7:8080/activities/user';
 export const SERVER_IP = 'http://192.168.1.7:8080';
 export const URL_PROFILE_IMAGE = 'http://192.168.1.7:8080/user/profile-image/';
+export const URL_VIDEO_LESSONS = 'http://192.168.1.7:8080/video-lessons';

@@ -41,6 +41,10 @@ const Menu = () => {
     navigation.navigate(MenuUrl.Profile);
   };
 
+  const handleVideoLessonsPress = () => {
+    navigation.navigate(MenuUrl.VideoLessons);
+  };
+
   const handleSupportPress = () => {
     navigation.navigate(MenuUrl.Suport);
   };
@@ -83,7 +87,11 @@ const Menu = () => {
           color="#344874"
           onPress={handleCoursesPress}
         />
+        <MenuItem icon="play" text="VideoAula" color="#279330" onPress={handleVideoLessonsPress} />
+      </View>
+      <View style={menuStyles.cardRow}>
         <MenuItem icon="user" text="Perfil" color="#CC3300" onPress={handleProfilePress} />
+        <MenuItem icon="exit" text="Sair" color="#FF3333" onPress={handleLogout} />
       </View>
       <View style={menuStyles.cardRow}>
         <MenuItem icon="question" text="Ajuda" color="#006633" onPress={handleSupportPress} />

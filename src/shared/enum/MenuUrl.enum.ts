@@ -27,4 +27,5 @@ export enum MenuUrl {
   FilesAndPhotosCreate = 'FilesAndPhotosCreate',
   Courses = 'Courses',
   CoursesDetails = 'CoursesDetails',
+  VideoLessons = 'VideoLessons',
 }

@@ -29,6 +29,7 @@ import Profile from './modules/profile';
 import Splash from './modules/splash';
 import Suport from './modules/suport';
 import Translation from './modules/translation';
+import VideoLessons from './modules/VideoLessons/screens/VideoLessons';
 import navigationStyle from './Navigation.style';
 import { Icon } from './shared/components/icon/Icon';
 import { MenuUrl } from './shared/enum/MenuUrl.enum';
@@ -174,6 +175,28 @@ const TabNavigation = () => {
         component={Courses}
         options={({ navigation }) => ({
           title: 'Cursos Online',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Menu')}
+              style={navigationStyle.headerLeftContainer}
+            >
+              <Text style={navigationStyle.headerLeftText}>
+                <Icon name="arrow-left2" color="#FFF" size={23} />
+              </Text>
+            </TouchableOpacity>
+          ),
+          tabBarButton: () => null,
+        })}
+      />
+
+      <Tab.Screen
+        name="VideoLessons"
+        component={VideoLessons}
+        options={({ navigation }) => ({
+          title: 'VideoAula',
           headerTintColor: '#FFF',
           headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
           // eslint-disable-next-line react/no-unstable-nested-components
@@ -645,6 +668,11 @@ const Navigation = () => {
         />
         <Stack.Screen
           name={MenuUrl.CoursesDetails}
+          component={CoursesDetails}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={MenuUrl.VideoLessons}
           component={CoursesDetails}
           options={{ headerShown: false }}
         />
