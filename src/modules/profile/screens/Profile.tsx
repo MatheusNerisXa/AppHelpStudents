@@ -1,9 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
-import { Alert, Animated, ScrollView, Text, TextInput, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Alert, Image, Modal, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Avatar } from 'react-native-elements';
+import ImagePicker from 'react-native-image-crop-picker';
 
 import Button from '../../../shared/components/button/Button';
-import { URL_USER_ID } from '../../../shared/constants/urls';
+import {
+  SERVER_IP,
+  URL_PROFILE_IMAGE,
+  URL_UPDATE_PROFILE_IMAGE,
+  URL_USER_ID,
+} from '../../../shared/constants/urls';
 import { useRequest } from '../../../shared/hooks/useRequest';
 import profileStyle from '../styles/profile.style';
 
@@ -14,81 +22,117 @@ const Profile = () => {
   const [email, setEmail] = useState('');
   const [cpf, setCpf] = useState('');
   const [phone, setPhone] = useState('');
+  const [profileImageUrl, setProfileImageUrl] = useState('');
 
-  const animation = useRef(new Animated.Value(0)).current;
+  const [isUploading, setIsUploading] = useState(false);
 
-  const fetchUserData = async () => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalImageUri, setModalImageUri] = useState('');
+
+  const handleImageSelect = async (source) => {
     try {
-      const response = await axios.get(`${URL_USER_ID}${user.id}`);
+      const options = {
+        compressImageQuality: 0.7,
+      };
 
-      if (response.status === 200) {
-        const updatedUser = response.data;
-        console.log('Dados atualizados:', updatedUser);
+      let image = null;
 
-        setName(updatedUser.name);
-        setEmail(updatedUser.email);
-        setCpf(updatedUser.cpf);
-        setPhone(updatedUser.phone);
+      if (source === 'gallery') {
+        image = await ImagePicker.openPicker(options);
+      } else if (source === 'camera') {
+        image = await ImagePicker.openCamera(options);
+      }
 
-        setUser(updatedUser);
-      } else {
-        console.error('Falha ao buscar os dados atualizados do usuário.');
-        Alert.alert('Erro', 'Falha ao buscar os dados atualizados do usuário.');
+      if (image) {
+        console.log('Imagem selecionada:', image);
+        uploadImage(image);
       }
     } catch (error) {
-      console.error('Erro ao buscar os dados atualizados:', error);
-      Alert.alert('Erro', 'Ocorreu um erro ao buscar os dados atualizados do usuário.');
+      if (error.message !== 'User cancelled image selection') {
+        console.error('Erro ao selecionar a imagem:', error);
+      }
     }
   };
 
-  useEffect(() => {
-    Animated.timing(animation, {
-      toValue: 1,
-      duration: 500,
-      useNativeDriver: true,
-    }).start();
+  const uploadImage = async (image) => {
+    const formData = new FormData();
+    const fileExtension = image.path.split('.').pop();
+    const randomFileNameWithExtension = generateRandomFileName() + '.' + fileExtension;
 
-    if (user) {
-      setName(user.name);
-      setEmail(user.email);
-      setCpf(user.cpf);
-      setPhone(user.phone);
+    formData.append('file', {
+      uri: image.path,
+      type: image.mime,
+      name: randomFileNameWithExtension,
+    });
 
-      fetchUserData();
+    try {
+      const response = await axios.put(URL_UPDATE_PROFILE_IMAGE + user.id, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.status === 200) {
+        Alert.alert('Sucesso', 'Imagem de perfil enviada com sucesso.');
+
+        const newProfileImageUrl = response.data.profile_url;
+
+        setProfileImageUrl(newProfileImageUrl);
+
+        setIsUploading(true);
+
+        fetchProfileImage();
+      } else {
+        Alert.alert('Erro', 'Ocorreu um erro ao enviar a imagem de perfil.');
+      }
+    } catch (error) {
+      console.error('Erro ao fazer upload da imagem de perfil:', error);
+      Alert.alert('Erro', 'Ocorreu um erro ao enviar a imagem de perfil.');
     }
-  }, [animation, user]);
+  };
+
+  const fetchProfileImage = () => {
+    axios
+      .get(`${user.id}`)
+      .then((response) => {
+        if (response.data.ProfileImage) {
+          setProfileImageUrl(response.data.ProfileImage);
+        }
+      })
+      .catch((error) => {
+        console.error('Erro ao buscar a imagem de perfil:', error);
+      });
+  };
 
   const handleSaveChanges = async () => {
-    try {
-      console.log('Salvando alterações...');
-      const updatedFields = {};
-      if (name !== user.name) {
-        updatedFields.name = name;
-      }
-      if (email !== user.email) {
-        updatedFields.email = email;
-      }
-      if (cpf !== user.cpf) {
-        updatedFields.cpf = cpf;
-      }
-      if (phone !== user.phone) {
-        updatedFields.phone = phone;
-      }
+    const updatedFields = {};
 
-      const response = await axios.put(URL_USER_ID + `${user.id}`, updatedFields, {
+    if (name !== user.name) {
+      updatedFields.name = name;
+    }
+    if (email !== user.email) {
+      updatedFields.email = email;
+    }
+    if (cpf !== user.cpf) {
+      updatedFields.cpf = cpf;
+    }
+    if (phone !== user.phone) {
+      updatedFields.phone = phone;
+    }
+
+    try {
+      const userUpdateResponse = await axios.put(URL_USER_ID + `${user.id}`, updatedFields, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
 
-      if (response.status === 200) {
+      if (userUpdateResponse.status === 200) {
         console.log('Perfil atualizado com sucesso.');
-        const updatedUserData = {
-          ...user,
-          ...updatedFields,
-        };
 
-        setUser(updatedUserData);
+        if (isUploading) {
+          fetchProfileImage();
+        }
 
         Alert.alert('Sucesso', 'Perfil atualizado com sucesso.', [
           {
@@ -99,7 +143,7 @@ const Profile = () => {
           },
         ]);
       } else {
-        console.error('Erro ao atualizar o perfil do usuário:', response.statusText);
+        console.error('Erro ao atualizar o perfil do usuário:', userUpdateResponse.statusText);
         Alert.alert('Erro', 'Falha ao atualizar o perfil.');
       }
     } catch (error) {
@@ -108,65 +152,112 @@ const Profile = () => {
     }
   };
 
+  const generateRandomFileName = () => {
+    const randomFileName = Math.random().toString(36).substring(7);
+    return randomFileName;
+  };
+
+  useEffect(() => {
+    if (user) {
+      axios
+        .get(URL_USER_ID + `${user.id}`)
+        .then((response) => {
+          const userData = response.data;
+          setName(userData.name);
+          setEmail(userData.email);
+          setCpf(userData.cpf);
+          setPhone(userData.phone);
+
+          axios
+            .get(URL_PROFILE_IMAGE + `${user.id}`)
+            .then((imageResponse) => {
+              if (imageResponse.data.ProfileImage) {
+                setProfileImageUrl(imageResponse.data.ProfileImage);
+              }
+            })
+            .catch((error) => {
+              console.error('Erro ao buscar a imagem de perfil:', error);
+            });
+        })
+        .catch((error) => {
+          console.error('Erro ao buscar as informações do usuário:', error);
+        });
+    }
+  }, [user]);
+
   return (
     <View style={profileStyle.pageContainer}>
-      <ScrollView contentContainerStyle={profileStyle.container}>
-        <Animated.View
-          style={[
-            profileStyle.contentContainer,
-            {
-              opacity: animation,
-              transform: [
-                {
-                  translateY: animation.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [50, 0],
-                  }),
-                },
-              ],
-            },
-          ]}
-        >
-          <View style={profileStyle.inputContainer}>
-            <Text style={profileStyle.label}>Name:</Text>
-            <TextInput
-              value={name}
-              onChangeText={setName}
-              style={profileStyle.input}
-              placeholder="Enter your name"
-            />
-          </View>
-          <View style={profileStyle.inputContainer}>
-            <Text style={profileStyle.label}>Email:</Text>
-            <TextInput
-              value={email}
-              onChangeText={setEmail}
-              style={profileStyle.input}
-              placeholder="Enter your email"
-            />
-          </View>
-          <View style={profileStyle.inputContainer}>
-            <Text style={profileStyle.label}>CPF:</Text>
-            <TextInput
-              value={cpf}
-              onChangeText={setCpf}
-              editable={false}
-              style={profileStyle.input}
-              placeholder="Enter your CPF"
-            />
-          </View>
-          <View style={profileStyle.inputContainer}>
-            <Text style={profileStyle.label}>Phone:</Text>
-            <TextInput
-              value={phone}
-              onChangeText={setPhone}
-              style={profileStyle.input}
-              placeholder="Enter your phone number"
-            />
-          </View>
-          <Button title="Salvar" onPress={handleSaveChanges} />
-        </Animated.View>
-      </ScrollView>
+      <View style={profileStyle.container}>
+        <View style={profileStyle.imageContainer}>
+          <Avatar
+            size="xlarge"
+            rounded
+            source={{
+              uri: profileImageUrl || SERVER_IP + '/static/default.png',
+            }}
+            onPress={() => {
+              if (profileImageUrl) {
+                console.log('Avatar Image URL (profileImageUrl):', profileImageUrl);
+              } else {
+                console.log('Avatar Image URL is empty or null');
+              }
+              handleImageSelect('gallery');
+            }}
+          />
+        </View>
+        <View style={profileStyle.inputContainer}>
+          <Text style={profileStyle.label}>Name:</Text>
+          <TextInput
+            value={name}
+            onChangeText={setName}
+            style={profileStyle.input}
+            placeholder="Enter your name"
+          />
+        </View>
+        <View style={profileStyle.inputContainer}>
+          <Text style={profileStyle.label}>Email:</Text>
+          <TextInput
+            value={email}
+            onChangeText={setEmail}
+            style={profileStyle.input}
+            placeholder="Enter your email"
+          />
+        </View>
+        <View style={profileStyle.inputContainer}>
+          <Text style={profileStyle.label}>CPF:</Text>
+          <TextInput
+            value={cpf}
+            onChangeText={setCpf}
+            style={profileStyle.input}
+            placeholder="Enter your CPF"
+          />
+        </View>
+        <View style={profileStyle.inputContainer}>
+          <Text style={profileStyle.label}>Phone:</Text>
+          <TextInput
+            value={phone}
+            onChangeText={setPhone}
+            style={profileStyle.input}
+            placeholder="Enter your phone number"
+          />
+        </View>
+        <Button title="Salvar" onPress={handleSaveChanges} />
+      </View>
+      <Modal
+        visible={modalVisible}
+        transparent={true}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={profileStyle.modalContainer}>
+          <Image source={{ uri: modalImageUri }} style={profileStyle.modalImage} />
+          <TouchableOpacity
+            onPress={() => setModalVisible(false)}
+            style={profileStyle.closeModalButton}
+          >
+            <Text style={profileStyle.closeModalButtonText}>X</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </View>
   );
 };
