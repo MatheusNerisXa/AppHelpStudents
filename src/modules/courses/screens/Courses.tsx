@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { Image, Linking, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
+import { URL_COURSES } from '../../../shared/constants/urls';
 import CoursesStyle from '../styles/couses.style';
 
 const CoursesComponent = () => {
@@ -13,7 +14,7 @@ const CoursesComponent = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const fetchData = () => {
-    fetch('http://192.168.1.7:8080/courses')
+    fetch(URL_COURSES)
       .then((response) => response.json())
       .then((data) => setCourses(data))
       .finally(() => setRefreshing(false));

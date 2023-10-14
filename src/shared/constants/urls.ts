@@ -20,3 +20,5 @@ export const URL_ADD_ACTIVITY = 'http://192.168.1.7:8080/activities/user';
 export const SERVER_IP = 'http://192.168.1.7:8080';
 export const URL_PROFILE_IMAGE = 'http://192.168.1.7:8080/user/profile-image/';
 export const URL_VIDEO_LESSONS = 'http://192.168.1.7:8080/video-lessons';
+export const URL_COURSES = 'http://192.168.1.7:8080/courses';
+export const URL_JOBS = 'http://192.168.1.7:8080/jobs';

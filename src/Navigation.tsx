@@ -22,6 +22,8 @@ import FilesAndPhotosCreate from './modules/filesphotos/screens/FilesAndPhotosCr
 import FilesAndPhotosDetails from './modules/filesphotos/screens/FilesAndPhotosDetails';
 import Home from './modules/home';
 import Ias from './modules/ias/screens/Ias';
+import JobsComponent from './modules/jobs/screens/Jobs';
+import JobDetails from './modules/jobs/screens/JobsDetails';
 import Login from './modules/login';
 import PasswordRecoveryScreen from './modules/login/screens/PasswordRecoveryScreen';
 import Menu from './modules/menu';
@@ -154,6 +156,28 @@ const TabNavigation = () => {
         component={Exams}
         options={({ navigation }) => ({
           title: 'Vestibulares',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Menu')}
+              style={navigationStyle.headerLeftContainer}
+            >
+              <Text style={navigationStyle.headerLeftText}>
+                <Icon name="arrow-left2" color="#FFF" size={23} />
+              </Text>
+            </TouchableOpacity>
+          ),
+          tabBarButton: () => null,
+        })}
+      />
+
+      <Tab.Screen
+        name="Jobs"
+        component={JobsComponent}
+        options={({ navigation }) => ({
+          title: 'Vagas de emprego',
           headerTintColor: '#FFF',
           headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
           // eslint-disable-next-line react/no-unstable-nested-components
@@ -523,6 +547,28 @@ const TabNavigation = () => {
           tabBarButton: () => null,
         })}
       />
+
+      <Tab.Screen
+        name="JobDetails"
+        component={JobDetails}
+        options={({ navigation }) => ({
+          title: 'Vagas de emprego',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Jobs')}
+              style={navigationStyle.headerLeftContainer}
+            >
+              <Text style={navigationStyle.headerLeftText}>
+                <Icon name="arrow-left2" color="#FFF" size={23} />
+              </Text>
+            </TouchableOpacity>
+          ),
+          tabBarButton: () => null,
+        })}
+      />
       <Tab.Screen
         name="DisciplineCreationScreen"
         component={DisciplineCreation}
@@ -683,6 +729,12 @@ const Navigation = () => {
           component={FilesAndPhotosDetails}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name={MenuUrl.JobsComponent}
+          component={JobsComponent}
+          options={{ headerShown: false }}
+        />
+
         <Stack.Screen name={MenuUrl.Exam} component={Exams} options={{ headerShown: false }} />
         <Stack.Screen name={MenuUrl.News} component={News} options={{ headerShown: false }} />
         <Stack.Screen
@@ -693,6 +745,11 @@ const Navigation = () => {
         <Stack.Screen
           name={MenuUrl.ExamDetails}
           component={ExamDetails}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={MenuUrl.JobDetails}
+          component={JobDetails}
           options={{ headerShown: false }}
         />
         <Stack.Screen

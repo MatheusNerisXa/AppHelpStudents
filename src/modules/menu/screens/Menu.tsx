@@ -53,6 +53,10 @@ const Menu = () => {
     navigation.navigate(MenuUrl.Suport);
   };
 
+  const handleJobsPress = () => {
+    navigation.navigate(MenuUrl.JobsComponent);
+  };
+
   const handleCoursesPress = () => {
     navigation.navigate(MenuUrl.Courses);
   };
@@ -94,12 +98,7 @@ const Menu = () => {
         <MenuItem icon="magic-wand" text="IAs" color="#73364d" onPress={handleIasPress} />
       </View>
       <View style={menuStyles.cardRow}>
-        <MenuItem
-          icon="search"
-          text="Vagas de emprego"
-          color="#205858"
-          onPress={handleSupportPress}
-        />
+        <MenuItem icon="search" text="Vagas de emprego" color="#205858" onPress={handleJobsPress} />
         <MenuItem icon="play" text="VideoAula" color="#279330" onPress={handleVideoLessonsPress} />
       </View>
       <View style={menuStyles.cardRow}>
