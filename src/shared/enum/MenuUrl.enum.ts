@@ -31,4 +31,6 @@ export enum MenuUrl {
   IasComponent = 'Ias',
   JobDetails = 'JobDetails',
   JobsComponent = 'Jobs',
+  ContentDetails = 'ContentDetails',
+  Content = 'Content',
 }

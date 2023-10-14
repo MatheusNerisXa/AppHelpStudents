@@ -10,6 +10,8 @@ import AbsencesMenu from './modules/absences/screens/MenuAbsences';
 import ActivitiesScreen from './modules/activities/screens/Activities';
 import ActivitiesCreation from './modules/activities/screens/ActivitiesCreation';
 import ChatGPT from './modules/chat/screens/Chat';
+import Content from './modules/content/screens/Content';
+import ContentDetails from './modules/content/screens/ContentDetails';
 import { Courses } from './modules/courses';
 import CoursesDetails from './modules/courses/screens/CoursesDetails';
 import CreateUser from './modules/createUser';
@@ -200,6 +202,28 @@ const TabNavigation = () => {
         component={Courses}
         options={({ navigation }) => ({
           title: 'Cursos Online',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Menu')}
+              style={navigationStyle.headerLeftContainer}
+            >
+              <Text style={navigationStyle.headerLeftText}>
+                <Icon name="arrow-left2" color="#FFF" size={23} />
+              </Text>
+            </TouchableOpacity>
+          ),
+          tabBarButton: () => null,
+        })}
+      />
+
+      <Tab.Screen
+        name="Content"
+        component={Content}
+        options={({ navigation }) => ({
+          title: 'Arquivos para estudos',
           headerTintColor: '#FFF',
           headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
           // eslint-disable-next-line react/no-unstable-nested-components
@@ -569,6 +593,29 @@ const TabNavigation = () => {
           tabBarButton: () => null,
         })}
       />
+
+      <Tab.Screen
+        name="ContentDetails"
+        component={ContentDetails}
+        options={({ navigation }) => ({
+          title: 'Arquivos para estudo',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Content')}
+              style={navigationStyle.headerLeftContainer}
+            >
+              <Text style={navigationStyle.headerLeftText}>
+                <Icon name="arrow-left2" color="#FFF" size={23} />
+              </Text>
+            </TouchableOpacity>
+          ),
+          tabBarButton: () => null,
+        })}
+      />
+
       <Tab.Screen
         name="DisciplineCreationScreen"
         component={DisciplineCreation}
@@ -748,6 +795,11 @@ const Navigation = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
+          name={MenuUrl.ContentDetails}
+          component={ContentDetails}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
           name={MenuUrl.JobDetails}
           component={JobDetails}
           options={{ headerShown: false }}
@@ -783,6 +835,8 @@ const Navigation = () => {
           component={AbsencesScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen name={MenuUrl.Content} component={Content} options={{ headerShown: false }} />
+
         <Stack.Screen name={MenuUrl.Courses} component={Courses} options={{ headerShown: false }} />
         <Stack.Screen
           name={MenuUrl.AbsencesDetails}
