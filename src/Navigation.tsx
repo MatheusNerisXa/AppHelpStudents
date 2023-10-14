@@ -21,6 +21,7 @@ import FilesAndPhotos from './modules/filesphotos';
 import FilesAndPhotosCreate from './modules/filesphotos/screens/FilesAndPhotosCreate';
 import FilesAndPhotosDetails from './modules/filesphotos/screens/FilesAndPhotosDetails';
 import Home from './modules/home';
+import Ias from './modules/ias/screens/Ias';
 import Login from './modules/login';
 import PasswordRecoveryScreen from './modules/login/screens/PasswordRecoveryScreen';
 import Menu from './modules/menu';
@@ -192,6 +193,27 @@ const TabNavigation = () => {
         })}
       />
 
+      <Tab.Screen
+        name="Ias"
+        component={Ias}
+        options={({ navigation }) => ({
+          title: 'Inteligência artificial',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Menu')}
+              style={navigationStyle.headerLeftContainer}
+            >
+              <Text style={navigationStyle.headerLeftText}>
+                <Icon name="arrow-left2" color="#FFF" size={23} />
+              </Text>
+            </TouchableOpacity>
+          ),
+          tabBarButton: () => null,
+        })}
+      />
       <Tab.Screen
         name="VideoLessons"
         component={VideoLessons}
@@ -479,6 +501,7 @@ const TabNavigation = () => {
           tabBarButton: () => null,
         })}
       />
+
       <Tab.Screen
         name="ExamDetails"
         component={ExamDetails}
@@ -646,6 +669,12 @@ const Navigation = () => {
 
         <Stack.Screen
           name={MenuUrl.HOME}
+          component={TabNavigation}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name={MenuUrl.IasComponent}
           component={TabNavigation}
           options={{ headerShown: false }}
         />

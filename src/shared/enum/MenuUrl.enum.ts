@@ -28,4 +28,5 @@ export enum MenuUrl {
   Courses = 'Courses',
   CoursesDetails = 'CoursesDetails',
   VideoLessons = 'VideoLessons',
+  IasComponent = 'Ias',
 }

@@ -37,6 +37,10 @@ const Menu = () => {
     navigation.navigate(MenuUrl.Exam);
   };
 
+  const handleIasPress = () => {
+    navigation.navigate(MenuUrl.IasComponent);
+  };
+
   const handleProfilePress = () => {
     navigation.navigate(MenuUrl.Profile);
   };
@@ -90,8 +94,8 @@ const Menu = () => {
         <MenuItem icon="play" text="VideoAula" color="#279330" onPress={handleVideoLessonsPress} />
       </View>
       <View style={menuStyles.cardRow}>
+        <MenuItem icon="magic-wand" text="IAs" color="#73364d" onPress={handleIasPress} />
         <MenuItem icon="user" text="Perfil" color="#CC3300" onPress={handleProfilePress} />
-        <MenuItem icon="exit" text="Sair" color="#FF3333" onPress={handleLogout} />
       </View>
       <View style={menuStyles.cardRow}>
         <MenuItem icon="question" text="Ajuda" color="#006633" onPress={handleSupportPress} />
