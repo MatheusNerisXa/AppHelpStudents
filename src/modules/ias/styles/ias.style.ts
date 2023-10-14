@@ -38,13 +38,15 @@ const IasStyle = StyleSheet.create({
   iaImage: {
     width: 110,
     height: 100,
-    marginLeft: 10,
-    marginRight: 20,
+    marginLeft: 0,
+    marginRight: 0,
     borderRadius: 5,
   },
   learnMoreText: {
-    color: '#007bff',
+    color: '#253494',
     textDecorationLine: 'underline',
+    marginTop: 5,
+    textAlign: 'center',
   },
   cardContent: {
     flex: 1,
@@ -52,12 +54,14 @@ const IasStyle = StyleSheet.create({
   },
   iaName: {
     fontSize: 18,
+    textAlign: 'center',
     fontWeight: 'bold',
     color: '#253494',
   },
   iaDescription: {
-    color: '#666',
+    color: '#000',
     textAlign: 'justify',
+    marginTop: 5,
   },
 });
 

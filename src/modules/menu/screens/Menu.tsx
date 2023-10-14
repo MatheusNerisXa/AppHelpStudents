@@ -91,10 +91,19 @@ const Menu = () => {
           color="#344874"
           onPress={handleCoursesPress}
         />
+        <MenuItem icon="magic-wand" text="IAs" color="#73364d" onPress={handleIasPress} />
+      </View>
+      <View style={menuStyles.cardRow}>
+        <MenuItem
+          icon="search"
+          text="Vagas de emprego"
+          color="#205858"
+          onPress={handleSupportPress}
+        />
         <MenuItem icon="play" text="VideoAula" color="#279330" onPress={handleVideoLessonsPress} />
       </View>
       <View style={menuStyles.cardRow}>
-        <MenuItem icon="magic-wand" text="IAs" color="#73364d" onPress={handleIasPress} />
+        <MenuItem icon="files-empty" text="Arquivos" color="#835824" onPress={handleLogout} />
         <MenuItem icon="user" text="Perfil" color="#CC3300" onPress={handleProfilePress} />
       </View>
       <View style={menuStyles.cardRow}>
