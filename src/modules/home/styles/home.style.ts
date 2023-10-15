@@ -21,7 +21,7 @@ const homeStyle = StyleSheet.create({
     borderRadius: 12,
   },
   activityCard: {
-    backgroundColor: '#f09d5c',
+    backgroundColor: '#253494',
     borderRadius: 10,
     padding: 10,
     margin: 1,
@@ -66,6 +66,34 @@ const homeStyle = StyleSheet.create({
   },
   buttonText: {
     fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  // Estilos para o cartão do usuário
+  userCard: {
+    alignItems: 'center', // Centralize o conteúdo no cartão do usuário
+    backgroundColor: '#253494',
+    borderRadius: 10,
+    padding: 10,
+    elevation: 5,
+    marginBottom: 15,
+  },
+  // Estilos para a imagem do usuário
+  userAvatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 10,
+  },
+  userName: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
+    textAlign: 'center',
+    marginBottom: 5,
+  },
+  userStats: {
+    fontSize: 16,
+    color: 'white',
     textAlign: 'center',
   },
 });

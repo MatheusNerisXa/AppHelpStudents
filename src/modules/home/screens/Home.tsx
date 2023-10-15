@@ -2,7 +2,11 @@ import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 
-import { URL_ACTIVITIES_USER_PENDING, URL_BANNERS } from '../../../shared/constants/urls';
+import {
+  URL_ACTIVITIES_USER_PENDING,
+  URL_BANNERS,
+  URL_USER_ID,
+} from '../../../shared/constants/urls';
 import { useRequest } from '../../../shared/hooks/useRequest';
 import homeStyle from '../styles/home.style';
 
@@ -18,13 +22,24 @@ interface Activity {
   dueDate: string;
 }
 
+interface User {
+  id: number;
+  name: string;
+  photo_image: string;
+  approvedCount: number;
+  rejectedCount: number;
+  subCount: number;
+}
+
 const Home: React.FC = () => {
   const { getUserFromStorage } = useRequest();
   const [banners, setBanners] = useState<Banner[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [pendingActivities, setPendingActivities] = useState<Activity[]>([]);
   const [currentActivityIndex, setCurrentActivityIndex] = useState(0);
+  const [user, setUser] = useState<User | null>(null);
   const [userId, setUserId] = useState<number | null>(null);
+  const [userName, setUserName] = useState('');
 
   const fetchActivities = () => {
     try {
@@ -52,10 +67,23 @@ const Home: React.FC = () => {
     }
   };
 
+  const fetchUserName = () => {
+    if (userId) {
+      fetch(URL_USER_ID + `${userId}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setUserName(data.name);
+        })
+        .catch((error) => console.error('Erro ao buscar o nome do usuário:', error));
+    }
+  };
+
   useEffect(() => {
     const fetchUserData = async () => {
       const userData = await getUserFromStorage();
       setUserId(userData?.id);
+
+      setUser(userData);
     };
 
     fetchUserData();
@@ -75,6 +103,7 @@ const Home: React.FC = () => {
     if (userId !== null) {
       fetchBanners();
       fetchActivities();
+      fetchUserName();
     }
   }, [userId]);
 
@@ -102,6 +131,16 @@ const Home: React.FC = () => {
 
   return (
     <View style={homeStyle.container}>
+      {user && (
+        <View style={homeStyle.userCard}>
+          <Text style={homeStyle.userName}>{userName || user.name}</Text>
+          <Text style={homeStyle.userStats}>
+            Aprovadas: {user.approvedCount}, Reprovadas: {user.rejectedCount}, Pendentes:{' '}
+            {pendingActivities.length}, Sub: {user.subCount}
+          </Text>
+        </View>
+      )}
+
       {pendingActivities.length > 0 && (
         <View style={homeStyle.activityCard}>
           <Text style={homeStyle.activityCardTitle}>

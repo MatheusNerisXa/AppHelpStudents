@@ -13,10 +13,10 @@ const Profile = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { user, setUser } = useRequest();
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [cpf, setCpf] = useState('');
-  const [phone, setPhone] = useState('');
+  const [newName, setNewName] = useState('');
+  const [newEmail, setNewEmail] = useState('');
+  const [newCpf, setNewCpf] = useState('');
+  const [newPhone, setNewPhone] = useState('');
   const [profileImageUrl, setProfileImageUrl] = useState('');
 
   const [isUploading, setIsUploading] = useState(false);
@@ -103,17 +103,17 @@ const Profile = () => {
   const handleSaveChanges = async () => {
     const updatedFields = {};
 
-    if (name !== user.name) {
-      updatedFields.name = name;
+    if (newName !== user.name) {
+      updatedFields.name = newName;
     }
-    if (email !== user.email) {
-      updatedFields.email = email;
+    if (newEmail !== user.email) {
+      updatedFields.email = newEmail;
     }
-    if (cpf !== user.cpf) {
-      updatedFields.cpf = cpf;
+    if (newCpf !== user.cpf) {
+      updatedFields.cpf = newCpf;
     }
-    if (phone !== user.phone) {
-      updatedFields.phone = phone;
+    if (newPhone !== user.phone) {
+      updatedFields.phone = newPhone;
     }
 
     try {
@@ -159,10 +159,10 @@ const Profile = () => {
         .get(URL_USER_ID + `${user.id}`)
         .then((response) => {
           const userData = response.data;
-          setName(userData.name);
-          setEmail(userData.email);
-          setCpf(userData.cpf);
-          setPhone(userData.phone);
+          setNewName(userData.name);
+          setNewEmail(userData.email);
+          setNewCpf(userData.cpf);
+          setNewPhone(userData.phone);
 
           axios
             .get(`http://192.168.1.7:8080/user/profile-image/${user.id}`)
@@ -204,8 +204,8 @@ const Profile = () => {
         <View style={profileStyle.inputContainer}>
           <Text style={profileStyle.label}>Name:</Text>
           <TextInput
-            value={name}
-            onChangeText={setName}
+            value={newName}
+            onChangeText={setNewName}
             style={profileStyle.input}
             placeholder="Enter your name"
           />
@@ -213,8 +213,8 @@ const Profile = () => {
         <View style={profileStyle.inputContainer}>
           <Text style={profileStyle.label}>Email:</Text>
           <TextInput
-            value={email}
-            onChangeText={setEmail}
+            value={newEmail}
+            onChangeText={setNewEmail}
             style={profileStyle.input}
             placeholder="Enter your email"
           />
@@ -222,8 +222,8 @@ const Profile = () => {
         <View style={profileStyle.inputContainer}>
           <Text style={profileStyle.label}>CPF:</Text>
           <TextInput
-            value={cpf}
-            onChangeText={setCpf}
+            value={newCpf}
+            onChangeText={setNewCpf}
             style={profileStyle.input}
             placeholder="Enter your CPF"
           />
@@ -231,8 +231,8 @@ const Profile = () => {
         <View style={profileStyle.inputContainer}>
           <Text style={profileStyle.label}>Phone:</Text>
           <TextInput
-            value={phone}
-            onChangeText={setPhone}
+            value={newPhone}
+            onChangeText={setNewPhone}
             style={profileStyle.input}
             placeholder="Enter your phone number"
           />
