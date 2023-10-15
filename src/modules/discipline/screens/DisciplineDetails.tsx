@@ -90,9 +90,9 @@ const DisciplineDetails = ({ route, navigation }) => {
     });
   };
 
-  const handleActivities = () => {
-    navigation.navigate('Activities', { disciplineId: discipline.id });
-  };
+  // const handleActivities = () => {
+  //   navigation.navigate('Activities', { disciplineId: discipline.id });
+  // };
 
   const handleAbsencesMenu = () => {
     navigation.navigate('AbsencesMenu', {
@@ -190,12 +190,7 @@ const DisciplineDetails = ({ route, navigation }) => {
       </View>
       <View style={menuStyles.cardRow}>
         <MenuItem icon="upload" text="Faltas" color="#0066CC" onPress={handleAbsencesMenu} />
-        <MenuItem
-          icon="book"
-          text="Cadastrar nota"
-          color="#6600CC"
-          onPress={handleFilesAndPhotos}
-        />
+        <MenuItem icon="happy" text="Notas" color="#6600CC" onPress={handleFilesAndPhotos} />
       </View>
       <View style={menuStyles.cardRow}>
         <MenuItem
@@ -204,16 +199,25 @@ const DisciplineDetails = ({ route, navigation }) => {
           color="#006633"
           onPress={handleFilesAndPhotos}
         />
-        <MenuItem
+        {/* <MenuItem
           icon="checkbox-checked"
           text="Atividades"
           color="#FF6600"
           onPress={handleActivities}
-        />
+        /> */}
+        <MenuItem icon="cog" text="Configurações" color="#CC3300" onPress={handleFilesAndPhotos} />
       </View>
       <View style={menuStyles.cardRow}>
-        <MenuItem icon="cog" text="Configurar" color="#CC3300" onPress={handleFilesAndPhotos} />
-        <MenuItem icon="bin" text="Excluir" color="#FF0022" onPress={handleDeletePress} />
+        <TouchableOpacity onPress={handleDeletePress}>
+          <Animatable.View
+            animation="fadeInLeft"
+            duration={1000}
+            style={menuStyles.cardContainerDelete}
+          >
+            <Icon name="bin" size={32} color="#FFF" style={menuStyles.icon} />
+            <Text style={menuStyles.cardText}>Excluir</Text>
+          </Animatable.View>
+        </TouchableOpacity>
       </View>
 
       {/* <View style={menuStyles.cardRow}>

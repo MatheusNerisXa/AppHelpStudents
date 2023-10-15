@@ -39,4 +39,11 @@ export const menuStyles = StyleSheet.create({
     color: '#FFF',
     marginTop: 8,
   },
+  cardContainerDelete: {
+    backgroundColor: '#FF0022',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 80,
+    width: cardWidth * 2,
+  },
 });
