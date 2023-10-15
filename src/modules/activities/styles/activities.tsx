@@ -230,6 +230,16 @@ const ActivitiesStyle = StyleSheet.create({
     fontWeight: 'bold',
     color: '#FFF',
   },
+  overdueMessageContainer: {
+    backgroundColor: 'yellow',
+    padding: 5,
+    borderRadius: 5,
+    marginTop: 1,
+  },
+  overdueMessage: {
+    color: 'black',
+    fontWeight: 'bold',
+  },
 });
 
 export default ActivitiesStyle;

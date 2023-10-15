@@ -104,6 +104,12 @@ const ActivitiesScreen: React.FC = () => {
     return format(new Date(dueDate), 'dd/MM/yyyy');
   };
 
+  const isOverdue = (dueDate: string) => {
+    const dueDateDate = new Date(dueDate);
+    const currentDate = new Date();
+    return dueDateDate < currentDate;
+  };
+
   const formatDateBrazil = (dateString) => {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
     return new Date(dateString).toLocaleDateString('pt-BR', options);
@@ -329,6 +335,11 @@ const ActivitiesScreen: React.FC = () => {
                   <Text style={ActivitiesStyle.infoLabel}>Prazo:</Text>
                   <Text style={ActivitiesStyle.infoText}>{formatDueDate(item.dueDate)}</Text>
                 </View>
+                {isOverdue(item.dueDate) && (
+                  <View style={ActivitiesStyle.overdueMessageContainer}>
+                    <Text style={ActivitiesStyle.overdueMessage}>Atrasado</Text>
+                  </View>
+                )}
                 <View style={ActivitiesStyle.infoItem}>
                   <Text
                     style={[
