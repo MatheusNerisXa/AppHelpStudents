@@ -20,33 +20,51 @@ const homeStyle = StyleSheet.create({
     height: '100%',
     borderRadius: 12,
   },
-  headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 24,
+  activityCard: {
+    backgroundColor: '#f09d5c',
+    borderRadius: 10,
+    padding: 10,
+    margin: 1,
+    width: '100%',
+    elevation: 5,
+    marginBottom: 15,
   },
-  greetingText: {
-    fontSize: 24,
+  activityCardTitle: {
+    fontSize: 18,
+    textAlign: 'center',
     fontWeight: 'bold',
-    marginRight: 8,
-    color: '#333',
+    marginTop: 10,
+    marginBottom: 10,
+    color: 'white',
   },
-  userName: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#007AFF',
-  },
-  dotsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 1,
-  },
-  dot: {
-    width: 10,
-    height: 10,
+  activityItem: {
+    backgroundColor: 'white',
     borderRadius: 5,
-    marginHorizontal: 5,
+    padding: 10,
+    marginVertical: 5,
+    elevation: 3,
+  },
+  totalSummary: {
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  totalSummaryText: {
+    fontSize: 15,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  navigationButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  navigationButton: {
+    padding: 10,
+    backgroundColor: 'white',
+    borderRadius: 5,
+  },
+  buttonText: {
+    textAlign: 'center',
   },
 });
 
