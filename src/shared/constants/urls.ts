@@ -23,3 +23,4 @@ export const URL_VIDEO_LESSONS = 'http://192.168.1.7:8080/video-lessons';
 export const URL_COURSES = 'http://192.168.1.7:8080/courses';
 export const URL_JOBS = 'http://192.168.1.7:8080/jobs';
 export const URL_CONTENT = 'http://192.168.1.7:8080/content/all';
+export const URL_ACTIVITIES_USER_PENDING = 'http://192.168.1.7:8080/activities/user/';

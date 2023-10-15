@@ -2,7 +2,8 @@ import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 
-import { URL_BANNERS } from '../../../shared/constants/urls';
+import { URL_ACTIVITIES_USER_PENDING, URL_BANNERS } from '../../../shared/constants/urls';
+import { useRequest } from '../../../shared/hooks/useRequest';
 import homeStyle from '../styles/home.style';
 
 interface Banner {
@@ -18,10 +19,47 @@ interface Activity {
 }
 
 const Home: React.FC = () => {
+  const { getUserFromStorage } = useRequest();
   const [banners, setBanners] = useState<Banner[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [pendingActivities, setPendingActivities] = useState<Activity[]>([]);
   const [currentActivityIndex, setCurrentActivityIndex] = useState(0);
+  const [userId, setUserId] = useState<number | null>(null);
+
+  const fetchActivities = () => {
+    try {
+      const currentDate = new Date();
+      const nextWeek = new Date();
+      nextWeek.setDate(currentDate.getDate() + 7);
+
+      fetch(URL_ACTIVITIES_USER_PENDING + `${userId}/pending`)
+        .then((response) => response.json())
+        .then((data) => {
+          const nextWeekPendingActivities = data.filter((activity) => {
+            const dueDate = new Date(activity.dueDate);
+            return dueDate >= currentDate && dueDate <= nextWeek;
+          });
+
+          setPendingActivities(nextWeekPendingActivities);
+
+          if (nextWeekPendingActivities.length > 0) {
+            setCurrentActivityIndex(0);
+          }
+        })
+        .catch((error) => console.error('Erro ao buscar atividades pendentes:', error));
+    } catch (error) {
+      console.error('Erro ao buscar atividades pendentes:', error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const userData = await getUserFromStorage();
+      setUserId(userData?.id);
+    };
+
+    fetchUserData();
+  }, [getUserFromStorage]);
 
   useEffect(() => {
     async function fetchBanners() {
@@ -34,22 +72,11 @@ const Home: React.FC = () => {
       }
     }
 
-    async function fetchActivities() {
-      try {
-        const response = await fetch('http://192.168.1.7:8080/activities/user/12/pending'); // Substitua 12 pelo ID do usuário
-        const data = await response.json();
-        const nextWeekPendingActivities = data.filter((activity: Activity) =>
-          isDateInNextWeek(new Date(activity.dueDate)),
-        );
-        setPendingActivities(nextWeekPendingActivities);
-      } catch (error) {
-        console.error('Erro ao buscar atividades pendentes:', error);
-      }
+    if (userId !== null) {
+      fetchBanners();
+      fetchActivities();
     }
-
-    fetchBanners();
-    fetchActivities();
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -77,13 +104,19 @@ const Home: React.FC = () => {
     <View style={homeStyle.container}>
       {pendingActivities.length > 0 && (
         <View style={homeStyle.activityCard}>
-          <Text style={homeStyle.activityCardTitle}>Tarefas Pendentes da Semana</Text>
+          <Text style={homeStyle.activityCardTitle}>
+            Tarefas Pendentes da Semana: {pendingActivities.length}
+          </Text>
           <View style={homeStyle.activityItem}>
-            <Text>Título: {pendingActivities[currentActivityIndex].taskName}</Text>
-            <Text>
-              Data de Vencimento:{' '}
-              {format(new Date(pendingActivities[currentActivityIndex].dueDate), 'dd/MM/yyyy')}
-            </Text>
+            {pendingActivities[currentActivityIndex] && (
+              <>
+                <Text>Título: {pendingActivities[currentActivityIndex].taskName}</Text>
+                <Text>
+                  Data de Vencimento:{' '}
+                  {format(new Date(pendingActivities[currentActivityIndex].dueDate), 'dd/MM/yyyy')}
+                </Text>
+              </>
+            )}
           </View>
           <View style={homeStyle.navigationButtons}>
             <TouchableOpacity style={homeStyle.navigationButton} onPress={handlePreviousActivity}>
@@ -106,12 +139,5 @@ const Home: React.FC = () => {
     </View>
   );
 };
-
-function isDateInNextWeek(date: Date) {
-  const currentDate = new Date();
-  const nextWeek = new Date(currentDate);
-  nextWeek.setDate(nextWeek.getDate() + 7);
-  return date <= nextWeek;
-}
 
 export default Home;
