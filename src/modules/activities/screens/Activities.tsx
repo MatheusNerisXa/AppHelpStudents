@@ -335,11 +335,13 @@ const ActivitiesScreen: React.FC = () => {
                   <Text style={ActivitiesStyle.infoLabel}>Prazo:</Text>
                   <Text style={ActivitiesStyle.infoText}>{formatDueDate(item.dueDate)}</Text>
                 </View>
-                {isOverdue(item.dueDate) && (
-                  <View style={ActivitiesStyle.overdueMessageContainer}>
-                    <Text style={ActivitiesStyle.overdueMessage}>Atrasado</Text>
-                  </View>
-                )}
+                {item.isCompleted
+                  ? null
+                  : isOverdue(item.dueDate) && (
+                      <View style={ActivitiesStyle.overdueMessageContainer}>
+                        <Text style={ActivitiesStyle.overdueMessage}>Atrasado</Text>
+                      </View>
+                    )}
                 <View style={ActivitiesStyle.infoItem}>
                   <Text
                     style={[
