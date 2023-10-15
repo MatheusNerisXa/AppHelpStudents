@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-shadow */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import { URL_CONTENT } from '../../../shared/constants/urls';
 import contentStyle from '../styles/content.style';
@@ -9,6 +8,7 @@ import contentStyle from '../styles/content.style';
 const Content = ({ navigation }) => {
   const [contentData, setContentData] = useState([]);
   const [error, setError] = useState(null);
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     axios
@@ -21,6 +21,10 @@ const Content = ({ navigation }) => {
       });
   }, []);
 
+  const filteredContent = contentData.filter((item) =>
+    item.title.toLowerCase().includes(searchText.toLowerCase()),
+  );
+
   if (error) {
     return (
       <View style={contentStyle.container}>
@@ -31,8 +35,17 @@ const Content = ({ navigation }) => {
 
   return (
     <View style={contentStyle.container}>
+      <View style={contentStyle.searchContainer}>
+        <TextInput
+          style={contentStyle.searchInput}
+          placeholder="Buscar pelo nome do arquivo"
+          placeholderTextColor="#666"
+          value={searchText}
+          onChangeText={(text) => setSearchText(text)}
+        />
+      </View>
       <FlatList
-        data={contentData}
+        data={filteredContent}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <TouchableOpacity
