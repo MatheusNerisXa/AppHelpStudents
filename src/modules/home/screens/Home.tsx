@@ -87,10 +87,10 @@ const Home: React.FC = () => {
           </View>
           <View style={homeStyle.navigationButtons}>
             <TouchableOpacity style={homeStyle.navigationButton} onPress={handlePreviousActivity}>
-              <Text style={homeStyle.buttonText}>Anterior</Text>
+              <Text style={homeStyle.buttonText}>{'<'}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={homeStyle.navigationButton} onPress={handleNextActivity}>
-              <Text style={homeStyle.buttonText}>Próxima</Text>
+              <Text style={homeStyle.buttonText}>{'>'}</Text>
             </TouchableOpacity>
           </View>
         </View>

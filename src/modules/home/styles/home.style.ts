@@ -62,8 +62,10 @@ const homeStyle = StyleSheet.create({
     padding: 10,
     backgroundColor: 'white',
     borderRadius: 5,
+    width: 150,
   },
   buttonText: {
+    fontWeight: 'bold',
     textAlign: 'center',
   },
 });
