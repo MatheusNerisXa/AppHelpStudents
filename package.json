@@ -73,6 +73,7 @@
     "react-native-swipe-list-view": "^3.2.9",
     "react-native-swiper": "^1.6.0",
     "react-native-tab-view": "^3.5.2",
+    "react-native-text-input-mask": "^3.2.0",
     "react-native-text-ticker": "^1.14.0",
     "react-native-tts": "^4.1.0",
     "react-native-typewriter": "^0.7.0",

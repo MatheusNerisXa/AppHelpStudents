@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native';

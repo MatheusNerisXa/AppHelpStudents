@@ -3,7 +3,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import { useNavigation, useRoute } from '@react-navigation/native';
 import axios from 'axios';
-import { format } from 'date-fns';
+import { format, isValid, parse } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
@@ -14,6 +14,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { TextInputMask } from 'react-native-masked-text';
 import { SwipeListView } from 'react-native-swipe-list-view';
 
 import { Icon } from '../../../shared/components/icon/Icon';
@@ -56,6 +57,11 @@ const ActivitiesScreen: React.FC = () => {
 
   const [totalConcluidas, setTotalConcluidas] = useState(0);
   const [totalNaoConcluidas, setTotalNaoConcluidas] = useState(0);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editTaskName, setEditTaskName] = useState('');
+  const [editDescription, setEditDescription] = useState('');
+  const [editDueDate, setEditDueDate] = useState('');
+  const [editItem, setEditItem] = useState<Activity | null>(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -98,6 +104,11 @@ const ActivitiesScreen: React.FC = () => {
     return format(new Date(dueDate), 'dd/MM/yyyy');
   };
 
+  const formatDateBrazil = (dateString) => {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString('pt-BR', options);
+  };
+
   const handleSearch = (text: string) => {
     setSearchText(text);
   };
@@ -111,6 +122,66 @@ const ActivitiesScreen: React.FC = () => {
     setIsDeleteModalVisible(false);
   };
 
+  const openEditModal = (activity: Activity) => {
+    setEditItem(activity);
+    setEditTaskName(activity.taskName);
+    setEditDescription(activity.description);
+
+    setEditDueDate(format(new Date(activity.dueDate), 'dd/MM/yyyy'));
+
+    setIsEditing(true);
+  };
+
+  const closeEditModal = () => {
+    setIsEditing(false);
+    setEditTaskName('');
+    setEditDescription('');
+    setEditDueDate('');
+    setEditItem(null);
+  };
+
+  const confirmEditActivity = async () => {
+    if (editItem) {
+      const parsedDueDate = parse(editDueDate, 'dd/MM/yyyy', new Date(), {
+        awareOfUnicodeTokens: true,
+      });
+
+      if (isValid(parsedDueDate)) {
+        const dayEdited = parsedDueDate.getDate();
+        const existingDate = new Date(editItem.dueDate);
+        existingDate.setDate(dayEdited);
+
+        try {
+          const response = await axios.put(URL_ACTIVITIES_EDIT + `${editItem.id}`, {
+            taskName: editTaskName,
+            description: editDescription,
+            dueDate: existingDate.toISOString().split('T')[0],
+          });
+
+          if (response.status === 200) {
+            const updatedActivities = activities.map((activity) => {
+              if (activity.id === editItem.id) {
+                return {
+                  ...activity,
+                  taskName: editTaskName,
+                  description: editDescription,
+                  dueDate: existingDate.toISOString().split('T')[0],
+                };
+              }
+              return activity;
+            });
+
+            setActivities(updatedActivities);
+            closeEditModal();
+          }
+        } catch (error) {
+          console.error('Error editing activity:', error);
+        }
+      } else {
+        console.error('Data inválida. Insira uma data no formato DD/MM/YYYY.');
+      }
+    }
+  };
   const confirmDeleteActivity = async () => {
     if (itemToDelete) {
       try {
@@ -283,12 +354,11 @@ const ActivitiesScreen: React.FC = () => {
             <View style={ActivitiesStyle.rowBack}>
               <TouchableOpacity
                 style={ActivitiesStyle.editButton}
-                onPress={() => {
-                  // Ação ao tocar em editar
-                }}
+                onPress={() => openEditModal(item)}
               >
                 <Icon name="pencil" size={24} color="white" />
               </TouchableOpacity>
+
               <TouchableOpacity
                 style={ActivitiesStyle.completeButton}
                 onPress={() => handleToggleCompletion(item)}
@@ -328,11 +398,58 @@ const ActivitiesScreen: React.FC = () => {
                 Tem certeza que deseja excluir a atividade "
                 {itemToDelete ? itemToDelete.taskName : ''}"?
               </Text>
-              <Text>Prazo: {itemToDelete ? formatDueDate(itemToDelete.dueDate) : ''}</Text>
+              <Text>Prazo: {itemToDelete ? formatDateBrazil(itemToDelete.dueDate) : ''}</Text>
+
               <Text>Descrição: {itemToDelete ? itemToDelete.description || 'N/A' : ''}</Text>
               <View style={ActivitiesStyle.modalButtons}>
                 <Button title="Cancelar" onPress={closeDeleteModal} color="#FF0000" />
                 <Button title="Confirmar" onPress={confirmDeleteActivity} color="#007AFF" />
+              </View>
+            </View>
+          </View>
+        </View>
+      </Modal>
+      <Modal visible={isEditing} transparent={true} animationType="slide">
+        <View style={ActivitiesStyle.modalContainer}>
+          <View style={ActivitiesStyle.modalBackground}>
+            <View style={ActivitiesStyle.modalContent}>
+              <Text style={ActivitiesStyle.modalTitle}>Editar Atividade</Text>
+              <View>
+                <Text>Título:</Text>
+                <TextInput
+                  style={[ActivitiesStyle.input]}
+                  placeholder="Título"
+                  multiline={true}
+                  value={editTaskName}
+                  onChangeText={(text) => setEditTaskName(text)}
+                />
+              </View>
+              <View>
+                <Text>Descrição:</Text>
+                <TextInput
+                  style={[ActivitiesStyle.input]}
+                  placeholder="Descrição"
+                  multiline={true}
+                  value={editDescription}
+                  onChangeText={(text) => setEditDescription(text)}
+                />
+              </View>
+              <View>
+                <Text>Prazo:</Text>
+                <TextInputMask
+                  style={ActivitiesStyle.input}
+                  type={'datetime'}
+                  options={{
+                    format: 'DD/MM/YYYY',
+                  }}
+                  placeholder="DD/MM/YYYY"
+                  value={editDueDate}
+                  onChangeText={(text) => setEditDueDate(text)}
+                />
+              </View>
+              <View style={ActivitiesStyle.modalButtons}>
+                <Button title="Cancelar" onPress={closeEditModal} color="#FF0000" />
+                <Button title="Salvar" onPress={confirmEditActivity} color="#007AFF" />
               </View>
             </View>
           </View>

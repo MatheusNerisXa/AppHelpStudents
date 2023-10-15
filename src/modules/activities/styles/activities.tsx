@@ -25,6 +25,16 @@ const ActivitiesStyle = StyleSheet.create({
     color: '#333',
     fontSize: 16,
   },
+  input: {
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#253494',
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 10,
+    fontSize: 16,
+    color: '#333',
+  },
   activityCard: {
     borderRadius: 10,
     padding: 16,
