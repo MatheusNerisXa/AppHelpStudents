@@ -21,13 +21,17 @@ const homeStyle = StyleSheet.create({
     borderRadius: 12,
   },
   activityCard: {
-    backgroundColor: '#253494',
+    backgroundColor: '#f0f0f0',
     borderRadius: 10,
     padding: 10,
     margin: 1,
     width: '100%',
     elevation: 5,
     marginBottom: 15,
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    borderWidth: 2,
+    borderColor: '#253494',
   },
   activityCardTitle: {
     fontSize: 18,
@@ -35,7 +39,7 @@ const homeStyle = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 10,
     marginBottom: 10,
-    color: 'white',
+    color: '#253494',
   },
   activityItem: {
     backgroundColor: 'white',
@@ -43,6 +47,10 @@ const homeStyle = StyleSheet.create({
     padding: 10,
     marginVertical: 5,
     elevation: 3,
+    borderColor: '#253494',
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    borderWidth: 1.2,
   },
   totalSummary: {
     alignItems: 'center',
@@ -57,32 +65,29 @@ const homeStyle = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 10,
+    borderColor: '#253494',
   },
   navigationButton: {
     padding: 10,
     backgroundColor: 'white',
     borderRadius: 5,
     width: 150,
+    borderColor: '#253494',
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    borderWidth: 1.2,
   },
   buttonText: {
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  // Estilos para o cartão do usuário
   userCard: {
-    alignItems: 'center', // Centralize o conteúdo no cartão do usuário
+    alignItems: 'center',
     backgroundColor: '#253494',
     borderRadius: 10,
     padding: 10,
     elevation: 5,
     marginBottom: 15,
-  },
-  // Estilos para a imagem do usuário
-  userAvatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginBottom: 10,
   },
   userName: {
     fontSize: 20,
@@ -94,6 +99,38 @@ const homeStyle = StyleSheet.create({
   userStats: {
     fontSize: 16,
     color: 'white',
+    textAlign: 'center',
+  },
+  progressBarContainer: {
+    width: '100%',
+    backgroundColor: '#EDEDED',
+    borderRadius: 10,
+    height: 10,
+    marginVertical: 5,
+  },
+  progressBar: {
+    height: 10,
+    borderRadius: 10,
+  },
+  statsValue: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  disciplineStats: {
+    backgroundColor: '#f0f0f0',
+    borderRadius: 10,
+    padding: 16,
+    marginBottom: 16,
+    borderWidth: 2,
+    borderColor: '#253494',
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  },
+  disciplineStatsHeading: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#253494',
     textAlign: 'center',
   },
 });

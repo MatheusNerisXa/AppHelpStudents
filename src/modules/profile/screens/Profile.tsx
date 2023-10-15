@@ -89,7 +89,7 @@ const Profile = () => {
 
   const fetchProfileImage = () => {
     axios
-      .get(`http://192.168.1.7:8080/user/profile-image/${user.id}`)
+      .get(`http://192.168.1.2:8080/user/profile-image/${user.id}`)
       .then((response) => {
         if (response.data.ProfileImage) {
           setProfileImageUrl(response.data.ProfileImage);
@@ -165,7 +165,7 @@ const Profile = () => {
           setNewPhone(userData.phone);
 
           axios
-            .get(`http://192.168.1.7:8080/user/profile-image/${user.id}`)
+            .get(`http://192.168.1.2:8080/user/profile-image/${user.id}`)
             .then((imageResponse) => {
               if (imageResponse.data.ProfileImage) {
                 setProfileImageUrl(imageResponse.data.ProfileImage);
@@ -189,7 +189,7 @@ const Profile = () => {
             size="xlarge"
             rounded
             source={{
-              uri: profileImageUrl || 'http://192.168.1.7:8080/static/default.png',
+              uri: profileImageUrl || 'http://192.168.1.s:8080/static/default.png',
             }}
             onPress={() => {
               if (profileImageUrl) {

@@ -1,10 +1,12 @@
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
+import { ProgressBar } from 'react-native-paper';
 
 import {
   URL_ACTIVITIES_USER_PENDING,
   URL_BANNERS,
+  URL_DISCIPLINE,
   URL_USER_ID,
 } from '../../../shared/constants/urls';
 import { useRequest } from '../../../shared/hooks/useRequest';
@@ -22,6 +24,10 @@ interface Activity {
   dueDate: string;
 }
 
+interface Discipline {
+  status_discipline: number;
+}
+
 interface User {
   id: number;
   name: string;
@@ -29,6 +35,7 @@ interface User {
   approvedCount: number;
   rejectedCount: number;
   subCount: number;
+  cursandoCount: number;
 }
 
 const Home: React.FC = () => {
@@ -40,6 +47,7 @@ const Home: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [userId, setUserId] = useState<number | null>(null);
   const [userName, setUserName] = useState('');
+  const [disciplines, setDisciplines] = useState<Discipline[]>([]);
 
   const fetchActivities = () => {
     try {
@@ -78,6 +86,21 @@ const Home: React.FC = () => {
     }
   };
 
+  const countDisciplinesByStatus = (status) => {
+    return disciplines.filter((discipline) => discipline.status_discipline === status).length;
+  };
+
+  const fetchDisciplines = () => {
+    try {
+      fetch(URL_DISCIPLINE + `${userId}`)
+        .then((response) => response.json())
+        .then((data) => setDisciplines(data))
+        .catch((error) => console.error('Error fetching disciplines:', error));
+    } catch (error) {
+      console.error('Error fetching disciplines:', error);
+    }
+  };
+
   useEffect(() => {
     const fetchUserData = async () => {
       const userData = await getUserFromStorage();
@@ -104,6 +127,7 @@ const Home: React.FC = () => {
       fetchBanners();
       fetchActivities();
       fetchUserName();
+      fetchDisciplines();
     }
   }, [userId]);
 
@@ -133,11 +157,27 @@ const Home: React.FC = () => {
     <View style={homeStyle.container}>
       {user && (
         <View style={homeStyle.userCard}>
-          <Text style={homeStyle.userName}>{userName || user.name}</Text>
-          <Text style={homeStyle.userStats}>
-            Aprovadas: {user.approvedCount}, Reprovadas: {user.rejectedCount}, Pendentes:{' '}
-            {pendingActivities.length}, Sub: {user.subCount}
-          </Text>
+          <Text style={homeStyle.userName}>Aluno: {userName || user.name}</Text>
+        </View>
+      )}
+
+      {disciplines.length > 0 && (
+        <View style={homeStyle.disciplineStats}>
+          <Text style={homeStyle.disciplineStatsHeading}>Estatísticas das matérias</Text>
+          {[1, 2, 3, 4].map((status) => (
+            <View style={homeStyle.statsItem} key={status}>
+              <View style={homeStyle.progressBarContainer}>
+                <ProgressBar
+                  progress={countDisciplinesByStatus(status) / disciplines.length}
+                  color={statusColors[status]}
+                  style={homeStyle.progressBar}
+                />
+              </View>
+              <Text style={homeStyle.statsValue}>
+                {countDisciplinesByStatus(status)} {statusLabels[status]}
+              </Text>
+            </View>
+          ))}
         </View>
       )}
 
@@ -177,6 +217,20 @@ const Home: React.FC = () => {
       )}
     </View>
   );
+};
+
+const statusColors = {
+  1: '#2ecc71',
+  2: '#e74c3c',
+  3: '#3498db',
+  4: '#f39c12',
+};
+
+const statusLabels = {
+  1: 'Aprovadas',
+  2: 'Reprovadas',
+  3: 'Cursando',
+  4: 'Sub',
 };
 
 export default Home;
