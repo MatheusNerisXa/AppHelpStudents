@@ -84,7 +84,10 @@ const DisciplineDetails = ({ route, navigation }) => {
   };
 
   const handleAbsences = () => {
-    navigation.navigate('Absences', { disciplineId: discipline.id });
+    navigation.navigate('AbsencesMenu', {
+      handleAbsences: handleAbsences,
+      disciplineId: discipline.id,
+    });
   };
 
   const handleActivities = () => {
