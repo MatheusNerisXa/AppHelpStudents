@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { Modal, RefreshControl, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
@@ -29,10 +30,11 @@ const DisciplineDetails = ({ route, navigation }) => {
     dateEnd: '',
   });
   const [totalAbsences, setTotalAbsences] = useState(null);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const maxAbsences = 20;
 
   const fetchDisciplineDetails = async () => {
     const disciplineUrl = URL_DISCIPLINEID + `${disciplineId}`;
@@ -55,14 +57,22 @@ const DisciplineDetails = ({ route, navigation }) => {
       disciplineResponse.status_color = statusInfo.color;
       setDiscipline(disciplineResponse);
 
-      if (totalAbsencesResponse && totalAbsencesResponse !== undefined) {
-        setTotalAbsences(totalAbsencesResponse.toString());
+      if (totalAbsencesResponse !== undefined) {
+        setTotalAbsences(totalAbsencesResponse);
+
+        let warningMessage = '';
+        if (totalAbsencesResponse >= maxAbsences * 0.9) {
+          warningMessage = 'Atenção: Você está se aproximando do limite de faltas.';
+        }
+        if (totalAbsencesResponse > maxAbsences) {
+          warningMessage = 'Faltas acima do permitido!';
+        }
+
+        setIsLoading(false);
+        setRefreshing(false);
       } else {
         setTotalAbsences('N/A');
       }
-
-      setIsLoading(false);
-      setRefreshing(false);
     } catch (error) {
       console.error('Erro ao buscar detalhes da disciplina:', error);
       setIsLoading(false);
@@ -82,14 +92,6 @@ const DisciplineDetails = ({ route, navigation }) => {
   const handleFilesAndPhotos = () => {
     navigation.navigate('FilePhotos');
   };
-
-  // const handleAbsences = () => {
-  //   navigation.navigate('AbsencesMenu', { disciplineId: discipline.id });
-  // };
-
-  // const handleActivities = () => {
-  //   navigation.navigate('Activities', { disciplineId: discipline.id });
-  // };
 
   const handleAbsencesMenu = () => {
     navigation.navigate('AbsencesMenu', { disciplineId: discipline.id });
@@ -181,6 +183,15 @@ const DisciplineDetails = ({ route, navigation }) => {
           <Text style={disciplineDetailsStyle.label}>Quantidade de Faltas:</Text>
           <Text style={disciplineDetailsStyle.value}>{totalAbsences}</Text>
         </View>
+
+        {totalAbsences >= maxAbsences * 0.9 ? (
+          // eslint-disable-next-line react-native/no-inline-styles
+          <Text style={{ color: 'red', textAlign: 'center' }}>
+            {totalAbsences > maxAbsences
+              ? 'Faltas acima do permitido!'
+              : 'Atenção: Você está se aproximando do limite de faltas.'}
+          </Text>
+        ) : null}
       </View>
       <View style={menuStyles.cardRow}>
         <MenuItem icon="upload" text="Faltas" color="#0066CC" onPress={handleAbsencesMenu} />
@@ -193,12 +204,6 @@ const DisciplineDetails = ({ route, navigation }) => {
           color="#006633"
           onPress={handleFilesAndPhotos}
         />
-        {/* <MenuItem
-          icon="checkbox-checked"
-          text="Atividades"
-          color="#FF6600"
-          onPress={handleActivities}
-        /> */}
         <MenuItem icon="cog" text="Configurações" color="#CC3300" onPress={handleFilesAndPhotos} />
       </View>
       <View style={menuStyles.cardRow}>
@@ -213,10 +218,6 @@ const DisciplineDetails = ({ route, navigation }) => {
           </Animatable.View>
         </TouchableOpacity>
       </View>
-
-      {/* <View style={menuStyles.cardRow}>
-        <Excluir icon="bin" text="Excluir" color="#FF0022" onPress={handleDeletePress} />
-      </View> */}
 
       <Modal
         visible={isModalVisible}
