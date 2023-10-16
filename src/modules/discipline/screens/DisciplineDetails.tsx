@@ -83,22 +83,16 @@ const DisciplineDetails = ({ route, navigation }) => {
     navigation.navigate('FilePhotos');
   };
 
-  const handleAbsences = () => {
-    navigation.navigate('AbsencesMenu', {
-      handleAbsences: handleAbsences,
-      disciplineId: discipline.id,
-    });
-  };
+  // const handleAbsences = () => {
+  //   navigation.navigate('AbsencesMenu', { disciplineId: discipline.id });
+  // };
 
   // const handleActivities = () => {
   //   navigation.navigate('Activities', { disciplineId: discipline.id });
   // };
 
   const handleAbsencesMenu = () => {
-    navigation.navigate('AbsencesMenu', {
-      handleAbsences: handleAbsences,
-      disciplineId: discipline.id,
-    });
+    navigation.navigate('AbsencesMenu', { disciplineId: discipline.id });
   };
 
   const handleDeletePress = () => {
