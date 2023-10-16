@@ -36,6 +36,31 @@ const Discipline = () => {
     setRefreshing(true);
     fetchDisciplines();
   };
+  const formatDaysOfWeek = (item) => {
+    const daysOfWeek = [];
+    if (item.monday) {
+      daysOfWeek.push('Seg');
+    }
+    if (item.tuesday) {
+      daysOfWeek.push('Ter');
+    }
+    if (item.wednesday) {
+      daysOfWeek.push('Qua');
+    }
+    if (item.thursday) {
+      daysOfWeek.push('Qui');
+    }
+    if (item.friday) {
+      daysOfWeek.push('Sex');
+    }
+    if (item.saturday) {
+      daysOfWeek.push('Sáb');
+    }
+    if (item.sunday) {
+      daysOfWeek.push('Dom');
+    }
+    return daysOfWeek.join(', ');
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -92,6 +117,9 @@ const Discipline = () => {
         <Text style={disciplineStyle.dateText}>
           Período: {formatBrazilianDate(item.dateStart)} até {formatBrazilianDate(item.dateEnd)}
         </Text>
+        <Text style={disciplineStyle.roomText}>Sala: {item.room}</Text>
+        <Text style={disciplineStyle.hourText}>Horário: {item.hour}</Text>
+        <Text style={disciplineStyle.daysText}>Dias de Aula: {formatDaysOfWeek(item)}</Text>
       </TouchableOpacity>
     );
   };

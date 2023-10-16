@@ -61,7 +61,7 @@ const ActivitiesCreation = ({ navigation }) => {
   useEffect(() => {
     const fetchUserDisciplines = async () => {
       try {
-        const response = await axios.get(`http://192.168.1.2:8080/discipline/user/${user.id}`);
+        const response = await axios.get(`http://192.168.1.11:8080/discipline/user/${user.id}`);
 
         if (response.status === 200) {
           const userDisciplines = response.data;
@@ -123,7 +123,7 @@ const ActivitiesCreation = ({ navigation }) => {
         discipline: selectedDiscipline ? selectedDiscipline.id : null,
       };
 
-      const response = await axios.post('http://192.168.1.2:8080/activities', activityData);
+      const response = await axios.post('http://192.168.1.11:8080/activities', activityData);
 
       if (response.status === 201) {
         navigation.navigate('Activities');

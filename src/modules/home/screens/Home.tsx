@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
-import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { ProgressBar } from 'react-native-paper';
 
 import {
@@ -154,68 +154,73 @@ const Home: React.FC = () => {
   };
 
   return (
-    <View style={homeStyle.container}>
-      {user && (
-        <View style={homeStyle.userCard}>
-          <Text style={homeStyle.userName}>Aluno: {userName || user.name}</Text>
-        </View>
-      )}
+    <ScrollView>
+      <View style={homeStyle.container}>
+        {user && (
+          <View style={homeStyle.userCard}>
+            <Text style={homeStyle.userName}>Aluno: {userName || user.name}</Text>
+          </View>
+        )}
 
-      {disciplines.length > 0 && (
-        <View style={homeStyle.disciplineStats}>
-          <Text style={homeStyle.disciplineStatsHeading}>Estatísticas das matérias</Text>
-          {[1, 2, 3, 4].map((status) => (
-            <View style={homeStyle.statsItem} key={status}>
-              <View style={homeStyle.progressBarContainer}>
-                <ProgressBar
-                  progress={countDisciplinesByStatus(status) / disciplines.length}
-                  color={statusColors[status]}
-                  style={homeStyle.progressBar}
-                />
-              </View>
-              <Text style={homeStyle.statsValue}>
-                {countDisciplinesByStatus(status)} {statusLabels[status]}
-              </Text>
-            </View>
-          ))}
-        </View>
-      )}
-
-      {pendingActivities.length > 0 && (
-        <View style={homeStyle.activityCard}>
-          <Text style={homeStyle.activityCardTitle}>
-            Tarefas Pendentes da Semana: {pendingActivities.length}
-          </Text>
-          <View style={homeStyle.activityItem}>
-            {pendingActivities[currentActivityIndex] && (
-              <>
-                <Text>Título: {pendingActivities[currentActivityIndex].taskName}</Text>
-                <Text>
-                  Data de Vencimento:{' '}
-                  {format(new Date(pendingActivities[currentActivityIndex].dueDate), 'dd/MM/yyyy')}
+        {disciplines.length > 0 && (
+          <View style={homeStyle.disciplineStats}>
+            <Text style={homeStyle.disciplineStatsHeading}>Estatísticas das matérias</Text>
+            {[1, 2, 3, 4].map((status) => (
+              <View style={homeStyle.statsItem} key={status}>
+                <View style={homeStyle.progressBarContainer}>
+                  <ProgressBar
+                    progress={countDisciplinesByStatus(status) / disciplines.length}
+                    color={statusColors[status]}
+                    style={homeStyle.progressBar}
+                  />
+                </View>
+                <Text style={homeStyle.statsValue}>
+                  {countDisciplinesByStatus(status)} {statusLabels[status]}
                 </Text>
-              </>
-            )}
+              </View>
+            ))}
           </View>
-          <View style={homeStyle.navigationButtons}>
-            <TouchableOpacity style={homeStyle.navigationButton} onPress={handlePreviousActivity}>
-              <Text style={homeStyle.buttonText}>{'<'}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={homeStyle.navigationButton} onPress={handleNextActivity}>
-              <Text style={homeStyle.buttonText}>{'>'}</Text>
-            </TouchableOpacity>
+        )}
+
+        {pendingActivities.length > 0 && (
+          <View style={homeStyle.activityCard}>
+            <Text style={homeStyle.activityCardTitle}>
+              Tarefas Pendentes da Semana: {pendingActivities.length}
+            </Text>
+            <View style={homeStyle.activityItem}>
+              {pendingActivities[currentActivityIndex] && (
+                <>
+                  <Text>Título: {pendingActivities[currentActivityIndex].taskName}</Text>
+                  <Text>
+                    Data de Vencimento:{' '}
+                    {format(
+                      new Date(pendingActivities[currentActivityIndex].dueDate),
+                      'dd/MM/yyyy',
+                    )}
+                  </Text>
+                </>
+              )}
+            </View>
+            <View style={homeStyle.navigationButtons}>
+              <TouchableOpacity style={homeStyle.navigationButton} onPress={handlePreviousActivity}>
+                <Text style={homeStyle.buttonText}>{'<'}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={homeStyle.navigationButton} onPress={handleNextActivity}>
+                <Text style={homeStyle.buttonText}>{'>'}</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      )}
-      {currentBanner && (
-        <View style={homeStyle.bannerContainer}>
-          <ImageBackground
-            source={{ uri: currentBanner.url_image }}
-            style={homeStyle.bannerImage}
-          />
-        </View>
-      )}
-    </View>
+        )}
+        {currentBanner && (
+          <View style={homeStyle.bannerContainer}>
+            <ImageBackground
+              source={{ uri: currentBanner.url_image }}
+              style={homeStyle.bannerImage}
+            />
+          </View>
+        )}
+      </View>
+    </ScrollView>
   );
 };
 

@@ -13,10 +13,10 @@ const Profile = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { user, setUser } = useRequest();
 
-  const [newName, setNewName] = useState('');
-  const [newEmail, setNewEmail] = useState('');
-  const [newCpf, setNewCpf] = useState('');
-  const [newPhone, setNewPhone] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [cpf, setCpf] = useState('');
+  const [phone, setPhone] = useState('');
   const [profileImageUrl, setProfileImageUrl] = useState('');
 
   const [isUploading, setIsUploading] = useState(false);
@@ -89,7 +89,7 @@ const Profile = () => {
 
   const fetchProfileImage = () => {
     axios
-      .get(`http://192.168.1.2:8080/user/profile-image/${user.id}`)
+      .get(`http://192.168.1.11:8080/user/profile-image/${user.id}`)
       .then((response) => {
         if (response.data.ProfileImage) {
           setProfileImageUrl(response.data.ProfileImage);
@@ -103,17 +103,17 @@ const Profile = () => {
   const handleSaveChanges = async () => {
     const updatedFields = {};
 
-    if (newName !== user.name) {
-      updatedFields.name = newName;
+    if (name !== user.name) {
+      updatedFields.name = name;
     }
-    if (newEmail !== user.email) {
-      updatedFields.email = newEmail;
+    if (email !== user.email) {
+      updatedFields.email = email;
     }
-    if (newCpf !== user.cpf) {
-      updatedFields.cpf = newCpf;
+    if (cpf !== user.cpf) {
+      updatedFields.cpf = cpf;
     }
-    if (newPhone !== user.phone) {
-      updatedFields.phone = newPhone;
+    if (phone !== user.phone) {
+      updatedFields.phone = phone;
     }
 
     try {
@@ -159,13 +159,13 @@ const Profile = () => {
         .get(URL_USER_ID + `${user.id}`)
         .then((response) => {
           const userData = response.data;
-          setNewName(userData.name);
-          setNewEmail(userData.email);
-          setNewCpf(userData.cpf);
-          setNewPhone(userData.phone);
+          setName(userData.name);
+          setEmail(userData.email);
+          setCpf(userData.cpf);
+          setPhone(userData.phone);
 
           axios
-            .get(`http://192.168.1.2:8080/user/profile-image/${user.id}`)
+            .get(`http://192.168.1.11:8080/user/profile-image/${user.id}`)
             .then((imageResponse) => {
               if (imageResponse.data.ProfileImage) {
                 setProfileImageUrl(imageResponse.data.ProfileImage);
@@ -189,7 +189,7 @@ const Profile = () => {
             size="xlarge"
             rounded
             source={{
-              uri: profileImageUrl || 'http://192.168.1.s:8080/static/default.png',
+              uri: profileImageUrl || 'http://192.168.1.11:8080/static/default.png',
             }}
             onPress={() => {
               if (profileImageUrl) {
@@ -204,37 +204,37 @@ const Profile = () => {
         <View style={profileStyle.inputContainer}>
           <Text style={profileStyle.label}>Name:</Text>
           <TextInput
-            value={newName}
-            onChangeText={setNewName}
+            value={name}
+            onChangeText={setName}
             style={profileStyle.input}
-            placeholder="Enter your name"
+            placeholder="Digíte seu nome"
           />
         </View>
         <View style={profileStyle.inputContainer}>
           <Text style={profileStyle.label}>Email:</Text>
           <TextInput
-            value={newEmail}
-            onChangeText={setNewEmail}
+            value={email}
+            onChangeText={setEmail}
             style={profileStyle.input}
-            placeholder="Enter your email"
+            placeholder="Digíte seu e-mail"
           />
         </View>
         <View style={profileStyle.inputContainer}>
           <Text style={profileStyle.label}>CPF:</Text>
           <TextInput
-            value={newCpf}
-            onChangeText={setNewCpf}
+            value={cpf}
+            onChangeText={setCpf}
             style={profileStyle.input}
-            placeholder="Enter your CPF"
+            placeholder="Digíte seu CPF"
           />
         </View>
         <View style={profileStyle.inputContainer}>
           <Text style={profileStyle.label}>Phone:</Text>
           <TextInput
-            value={newPhone}
-            onChangeText={setNewPhone}
+            value={phone}
+            onChangeText={setPhone}
             style={profileStyle.input}
-            placeholder="Enter your phone number"
+            placeholder="Digíte o número do seu celular"
           />
         </View>
         <Button title="Salvar" onPress={handleSaveChanges} />
