@@ -5,9 +5,10 @@ const homeStyle = StyleSheet.create({
     paddingTop: 20,
     flexGrow: 1,
     padding: 16,
-    backgroundColor: '#FFF',
+    backgroundColor: '#f0f0f0',
   },
   bannerContainer: {
+    marginTop: 10,
     width: '100%',
     height: 220,
     borderRadius: 12,
@@ -21,6 +22,7 @@ const homeStyle = StyleSheet.create({
     borderRadius: 12,
   },
   activityCard: {
+    marginTop: 10,
     backgroundColor: '#f0f0f0',
     borderRadius: 10,
     padding: 10,
@@ -125,6 +127,7 @@ const homeStyle = StyleSheet.create({
     borderColor: '#253494',
     shadowOpacity: 0.2,
     shadowRadius: 4,
+    marginTop: 10,
   },
   disciplineStatsHeading: {
     fontSize: 20,
@@ -132,6 +135,36 @@ const homeStyle = StyleSheet.create({
     marginBottom: 10,
     color: '#253494',
     textAlign: 'center',
+  },
+  todayDisciplines: {
+    marginTop: 10,
+  },
+  todayDisciplinesHeading: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 15,
+    color: '#253494',
+  },
+  todayDisciplineItem: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 15,
+    shadowColor: '#253494',
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    shadowOpacity: 2,
+    elevation: 5,
+    alignItems: 'center',
+  },
+  disciplineName: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: '#253494',
+  },
+  roomAndHour: {
+    fontSize: 16,
+    color: '#f09d5c',
   },
 });
 

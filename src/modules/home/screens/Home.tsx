@@ -1,4 +1,6 @@
-import { format } from 'date-fns';
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { format, getDay } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { ImageBackground, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { ProgressBar } from 'react-native-paper';
@@ -25,7 +27,18 @@ interface Activity {
 }
 
 interface Discipline {
+  id: number;
+  name: string;
   status_discipline: number;
+  monday: boolean;
+  tuesday: boolean;
+  wednesday: boolean;
+  thursday: boolean;
+  friday: boolean;
+  saturday: boolean;
+  sunday: boolean;
+  room: string;
+  hour: string;
 }
 
 interface User {
@@ -153,12 +166,69 @@ const Home: React.FC = () => {
     }
   };
 
+  const [currentDay, setCurrentDay] = useState(getDay(new Date()));
+
+  const filterDisciplinesByDay = (currentDay, disciplines) => {
+    return disciplines.filter((discipline) => {
+      if (discipline.status_discipline === 5) {
+        return false;
+      }
+
+      switch (currentDay) {
+        case 1:
+          return discipline.monday;
+        case 2:
+          return discipline.tuesday;
+        case 3:
+          return discipline.wednesday;
+        case 4:
+          return discipline.thursday;
+        case 5:
+          return discipline.friday;
+        case 6:
+          return discipline.saturday;
+        case 7:
+          return discipline.sunday;
+        default:
+          return false;
+      }
+    });
+  };
+
+  const todayDisciplines = filterDisciplinesByDay(currentDay, disciplines);
+
+  todayDisciplines.sort((a, b) => {
+    const [aHour, aMinute] = a.hour.split(':').map(Number);
+    const [bHour, bMinute] = b.hour.split(':').map(Number);
+
+    if (aHour === bHour) {
+      return aMinute - bMinute;
+    }
+
+    return aHour - bHour;
+  });
+
   return (
     <ScrollView>
       <View style={homeStyle.container}>
         {user && (
           <View style={homeStyle.userCard}>
             <Text style={homeStyle.userName}>Aluno: {userName || user.name}</Text>
+          </View>
+        )}
+        {todayDisciplines.length > 0 && (
+          <View style={homeStyle.todayDisciplines}>
+            <Text style={homeStyle.todayDisciplinesHeading}>Aulas do dia:</Text>
+            {todayDisciplines.map((discipline, index) => (
+              <View key={index} style={homeStyle.todayDisciplineItem}>
+                <Text
+                  style={homeStyle.disciplineName}
+                >{`Nome da Matéria: ${discipline.name}`}</Text>
+                <Text
+                  style={homeStyle.roomAndHour}
+                >{`Sala: ${discipline.room}, Horário: ${discipline.hour}`}</Text>
+              </View>
+            ))}
           </View>
         )}
 
@@ -181,7 +251,6 @@ const Home: React.FC = () => {
             ))}
           </View>
         )}
-
         {pendingActivities.length > 0 && (
           <View style={homeStyle.activityCard}>
             <Text style={homeStyle.activityCardTitle}>
