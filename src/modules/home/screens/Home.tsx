@@ -227,6 +227,7 @@ const Home: React.FC = () => {
                 <Text
                   style={homeStyle.roomAndHour}
                 >{`Sala: ${discipline.room}, Horário: ${discipline.hour}`}</Text>
+                <Text style={homeStyle.teacherText}>{`Professor: ${discipline.teacher}`}</Text>
               </View>
             ))}
           </View>

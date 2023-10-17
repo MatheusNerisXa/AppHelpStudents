@@ -3,7 +3,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { isDate } from 'date-fns';
 import React, { useEffect, useState } from 'react';
-import { Modal, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Keyboard, Modal, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import { URL_DISCIPLINE_CREATE } from '../../../shared/constants/urls';
 import { useRequest } from '../../../shared/hooks/useRequest';
@@ -55,6 +55,10 @@ const DisciplineCreation = () => {
   const [friday, setFriday] = useState(false);
   const [saturday, setSaturday] = useState(false);
   const [sunday, setSunday] = useState(false);
+  const [teacher, setTeacher] = useState('');
+  const [gradeWeight1, setGradeWeight1] = useState('');
+  const [gradeWeight2, setGradeWeight2] = useState('');
+  const [assignmentsWeight, setAssignmentsWeight] = useState('');
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -116,6 +120,10 @@ const DisciplineCreation = () => {
       friday,
       saturday,
       sunday,
+      teacher,
+      gradeWeight1,
+      gradeWeight2,
+      assignmentsWeight,
     };
 
     try {
@@ -134,6 +142,7 @@ const DisciplineCreation = () => {
           setModalVisible(false);
           navigation.navigate('Discipline', { refresh: true });
         }, 1500);
+        Keyboard.dismiss();
       } else {
         console.error('Erro ao criar matéria:', response.status);
       }
@@ -151,6 +160,19 @@ const DisciplineCreation = () => {
             style={CreateDisciplineStyle.input}
             onChangeText={(text) => setName(text)}
             value={name}
+            placeholder="Digite o nome da matéria"
+            placeholderTextColor="#000"
+          />
+        </View>
+
+        <View style={CreateDisciplineStyle.inputContainer}>
+          <Text style={CreateDisciplineStyle.label}>Professor(a):</Text>
+          <TextInput
+            style={CreateDisciplineStyle.input}
+            onChangeText={(text) => setTeacher(text)}
+            value={teacher}
+            placeholder="Digite o nome do professor(a)"
+            placeholderTextColor="#000"
           />
         </View>
 
@@ -160,6 +182,8 @@ const DisciplineCreation = () => {
             style={CreateDisciplineStyle.input}
             onChangeText={(text) => setRoom(text)}
             value={room}
+            placeholder="Digite o nome da sala"
+            placeholderTextColor="#000"
           />
         </View>
 
@@ -167,8 +191,10 @@ const DisciplineCreation = () => {
           <Text style={CreateDisciplineStyle.label}>Nota Mínima:</Text>
           <TextInput
             style={CreateDisciplineStyle.input}
-            onChangeText={(text) => setMinGrade(parseFloat(text))}
-            value={minGrade.toString()}
+            onChangeText={(text) => setMinGrade(text)}
+            value={minGrade}
+            placeholder="Digite a nota mínima"
+            placeholderTextColor="#000"
             keyboardType="numeric"
           />
         </View>
@@ -177,8 +203,10 @@ const DisciplineCreation = () => {
           <Text style={CreateDisciplineStyle.label}>Falta Máxima:</Text>
           <TextInput
             style={CreateDisciplineStyle.input}
-            onChangeText={(text) => setMaxAbsences(parseFloat(text))}
-            value={maxAbsences.toString()}
+            onChangeText={(text) => setMaxAbsences(text)}
+            value={maxAbsences}
+            placeholder="Digite a falta máxima"
+            placeholderTextColor="#000"
             keyboardType="numeric"
           />
         </View>
@@ -189,6 +217,8 @@ const DisciplineCreation = () => {
             style={CreateDisciplineStyle.input}
             onChangeText={(text) => setHour(text)}
             value={hour}
+            placeholder="Digite o horário"
+            placeholderTextColor="#000"
           />
         </View>
 
@@ -291,6 +321,42 @@ const DisciplineCreation = () => {
               </TouchableOpacity>
             ))}
           </View>
+        </View>
+
+        <View style={CreateDisciplineStyle.inputContainer}>
+          <Text style={CreateDisciplineStyle.label}>Peso da Nota 1:</Text>
+          <TextInput
+            style={CreateDisciplineStyle.input}
+            onChangeText={(text) => setGradeWeight1(text)}
+            value={gradeWeight1}
+            placeholder="Digite o peso da Nota 1"
+            placeholderTextColor="#000"
+            keyboardType="numeric"
+          />
+        </View>
+
+        <View style={CreateDisciplineStyle.inputContainer}>
+          <Text style={CreateDisciplineStyle.label}>Peso da Nota 2:</Text>
+          <TextInput
+            style={CreateDisciplineStyle.input}
+            onChangeText={(text) => setGradeWeight2(text)}
+            value={gradeWeight2}
+            placeholder="Digite o peso da Nota 2"
+            placeholderTextColor="#000"
+            keyboardType="numeric"
+          />
+        </View>
+
+        <View style={CreateDisciplineStyle.inputContainer}>
+          <Text style={CreateDisciplineStyle.label}>Peso das Atividades:</Text>
+          <TextInput
+            style={CreateDisciplineStyle.input}
+            onChangeText={(text) => setAssignmentsWeight(text)}
+            value={assignmentsWeight}
+            placeholder="Digite o peso das Atividades"
+            placeholderTextColor="#000"
+            keyboardType="numeric"
+          />
         </View>
 
         <TouchableOpacity style={CreateDisciplineStyle.addButton} onPress={handleCreate}>

@@ -120,6 +120,7 @@ const Discipline = () => {
         <Text style={disciplineStyle.roomText}>Sala: {item.room}</Text>
         <Text style={disciplineStyle.hourText}>Horário: {item.hour}</Text>
         <Text style={disciplineStyle.daysText}>Dias de Aula: {formatDaysOfWeek(item)}</Text>
+        <Text style={disciplineStyle.teacherText}>Professor: {item.teacher}</Text>
       </TouchableOpacity>
     );
   };

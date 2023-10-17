@@ -33,7 +33,7 @@ const disciplineStyle = StyleSheet.create({
   },
   separator: {
     height: 1,
-    backgroundColor: '#E0E0E0',
+    backgroundColor: '#f5f5f5',
   },
   emptyText: {
     textAlign: 'center',
@@ -73,6 +73,7 @@ const disciplineStyle = StyleSheet.create({
   },
   statusText: {
     fontSize: 14,
+    color: '#000',
     marginLeft: 8,
   },
   addButtonText: {
@@ -84,6 +85,7 @@ const disciplineStyle = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#000',
+    marginBottom: 8,
   },
   statusAndLabel: {
     flexDirection: 'row',
@@ -105,6 +107,22 @@ const disciplineStyle = StyleSheet.create({
   addText: {
     fontSize: 24,
     color: '#FFF',
+  },
+  roomText: {
+    fontSize: 14,
+    color: '#000',
+  },
+  hourText: {
+    fontSize: 14,
+    color: '#000',
+  },
+  daysText: {
+    fontSize: 14,
+    color: '#000',
+  },
+  teacherText: {
+    fontSize: 14,
+    color: '#000',
   },
 });
 

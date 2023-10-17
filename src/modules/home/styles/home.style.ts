@@ -166,6 +166,11 @@ const homeStyle = StyleSheet.create({
     fontSize: 16,
     color: '#f09d5c',
   },
+  teacherText: {
+    fontSize: 16,
+    color: '#333',
+    marginTop: 8,
+  },
 });
 
 export default homeStyle;
