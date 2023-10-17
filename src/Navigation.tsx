@@ -57,8 +57,8 @@ const TabNavigation = () => {
       case 'HelpGPT':
         iconName = 'bubbles4';
         break;
-      case 'Dashboards':
-        iconName = 'stats-bars2';
+      case 'Discipline':
+        iconName = 'book';
         break;
       case 'Activities':
         iconName = 'checkbox-checked';
@@ -95,16 +95,16 @@ const TabNavigation = () => {
           headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
         }}
       />
+
       <Tab.Screen
-        name="Dashboards"
-        component={Dashboard}
+        name="Activities"
+        component={ActivitiesScreen}
         options={{
-          title: 'Dash',
+          title: 'Tarefas',
           headerTintColor: '#FFF',
           headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
         }}
       />
-
       <Tab.Screen
         name="HelpGPT"
         component={ChatGPT}
@@ -114,11 +114,12 @@ const TabNavigation = () => {
           headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
         }}
       />
+
       <Tab.Screen
-        name="Activities"
-        component={ActivitiesScreen}
+        name="Discipline"
+        component={Discipline}
         options={{
-          title: 'Tarefas',
+          title: 'Matérias',
           headerTintColor: '#FFF',
           headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
         }}
@@ -304,7 +305,7 @@ const TabNavigation = () => {
           tabBarButton: () => null,
         })}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Discipline"
         component={Discipline}
         options={({ navigation }) => {
@@ -326,7 +327,7 @@ const TabNavigation = () => {
             tabBarButton: () => null,
           };
         }}
-      />
+      /> */}
       <Tab.Screen
         name="FilePhotos"
         component={FilesAndPhotos}
