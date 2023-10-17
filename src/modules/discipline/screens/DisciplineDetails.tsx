@@ -213,7 +213,7 @@ const DisciplineDetails = ({ route, navigation }) => {
         <MenuItem icon="upload" text="Faltas" color="#0066CC" onPress={handleAbsencesMenu} />
         <MenuItem icon="happy" text="Notas" color="#6600CC" onPress={handleFilesAndPhotos} />
       </View>
-      <View style={menuStyles.cardRow}>
+      {/* <View style={menuStyles.cardRow}>
         <MenuItem
           icon="stats-dots"
           text="Relatório"
@@ -221,17 +221,11 @@ const DisciplineDetails = ({ route, navigation }) => {
           onPress={handleFilesAndPhotos}
         />
         <MenuItem icon="cog" text="Configurações" color="#CC3300" onPress={handleFilesAndPhotos} />
-      </View>
+      </View> */}
       <View style={menuStyles.cardRow}>
-        <TouchableOpacity onPress={handleDeletePress}>
-          <Animatable.View
-            animation="fadeInLeft"
-            duration={1000}
-            style={menuStyles.cardContainerDelete}
-          >
-            <Icon name="bin" size={32} color="#FFF" style={menuStyles.icon} />
-            <Text style={menuStyles.cardText}>Excluir</Text>
-          </Animatable.View>
+        <TouchableOpacity onPress={handleDeletePress} style={menuStyles.cardContainerDelete}>
+          <Icon name="bin" size={32} color="#FFF" style={menuStyles.icon} />
+          <Text style={menuStyles.cardText}>Excluir</Text>
         </TouchableOpacity>
       </View>
 
@@ -270,14 +264,10 @@ const DisciplineDetails = ({ route, navigation }) => {
 
 const MenuItem = ({ onPress, icon, text, color }) => (
   <TouchableOpacity onPress={onPress}>
-    <Animatable.View
-      animation="fadeInLeft"
-      duration={1000}
-      style={[menuStyles.cardContainer, { backgroundColor: color }]}
-    >
+    <View style={[menuStyles.cardContainer, { backgroundColor: color }]}>
       <Icon name={icon} size={32} color="#FFF" style={menuStyles.icon} />
       <Text style={menuStyles.cardText}>{text}</Text>
-    </Animatable.View>
+    </View>
   </TouchableOpacity>
 );
 
