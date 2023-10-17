@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { Modal, RefreshControl, ScrollView, Text, TouchableOpacity, View } from 'react-native';
@@ -184,8 +185,22 @@ const DisciplineDetails = ({ route, navigation }) => {
           <Text style={disciplineDetailsStyle.value}>{totalAbsences}</Text>
         </View>
 
+        <View style={disciplineDetailsStyle.detailItem}>
+          <Text style={disciplineDetailsStyle.label}>Peso da Nota 1:</Text>
+          <Text style={disciplineDetailsStyle.value}>{discipline.gradeWeight1 || 'N/A'}</Text>
+        </View>
+
+        <View style={disciplineDetailsStyle.detailItem}>
+          <Text style={disciplineDetailsStyle.label}>Peso da Nota 2:</Text>
+          <Text style={disciplineDetailsStyle.value}>{discipline.gradeWeight2 || 'N/A'}</Text>
+        </View>
+
+        <View style={disciplineDetailsStyle.detailItem}>
+          <Text style={disciplineDetailsStyle.label}>Peso dos Trabalhos:</Text>
+          <Text style={disciplineDetailsStyle.value}>{discipline.assignmentsWeight || 'N/A'}</Text>
+        </View>
+
         {totalAbsences >= maxAbsences * 0.9 ? (
-          // eslint-disable-next-line react-native/no-inline-styles
           <Text style={{ color: 'red', textAlign: 'center' }}>
             {totalAbsences > maxAbsences
               ? 'Faltas acima do permitido!'
@@ -193,6 +208,7 @@ const DisciplineDetails = ({ route, navigation }) => {
           </Text>
         ) : null}
       </View>
+
       <View style={menuStyles.cardRow}>
         <MenuItem icon="upload" text="Faltas" color="#0066CC" onPress={handleAbsencesMenu} />
         <MenuItem icon="happy" text="Notas" color="#6600CC" onPress={handleFilesAndPhotos} />
