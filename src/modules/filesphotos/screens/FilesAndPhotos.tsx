@@ -131,7 +131,7 @@ const FilesAndPhotos = () => {
   return (
     <View style={filesAndPhotosStyle.container}>
       <FlatList
-        data={disciplineFolders}
+        data={disciplineFolders.filter((folder) => folder.status_discipline !== 5)} // Filtrar pastas com status_discipline diferente de 5
         renderItem={({ item, index }) => (
           <TouchableOpacity
             style={filesAndPhotosStyle.folderItem}

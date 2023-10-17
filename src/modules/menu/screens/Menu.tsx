@@ -64,10 +64,9 @@ const Menu = () => {
     navigation.navigate(MenuUrl.Courses);
   };
 
-  const handleDisciplinePress = () => {
-    navigation.navigate(MenuUrl.DisciplineMenu);
+  const handleFilesAndPhotos = () => {
+    navigation.navigate('FilePhotos');
   };
-
   const handleTranslationPress = () => {
     navigation.navigate(MenuUrl.Translation);
   };
@@ -83,7 +82,7 @@ const Menu = () => {
         <MenuItem icon="newspaper" text="Notícias" color="#FF9933" onPress={handleNewsPress} />
       </View>
       <View style={menuStyles.cardRow}>
-        <MenuItem icon="book" text="Matérias" color="#6600CC" onPress={handleDisciplinePress} />
+        <MenuItem icon="folder-minus" text="Fotos" color="#6600CC" onPress={handleFilesAndPhotos} />
         <MenuItem
           icon="earth"
           text="Help Tradutor"
