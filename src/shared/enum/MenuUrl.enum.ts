@@ -35,4 +35,5 @@ export enum MenuUrl {
   Content = 'Content',
   ResultMenu = 'ResultMenu',
   ResultListing = 'ResultListing',
+  ResultDetails = 'ResultDetails',
 }

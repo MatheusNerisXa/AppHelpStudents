@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-shadow */
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
@@ -15,25 +14,22 @@ const ResultMenu = ({ route }) => {
     navigation.navigate('ResultListing', { disciplineId });
   }, [disciplineId, navigation]);
 
-  const handleResultDetails = useCallback(
-    (disciplineId) => {
-      navigation.navigate('ResultDetails', { disciplineId });
-    },
-    [disciplineId, navigation],
-  );
+  const handleResultDetails = useCallback(() => {
+    navigation.navigate('ResultDetails', { disciplineId });
+  }, [disciplineId, navigation]);
 
   return (
     <ScrollView contentContainerStyle={menuStyles.container}>
       <View style={menuStyles.cardRow}>
         <MenuItem
           icon="upload"
-          text="Result Listing"
+          text="Adicionar Nota"
           color="#0066CC"
           onPress={handleResultListing}
         />
         <MenuItem
           icon="file-text"
-          text="Result Details"
+          text="Listagem das Notas"
           color="#6600CC"
           onPress={handleResultDetails}
         />

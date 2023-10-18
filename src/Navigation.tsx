@@ -32,6 +32,7 @@ import Menu from './modules/menu';
 import { News, NewsDetails } from './modules/news';
 import Profile from './modules/profile';
 import ResultMenu from './modules/result/screens/MenuResult';
+import ResultDetails from './modules/result/screens/ResultDetails';
 import ResultListingScreen from './modules/result/screens/ResultListing';
 import Splash from './modules/splash';
 import Suport from './modules/suport';
@@ -751,6 +752,28 @@ const TabNavigation = () => {
           tabBarButton: () => null,
         })}
       />
+
+      <Tab.Screen
+        name="ResultDetails"
+        component={ResultDetails}
+        options={({ navigation }) => ({
+          title: 'Detalhes das notas',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Discipline')}
+              style={navigationStyle.headerLeftContainer}
+            >
+              <Text style={navigationStyle.headerLeftText}>
+                <Icon name="arrow-left2" color="#FFF" size={23} />
+              </Text>
+            </TouchableOpacity>
+          ),
+          tabBarButton: () => null,
+        })}
+      />
       <Tab.Screen
         name="Menu"
         component={Menu}
@@ -902,6 +925,11 @@ const Navigation = () => {
         <Stack.Screen
           name={MenuUrl.AbsencesDetails}
           component={AbsencesScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={MenuUrl.ResultDetails}
+          component={ResultDetails}
           options={{ headerShown: false }}
         />
         <Stack.Screen

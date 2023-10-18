@@ -49,7 +49,7 @@ const ResultListingScreen = ({ route }) => {
         keyboardType="numeric"
       />
 
-      <Text style={resultStyle.label}>Observações do Trabalho:</Text>
+      <Text style={resultStyle.label}>Trabalho:</Text>
       <TextInput style={resultStyle.input} onChangeText={handleWorkNotesChange} value={workNotes} />
 
       <TouchableOpacity style={resultStyle.button} onPress={handleAddResult}>
