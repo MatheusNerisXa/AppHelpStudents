@@ -1,31 +1,41 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
 import { Icon } from '../../../shared/components/icon/Icon';
 import { menuStyles } from '../../menu/styles/menu.style';
 
-const AbsencesMenu = ({ route }) => {
+const ResultMenu = ({ route }) => {
   const navigation = useNavigation();
   const { disciplineId } = route.params;
 
-  const handleAbsences = useCallback(() => {
-    navigation.navigate('Absences', { disciplineId });
+  const handleResultListing = useCallback(() => {
+    navigation.navigate('ResultListing', { disciplineId });
   }, [disciplineId, navigation]);
 
-  const handleAbsencesDetails = useCallback(() => {
-    navigation.navigate('AbsencesDetails', { disciplineId });
-  }, [disciplineId, navigation]);
+  const handleResultDetails = useCallback(
+    (disciplineId) => {
+      navigation.navigate('ResultDetails', { disciplineId });
+    },
+    [disciplineId, navigation],
+  );
 
   return (
     <ScrollView contentContainerStyle={menuStyles.container}>
       <View style={menuStyles.cardRow}>
-        <MenuItem icon="upload" text="Adicionar Falta" color="#0066CC" onPress={handleAbsences} />
+        <MenuItem
+          icon="upload"
+          text="Result Listing"
+          color="#0066CC"
+          onPress={handleResultListing}
+        />
         <MenuItem
           icon="file-text"
-          text="Listagem de faltas"
+          text="Result Details"
           color="#6600CC"
-          onPress={handleAbsencesDetails}
+          onPress={handleResultDetails}
         />
       </View>
     </ScrollView>
@@ -34,11 +44,15 @@ const AbsencesMenu = ({ route }) => {
 
 const MenuItem = ({ onPress, icon, text, color }) => (
   <TouchableOpacity onPress={onPress}>
-    <View style={[menuStyles.cardContainer, { backgroundColor: color }]}>
+    <Animatable.View
+      animation="fadeInLeft"
+      duration={1000}
+      style={[menuStyles.cardContainer, { backgroundColor: color }]}
+    >
       <Icon name={icon} size={32} color="#FFF" style={menuStyles.icon} />
       <Text style={menuStyles.cardText}>{text}</Text>
-    </View>
+    </Animatable.View>
   </TouchableOpacity>
 );
 
-export default AbsencesMenu;
+export default ResultMenu;

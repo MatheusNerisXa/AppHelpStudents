@@ -15,7 +15,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 
 import fileCreateStyle from '../styles/fileCreate';
 
-const API_URL = 'http://192.168.1.11:8080/files-and-photos/upload';
+const API_URL = 'http://192.168.1.4:8080/files-and-photos/upload';
 
 const FilesAndPhotosCreate = ({ route }) => {
   const { disciplineId } = route.params;

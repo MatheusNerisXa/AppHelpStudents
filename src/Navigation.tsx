@@ -31,6 +31,8 @@ import PasswordRecoveryScreen from './modules/login/screens/PasswordRecoveryScre
 import Menu from './modules/menu';
 import { News, NewsDetails } from './modules/news';
 import Profile from './modules/profile';
+import ResultMenu from './modules/result/screens/MenuResult';
+import ResultListingScreen from './modules/result/screens/ResultListing';
 import Splash from './modules/splash';
 import Suport from './modules/suport';
 import Translation from './modules/translation';
@@ -438,6 +440,28 @@ const TabNavigation = () => {
       />
 
       <Tab.Screen
+        name="ResultMenu"
+        component={ResultMenu}
+        options={({ navigation }) => ({
+          title: 'Notas',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Menu')}
+              style={navigationStyle.headerLeftContainer}
+            >
+              <Text style={navigationStyle.headerLeftText}>
+                <Icon name="arrow-left2" color="#FFF" size={23} />
+              </Text>
+            </TouchableOpacity>
+          ),
+          tabBarButton: () => null,
+        })}
+      />
+
+      <Tab.Screen
         name="ActivitiesCreation"
         component={ActivitiesCreation}
         options={({ navigation }) => ({
@@ -508,6 +532,32 @@ const TabNavigation = () => {
         component={AbsencesScreen}
         options={({ navigation, route }) => ({
           title: 'Cadastro de Faltas',
+          headerTintColor: '#FFF',
+          headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('DisciplineDetails', {
+                  disciplineId: route.params.disciplineId,
+                });
+              }}
+              style={navigationStyle.headerLeftContainer}
+            >
+              <Text style={navigationStyle.headerLeftText}>
+                <Icon name="arrow-left2" color="#FFF" size={23} />
+              </Text>
+            </TouchableOpacity>
+          ),
+          tabBarButton: () => null,
+        })}
+      />
+
+      <Tab.Screen
+        name="ResultListing"
+        component={ResultListingScreen}
+        options={({ navigation, route }) => ({
+          title: 'Cadastro de Notas',
           headerTintColor: '#FFF',
           headerStyle: { backgroundColor: theme.colors.blueTheme.blue80 },
           // eslint-disable-next-line react/no-unstable-nested-components
@@ -832,8 +882,18 @@ const Navigation = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
+          name={MenuUrl.ResultMenu}
+          component={ResultMenu}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
           name={MenuUrl.Absences}
           component={AbsencesScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={MenuUrl.ResultListing}
+          component={ResultListingScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen name={MenuUrl.Content} component={Content} options={{ headerShown: false }} />

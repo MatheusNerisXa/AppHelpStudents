@@ -33,4 +33,6 @@ export enum MenuUrl {
   JobsComponent = 'Jobs',
   ContentDetails = 'ContentDetails',
   Content = 'Content',
+  ResultMenu = 'ResultMenu',
+  ResultListing = 'ResultListing',
 }

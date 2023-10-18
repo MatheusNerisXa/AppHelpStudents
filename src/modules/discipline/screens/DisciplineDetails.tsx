@@ -98,6 +98,10 @@ const DisciplineDetails = ({ route, navigation }) => {
     navigation.navigate('AbsencesMenu', { disciplineId: discipline.id });
   };
 
+  const handleResultMenu = () => {
+    navigation.navigate('ResultMenu', { disciplineId: discipline.id });
+  };
+
   const handleDeletePress = () => {
     setIsModalVisible(true);
   };
@@ -211,7 +215,7 @@ const DisciplineDetails = ({ route, navigation }) => {
 
       <View style={menuStyles.cardRow}>
         <MenuItem icon="upload" text="Faltas" color="#0066CC" onPress={handleAbsencesMenu} />
-        <MenuItem icon="happy" text="Notas" color="#6600CC" onPress={handleFilesAndPhotos} />
+        <MenuItem icon="happy" text="Notas" color="#6600CC" onPress={handleResultMenu} />
       </View>
       {/* <View style={menuStyles.cardRow}>
         <MenuItem
