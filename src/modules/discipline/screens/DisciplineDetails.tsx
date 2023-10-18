@@ -29,13 +29,12 @@ const DisciplineDetails = ({ route, navigation }) => {
     status_discipline: 0,
     dateStart: '',
     dateEnd: '',
+    maxAbsences: 0,
   });
   const [totalAbsences, setTotalAbsences] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const maxAbsences = 20;
 
   const fetchDisciplineDetails = async () => {
     const disciplineUrl = URL_DISCIPLINEID + `${disciplineId}`;
@@ -62,10 +61,10 @@ const DisciplineDetails = ({ route, navigation }) => {
         setTotalAbsences(totalAbsencesResponse);
 
         let warningMessage = '';
-        if (totalAbsencesResponse >= maxAbsences * 0.9) {
+        if (totalAbsencesResponse >= discipline.maxAbsences * 0.9) {
           warningMessage = 'Atenção: Você está se aproximando do limite de faltas.';
         }
-        if (totalAbsencesResponse > maxAbsences) {
+        if (totalAbsencesResponse > discipline.maxAbsences) {
           warningMessage = 'Faltas acima do permitido!';
         }
 
@@ -99,7 +98,7 @@ const DisciplineDetails = ({ route, navigation }) => {
   };
 
   const handleResultMenu = () => {
-    navigation.navigate('ResultMenu', { disciplineId: discipline.id });
+    navigation.navigate('AbsencesMenu', { disciplineId: discipline.id });
   };
 
   const handleDeletePress = () => {
@@ -204,9 +203,9 @@ const DisciplineDetails = ({ route, navigation }) => {
           <Text style={disciplineDetailsStyle.value}>{discipline.assignmentsWeight || 'N/A'}</Text>
         </View>
 
-        {totalAbsences >= maxAbsences * 0.9 ? (
+        {totalAbsences >= discipline.maxAbsences * 0.9 ? (
           <Text style={{ color: 'red', textAlign: 'center' }}>
-            {totalAbsences > maxAbsences
+            {totalAbsences > discipline.maxAbsences
               ? 'Faltas acima do permitido!'
               : 'Atenção: Você está se aproximando do limite de faltas.'}
           </Text>
@@ -215,7 +214,7 @@ const DisciplineDetails = ({ route, navigation }) => {
 
       <View style={menuStyles.cardRow}>
         <MenuItem icon="upload" text="Faltas" color="#0066CC" onPress={handleAbsencesMenu} />
-        <MenuItem icon="happy" text="Notas" color="#6600CC" onPress={handleResultMenu} />
+        <MenuItem icon="happy" text="Notas" color="#6600CC" onPress={handleFilesAndPhotos} />
       </View>
       {/* <View style={menuStyles.cardRow}>
         <MenuItem
