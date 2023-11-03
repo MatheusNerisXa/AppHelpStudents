@@ -68,7 +68,8 @@ const ActivitiesStyle = StyleSheet.create({
   },
   deleteButton: {
     width: 60,
-    height: '50%',
+    height: 60,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'red',
@@ -77,9 +78,32 @@ const ActivitiesStyle = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
   },
+  deleteIcon: {
+    color: 'white', // Cor do ícone
+  },
+  cardActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between', // Alinhar os ícones à direita
+    marginTop: 10, // Defina uma margem superior para separar os botões do conteúdo do cartão
+    padding: 10, // Adicione algum espaço entre os botões
+  },
+  actionButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginHorizontal: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#253494',
+  },
+  actionButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
   editButton: {
     width: 60,
-    height: '50%',
+    height: 60,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'blue',
@@ -89,9 +113,13 @@ const ActivitiesStyle = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
   },
+  editIcon: {
+    color: 'white',
+  },
   completeButton: {
     width: 60,
-    height: '50%',
+    height: 60,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'green',
@@ -99,6 +127,9 @@ const ActivitiesStyle = StyleSheet.create({
   completeText: {
     color: 'white',
     fontWeight: 'bold',
+  },
+  completeIcon: {
+    color: 'white',
   },
   descriptionContainer: {
     marginBottom: 8,
@@ -191,7 +222,7 @@ const ActivitiesStyle = StyleSheet.create({
   },
   addButtonContainer: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-end', // Corrigido para 'flex-end'
     alignItems: 'flex-end',
   },
   addButton: {
@@ -209,10 +240,9 @@ const ActivitiesStyle = StyleSheet.create({
   },
   filterButtons: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'spacebetween',
     marginVertical: 10,
   },
-
   filterButton: {
     flex: 1,
     paddingVertical: 10,
@@ -220,11 +250,9 @@ const ActivitiesStyle = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#666666',
   },
-
   activeFilterButton: {
     backgroundColor: '#253494',
   },
-
   filterButtonText: {
     fontSize: 16,
     fontWeight: 'bold',

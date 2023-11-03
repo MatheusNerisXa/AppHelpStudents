@@ -62,6 +62,9 @@ const ActivitiesScreen: React.FC = () => {
   const [editDescription, setEditDescription] = useState('');
   const [editDueDate, setEditDueDate] = useState('');
   const [editItem, setEditItem] = useState<Activity | null>(null);
+  const [showCompletionMessage, setShowCompletionMessage] = useState(false);
+  const [completionMessageType, setCompletionMessageType] = useState('');
+  const [completedActivityName, setCompletedActivityName] = useState('');
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -231,6 +234,14 @@ const ActivitiesScreen: React.FC = () => {
         setTotalNaoConcluidas(updatedTotalNaoConcluidas);
 
         setExpandedCard(null);
+
+        // Defina o nome da atividade que foi movida
+        setCompletedActivityName(item.taskName);
+
+        // Defina a mensagem e o tipo com base no estado da atividade
+        const message = item.isCompleted ? 'Pendentes' : 'Concluídas';
+        setCompletionMessageType(message);
+        setShowCompletionMessage(true);
       }
     } catch (error) {
       console.error('Error toggling completion:', error);
@@ -308,90 +319,80 @@ const ActivitiesScreen: React.FC = () => {
       {loading ? (
         <ActivityIndicator size="large" color="#f09d5c" style={ActivitiesStyle.loadingIndicator} />
       ) : (
-        <SwipeListView
-          data={filteredActivitiesByCompletion}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              activeOpacity={1}
-              style={[
-                ActivitiesStyle.activityCard,
-                {
-                  borderColor: item.isCompleted ? 'green' : 'red',
-                  borderWidth: 2,
-                  transform: [{ translateX: expandedCard === item.id ? 150 : 0 }],
-                },
-              ]}
-            >
-              <View style={ActivitiesStyle.activityHeader}>
-                <Text style={ActivitiesStyle.activityTitle}>{item.taskName}</Text>
-              </View>
-              <View style={ActivitiesStyle.descriptionContainer}>
-                <Text style={ActivitiesStyle.descriptionLabel}>Descrição: </Text>
-                <Text style={ActivitiesStyle.activityDescription}>{item.description}</Text>
-              </View>
-              <View style={ActivitiesStyle.infoContainer}>
-                <View style={ActivitiesStyle.infoItem}>
-                  <Text style={ActivitiesStyle.infoLabel}>Prazo:</Text>
-                  <Text style={ActivitiesStyle.infoText}>{formatDueDate(item.dueDate)}</Text>
+        <View>
+          {filteredActivitiesByCompletion.map((item) => (
+            <View key={item.id}>
+              <View
+                style={[
+                  ActivitiesStyle.activityCard,
+                  {
+                    borderColor: item.isCompleted ? 'green' : 'red',
+                    borderWidth: 2,
+                  },
+                ]}
+              >
+                <View style={ActivitiesStyle.activityHeader}>
+                  <Text style={ActivitiesStyle.activityTitle}>{item.taskName}</Text>
                 </View>
-                {item.isCompleted
-                  ? null
-                  : isOverdue(item.dueDate) && (
-                      <View style={ActivitiesStyle.overdueMessageContainer}>
-                        <Text style={ActivitiesStyle.overdueMessage}>Atrasado</Text>
-                      </View>
-                    )}
-                <View style={ActivitiesStyle.infoItem}>
-                  <Text
-                    style={[
-                      ActivitiesStyle.infoLabel,
-                      { color: item.isCompleted ? 'green' : 'red' },
-                    ]}
+                <View style={ActivitiesStyle.descriptionContainer}>
+                  <Text style={ActivitiesStyle.descriptionLabel}>Descrição: </Text>
+                  <Text style={ActivitiesStyle.activityDescription}>{item.description}</Text>
+                </View>
+                <View style={ActivitiesStyle.infoContainer}>
+                  <View style={ActivitiesStyle.infoItem}>
+                    <Text style={ActivitiesStyle.infoLabel}>Prazo:</Text>
+                    <Text style={ActivitiesStyle.infoText}>{formatDueDate(item.dueDate)}</Text>
+                  </View>
+                  {item.isCompleted
+                    ? null
+                    : isOverdue(item.dueDate) && (
+                        <View style={ActivitiesStyle.overdueMessageContainer}>
+                          <Text style={ActivitiesStyle.overdueMessage}>Atrasado</Text>
+                        </View>
+                      )}
+                  <View style={ActivitiesStyle.infoItem}>
+                    <Text
+                      style={[
+                        ActivitiesStyle.infoLabel,
+                        { color: item.isCompleted ? 'green' : 'red' },
+                      ]}
+                    >
+                      Concluído:
+                    </Text>
+                    <Text
+                      style={[
+                        ActivitiesStyle.infoText,
+                        { color: item.isCompleted ? 'green' : 'red' },
+                      ]}
+                    >
+                      {item.isCompleted ? 'Sim' : 'Não'}
+                    </Text>
+                  </View>
+                </View>
+                <View style={ActivitiesStyle.cardActions}>
+                  <TouchableOpacity
+                    style={ActivitiesStyle.editButton}
+                    onPress={() => openEditModal(item)}
                   >
-                    Concluído:
-                  </Text>
-                  <Text
-                    style={[
-                      ActivitiesStyle.infoText,
-                      { color: item.isCompleted ? 'green' : 'red' },
-                    ]}
+                    <Icon name="pencil" size={24} color="white" />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={ActivitiesStyle.completeButton}
+                    onPress={() => handleToggleCompletion(item)}
                   >
-                    {item.isCompleted ? 'Sim' : 'Não'}
-                  </Text>
+                    <Icon name={item.isCompleted ? 'cross' : 'checkmark'} size={24} color="white" />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={ActivitiesStyle.deleteButton}
+                    onPress={() => openDeleteModal(item)}
+                  >
+                    <Icon name="bin" size={24} color="white" />
+                  </TouchableOpacity>
                 </View>
               </View>
-            </TouchableOpacity>
-          )}
-          renderHiddenItem={({ item }) => (
-            <View style={ActivitiesStyle.rowBack}>
-              <TouchableOpacity
-                style={ActivitiesStyle.editButton}
-                onPress={() => openEditModal(item)}
-              >
-                <Icon name="pencil" size={24} color="white" />
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={ActivitiesStyle.completeButton}
-                onPress={() => handleToggleCompletion(item)}
-              >
-                <Icon name={item.isCompleted ? 'cross' : 'checkmark'} size={24} color="white" />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={ActivitiesStyle.deleteButton}
-                onPress={() => openDeleteModal(item)}
-              >
-                <Icon name="bin" size={24} color="white" />
-              </TouchableOpacity>
             </View>
-          )}
-          leftOpenValue={150}
-          rightOpenValue={-190}
-          disableRightSwipe={true}
-          onRowOpen={(rowKey) => setExpandedCard(rowKey)}
-          onRowClose={() => setExpandedCard(null)}
-        />
+          ))}
+        </View>
       )}
 
       <View style={ActivitiesStyle.addButtonContainer}>
@@ -417,6 +418,24 @@ const ActivitiesScreen: React.FC = () => {
               <View style={ActivitiesStyle.modalButtons}>
                 <Button title="Cancelar" onPress={closeDeleteModal} color="#FF0000" />
                 <Button title="Confirmar" onPress={confirmDeleteActivity} color="#007AFF" />
+              </View>
+            </View>
+          </View>
+        </View>
+      </Modal>
+      <Modal visible={showCompletionMessage} transparent={true} animationType="slide">
+        <View style={ActivitiesStyle.modalContainer}>
+          <View style={ActivitiesStyle.modalBackground}>
+            <View style={ActivitiesStyle.modalContent}>
+              <Text style={ActivitiesStyle.modalTitle}>
+                Atividade "{completedActivityName}" movida para {completionMessageType}
+              </Text>
+              <View style={ActivitiesStyle.modalButtons}>
+                <Button
+                  title="Fechar"
+                  onPress={() => setShowCompletionMessage(false)}
+                  color="#007AFF"
+                />
               </View>
             </View>
           </View>

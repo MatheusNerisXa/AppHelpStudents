@@ -19,7 +19,7 @@ const ResultDetails = ({ route }) => {
         if (response.ok) {
           const data = await response.json();
           if (data) {
-            console.log('Data from API:', data);
+            console.log('Data from API:', data); // Adicione este log para verificar os dados retornados.
             setResult(data);
           } else {
             setResult(null);
@@ -66,6 +66,9 @@ const ResultDetails = ({ route }) => {
         <View style={ResultDetailsStyle.activitiesContainer}>
           {result.map((item, index) => (
             <View key={index} style={ResultDetailsStyle.activityItem}>
+              <Text style={ResultDetailsStyle.label}>Disciplina:</Text>
+              <Text style={ResultDetailsStyle.value}>{item.discipline}</Text>
+
               <Text style={ResultDetailsStyle.label}>Atividades:</Text>
               <Text style={ResultDetailsStyle.value}>{item.workNotes || 'N/A'}</Text>
             </View>

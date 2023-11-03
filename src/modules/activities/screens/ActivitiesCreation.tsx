@@ -61,7 +61,7 @@ const ActivitiesCreation = ({ navigation }) => {
   useEffect(() => {
     const fetchUserDisciplines = async () => {
       try {
-        const response = await axios.get(`http://192.168.1.4:8080/discipline/user/${user.id}`);
+        const response = await axios.get(`http://192.168.1.16:8080/discipline/user/${user.id}`);
 
         if (response.status === 200) {
           const userDisciplines = response.data;
@@ -70,7 +70,9 @@ const ActivitiesCreation = ({ navigation }) => {
           console.error('Erro ao obter as disciplinas do usuário:', response.data);
         }
       } catch (error) {
-        console.error('Erro ao obter as disciplinas do usuário:', error);
+        console.log('Erro ao obter as disciplinas do usuário:', error);
+        // Defina setDisciplines([]) para um array vazio, para que o usuário não tenha disciplinas cadastradas.
+        setDisciplines([]);
       }
     };
 
@@ -93,7 +95,7 @@ const ActivitiesCreation = ({ navigation }) => {
 
     const formattedDisplayDate = format(date, 'dd/MM/yyyy');
 
-    setDueDate(formattedDueDate);
+    setDueDate(formattedDisplayDate);
   };
 
   const handleSaveActivity = async () => {
@@ -123,7 +125,7 @@ const ActivitiesCreation = ({ navigation }) => {
         discipline: selectedDiscipline ? selectedDiscipline.id : null,
       };
 
-      const response = await axios.post('http://192.168.1.4:8080/activities', activityData);
+      const response = await axios.post('http://192.168.1.16:8080/activities', activityData);
 
       if (response.status === 201) {
         navigation.navigate('Activities');

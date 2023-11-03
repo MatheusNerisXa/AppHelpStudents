@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { Modal, RefreshControl, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import * as Animatable from 'react-native-animatable';
 
 import { Icon } from '../../../shared/components/icon/Icon';
 import {
@@ -30,8 +29,15 @@ const DisciplineDetails = ({ route, navigation }) => {
     dateStart: '',
     dateEnd: '',
     maxAbsences: 0,
+    gradeWeight1: 0,
+    gradeWeight2: 0,
+    assignmentsWeight: 0,
+    grade1: 0,
+    grade2: 0,
   });
   const [totalAbsences, setTotalAbsences] = useState(null);
+  const [average, setAverage] = useState(null);
+
   const [isLoading, setIsLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -39,15 +45,18 @@ const DisciplineDetails = ({ route, navigation }) => {
   const fetchDisciplineDetails = async () => {
     const disciplineUrl = URL_DISCIPLINEID + `${disciplineId}`;
     const absencesTotalUrl = URL_ABSENCES_TOTAL + `${disciplineId}`;
+    const resultsUrl = 'http://192.168.1.16:8080/results/discipline/46'; // Substitua pela URL correta
 
     try {
-      const [disciplineResponse, totalAbsencesResponse] = await Promise.all([
+      const [disciplineResponse, totalAbsencesResponse, resultsResponse] = await Promise.all([
         fetch(disciplineUrl).then((response) => response.json()),
         fetch(absencesTotalUrl).then((response) => response.json()),
+        fetch(resultsUrl).then((response) => response.json()), // Busca as notas dos trabalhos
       ]);
 
       console.log('Dados da disciplina:', disciplineResponse);
       console.log('Total de faltas:', totalAbsencesResponse);
+      console.log('Notas dos trabalhos:', resultsResponse); // Exibe as notas dos trabalhos
 
       const statusInfo = statusMap[disciplineResponse.status_discipline] || {
         label: 'Desconhecido',
@@ -56,7 +65,6 @@ const DisciplineDetails = ({ route, navigation }) => {
       disciplineResponse.status_discipline = statusInfo.label;
       disciplineResponse.status_color = statusInfo.color;
       setDiscipline(disciplineResponse);
-
       if (totalAbsencesResponse !== undefined) {
         setTotalAbsences(totalAbsencesResponse);
 
@@ -66,6 +74,29 @@ const DisciplineDetails = ({ route, navigation }) => {
         }
         if (totalAbsencesResponse > discipline.maxAbsences) {
           warningMessage = 'Faltas acima do permitido!';
+        }
+
+        // Certifique-se de que gradeWeight1 e gradeWeight2 sejam números válidos maiores que zero
+        const gradeWeight1 = discipline.gradeWeight1 || 0;
+        const gradeWeight2 = discipline.gradeWeight2 || 0;
+
+        const weightedGrade1 = gradeWeight1 * (resultsResponse[0].grade || 0);
+        const weightedGrade2 = gradeWeight2 * (resultsResponse[1].grade || 0);
+        const totalWeight = gradeWeight1 + gradeWeight2 + discipline.assignmentsWeight;
+
+        // Calcula o peso das atividades
+        const weightedWorkNotes = resultsResponse.reduce(
+          (total, item) => total + (item.workNotes || 0),
+          0,
+        );
+
+        if (totalWeight === 0) {
+          // Evita a divisão por zero, se o totalWeight for zero, defina a média como 0
+          setAverage(0);
+        } else {
+          const calculatedAverage =
+            (weightedGrade1 + weightedGrade2 + weightedWorkNotes) / totalWeight;
+          setAverage(calculatedAverage);
         }
 
         setIsLoading(false);
@@ -87,10 +118,6 @@ const DisciplineDetails = ({ route, navigation }) => {
   const onRefresh = () => {
     setRefreshing(true);
     fetchDisciplineDetails();
-  };
-
-  const handleFilesAndPhotos = () => {
-    navigation.navigate('FilePhotos');
   };
 
   const handleAbsencesMenu = () => {
@@ -203,6 +230,13 @@ const DisciplineDetails = ({ route, navigation }) => {
           <Text style={disciplineDetailsStyle.value}>{discipline.assignmentsWeight || 'N/A'}</Text>
         </View>
 
+        <View style={disciplineDetailsStyle.detailItem}>
+          <Text style={disciplineDetailsStyle.label}>Média:</Text>
+          <Text style={disciplineDetailsStyle.value}>
+            {average !== null ? average.toFixed(2) : 'N/A'}
+          </Text>
+        </View>
+
         {totalAbsences >= discipline.maxAbsences * 0.9 ? (
           <Text style={{ color: 'red', textAlign: 'center' }}>
             {totalAbsences > discipline.maxAbsences
@@ -216,15 +250,6 @@ const DisciplineDetails = ({ route, navigation }) => {
         <MenuItem icon="upload" text="Faltas" color="#0066CC" onPress={handleAbsencesMenu} />
         <MenuItem icon="happy" text="Notas" color="#6600CC" onPress={handleResultMenu} />
       </View>
-      {/* <View style={menuStyles.cardRow}>
-        <MenuItem
-          icon="stats-dots"
-          text="Relatório"
-          color="#006633"
-          onPress={handleFilesAndPhotos}
-        />
-        <MenuItem icon="cog" text="Configurações" color="#CC3300" onPress={handleFilesAndPhotos} />
-      </View> */}
       <View style={menuStyles.cardRow}>
         <TouchableOpacity onPress={handleDeletePress} style={menuStyles.cardContainerDelete}>
           <Icon name="bin" size={32} color="#FFF" style={menuStyles.icon} />

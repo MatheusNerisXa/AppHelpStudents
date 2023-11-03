@@ -107,10 +107,22 @@ const Home: React.FC = () => {
     try {
       fetch(URL_DISCIPLINE + `${userId}`)
         .then((response) => response.json())
-        .then((data) => setDisciplines(data))
-        .catch((error) => console.error('Error fetching disciplines:', error));
+        .then((data) => {
+          if (Array.isArray(data)) {
+            setDisciplines(data);
+          } else {
+            // Handle the case when no disciplines are found, but without displaying an error or warning
+            console.log('No disciplines found for the user with ID:', userId);
+            setDisciplines([]); // Set disciplines as an empty array
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching disciplines:', error);
+          setDisciplines([]); // Set disciplines as an empty array in case of an error
+        });
     } catch (error) {
       console.error('Error fetching disciplines:', error);
+      setDisciplines([]); // Set disciplines as an empty array in case of an error
     }
   };
 
