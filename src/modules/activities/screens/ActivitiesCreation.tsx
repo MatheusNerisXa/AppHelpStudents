@@ -71,7 +71,6 @@ const ActivitiesCreation = ({ navigation }) => {
         }
       } catch (error) {
         console.log('Erro ao obter as disciplinas do usuário:', error);
-        // Defina setDisciplines([]) para um array vazio, para que o usuário não tenha disciplinas cadastradas.
         setDisciplines([]);
       }
     };
@@ -139,6 +138,7 @@ const ActivitiesCreation = ({ navigation }) => {
     } catch (error) {
       console.error('Erro ao criar a atividade:', error);
     }
+    navigation.navigate('Activities');
   };
 
   return (

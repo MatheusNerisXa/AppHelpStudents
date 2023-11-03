@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import axios from 'axios';
 import { format, isValid, parse } from 'date-fns';
 import React, { useEffect, useState } from 'react';
@@ -9,6 +10,7 @@ import {
   ActivityIndicator,
   Button,
   Modal,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -270,7 +272,10 @@ const ActivitiesScreen: React.FC = () => {
 
       if (response.status === 201) {
         const newActivity: Activity = response.data;
-        setActivities([...activities, newActivity]);
+
+        // Adicione a nova atividade ao estado activities
+        setActivities((prevActivities) => [...prevActivities, newActivity]);
+
         setIsAddModalVisible(false);
         setTaskName('');
         setDescription('');
@@ -319,7 +324,7 @@ const ActivitiesScreen: React.FC = () => {
       {loading ? (
         <ActivityIndicator size="large" color="#f09d5c" style={ActivitiesStyle.loadingIndicator} />
       ) : (
-        <View>
+        <ScrollView>
           {filteredActivitiesByCompletion.map((item) => (
             <View key={item.id}>
               <View
@@ -392,7 +397,7 @@ const ActivitiesScreen: React.FC = () => {
               </View>
             </View>
           ))}
-        </View>
+        </ScrollView>
       )}
 
       <View style={ActivitiesStyle.addButtonContainer}>

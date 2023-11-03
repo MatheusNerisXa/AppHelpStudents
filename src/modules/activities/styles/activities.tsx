@@ -67,25 +67,26 @@ const ActivitiesStyle = StyleSheet.create({
     marginTop: 0,
   },
   deleteButton: {
-    width: 60,
-    height: 60,
+    width: 40,
+    height: 40,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'red',
+    marginLeft: 10,
   },
   deleteText: {
     color: 'white',
     fontWeight: 'bold',
   },
   deleteIcon: {
-    color: 'white', // Cor do ícone
+    color: 'white',
   },
   cardActions: {
     flexDirection: 'row',
-    justifyContent: 'space-between', // Alinhar os ícones à direita
-    marginTop: 10, // Defina uma margem superior para separar os botões do conteúdo do cartão
-    padding: 10, // Adicione algum espaço entre os botões
+    justifyContent: 'flex-end',
+    marginTop: 10,
+    padding: 10,
   },
   actionButton: {
     width: 40,
@@ -101,8 +102,8 @@ const ActivitiesStyle = StyleSheet.create({
     fontSize: 16,
   },
   editButton: {
-    width: 60,
-    height: 60,
+    width: 40,
+    height: 40,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -117,12 +118,13 @@ const ActivitiesStyle = StyleSheet.create({
     color: 'white',
   },
   completeButton: {
-    width: 60,
-    height: 60,
+    width: 40,
+    height: 40,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'green',
+    marginLeft: 10,
   },
   completeText: {
     color: 'white',
@@ -222,7 +224,7 @@ const ActivitiesStyle = StyleSheet.create({
   },
   addButtonContainer: {
     flex: 1,
-    justifyContent: 'flex-end', // Corrigido para 'flex-end'
+    justifyContent: 'flex-end',
     alignItems: 'flex-end',
   },
   addButton: {
