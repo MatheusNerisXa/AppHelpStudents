@@ -10,7 +10,7 @@ const Ias = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const fetchData = () => {
-    fetch('http://192.168.1.16:8080/ias')
+    fetch('http://192.168.1.12:8080/ias')
       .then((response) => response.json())
       .then((data) => setIas(data))
       .finally(() => setRefreshing(false));

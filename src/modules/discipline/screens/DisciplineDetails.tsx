@@ -45,18 +45,18 @@ const DisciplineDetails = ({ route, navigation }) => {
   const fetchDisciplineDetails = async () => {
     const disciplineUrl = URL_DISCIPLINEID + `${disciplineId}`;
     const absencesTotalUrl = URL_ABSENCES_TOTAL + `${disciplineId}`;
-    const resultsUrl = 'http://192.168.1.16:8080/results/discipline/46'; // Substitua pela URL correta
+    const resultsUrl = 'http://192.168.1.12:8080/results/discipline/46';
 
     try {
       const [disciplineResponse, totalAbsencesResponse, resultsResponse] = await Promise.all([
         fetch(disciplineUrl).then((response) => response.json()),
         fetch(absencesTotalUrl).then((response) => response.json()),
-        fetch(resultsUrl).then((response) => response.json()), // Busca as notas dos trabalhos
+        fetch(resultsUrl).then((response) => response.json()),
       ]);
 
       console.log('Dados da disciplina:', disciplineResponse);
       console.log('Total de faltas:', totalAbsencesResponse);
-      console.log('Notas dos trabalhos:', resultsResponse); // Exibe as notas dos trabalhos
+      console.log('Notas dos trabalhos:', resultsResponse);
 
       const statusInfo = statusMap[disciplineResponse.status_discipline] || {
         label: 'Desconhecido',
@@ -76,7 +76,6 @@ const DisciplineDetails = ({ route, navigation }) => {
           warningMessage = 'Faltas acima do permitido!';
         }
 
-        // Certifique-se de que gradeWeight1 e gradeWeight2 sejam números válidos maiores que zero
         const gradeWeight1 = discipline.gradeWeight1 || 0;
         const gradeWeight2 = discipline.gradeWeight2 || 0;
 
@@ -84,14 +83,12 @@ const DisciplineDetails = ({ route, navigation }) => {
         const weightedGrade2 = gradeWeight2 * (resultsResponse[1].grade || 0);
         const totalWeight = gradeWeight1 + gradeWeight2 + discipline.assignmentsWeight;
 
-        // Calcula o peso das atividades
         const weightedWorkNotes = resultsResponse.reduce(
           (total, item) => total + (item.workNotes || 0),
           0,
         );
 
         if (totalWeight === 0) {
-          // Evita a divisão por zero, se o totalWeight for zero, defina a média como 0
           setAverage(0);
         } else {
           const calculatedAverage =

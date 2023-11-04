@@ -379,19 +379,19 @@ const ActivitiesScreen: React.FC = () => {
                     style={ActivitiesStyle.editButton}
                     onPress={() => openEditModal(item)}
                   >
-                    <Icon name="pencil" size={24} color="white" />
+                    <Icon name="pencil" size={16} color="white" />
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={ActivitiesStyle.completeButton}
                     onPress={() => handleToggleCompletion(item)}
                   >
-                    <Icon name={item.isCompleted ? 'cross' : 'checkmark'} size={24} color="white" />
+                    <Icon name={item.isCompleted ? 'cross' : 'checkmark'} size={16} color="white" />
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={ActivitiesStyle.deleteButton}
                     onPress={() => openDeleteModal(item)}
                   >
-                    <Icon name="bin" size={24} color="white" />
+                    <Icon name="bin" size={16} color="white" />
                   </TouchableOpacity>
                 </View>
               </View>

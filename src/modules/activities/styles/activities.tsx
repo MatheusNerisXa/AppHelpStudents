@@ -67,8 +67,8 @@ const ActivitiesStyle = StyleSheet.create({
     marginTop: 0,
   },
   deleteButton: {
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -86,7 +86,6 @@ const ActivitiesStyle = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     marginTop: 10,
-    padding: 10,
   },
   actionButton: {
     width: 40,
@@ -102,8 +101,8 @@ const ActivitiesStyle = StyleSheet.create({
     fontSize: 16,
   },
   editButton: {
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -118,8 +117,8 @@ const ActivitiesStyle = StyleSheet.create({
     color: 'white',
   },
   completeButton: {
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -242,7 +241,7 @@ const ActivitiesStyle = StyleSheet.create({
   },
   filterButtons: {
     flexDirection: 'row',
-    justifyContent: 'spacebetween',
+    justifyContent: 'space-between',
     marginVertical: 10,
   },
   filterButton: {
