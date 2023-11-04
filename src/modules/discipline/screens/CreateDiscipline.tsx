@@ -3,7 +3,16 @@
 import { useNavigation } from '@react-navigation/native';
 import { isDate } from 'date-fns';
 import React, { useEffect, useState } from 'react';
-import { Keyboard, Modal, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Modal,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import { URL_DISCIPLINE_CREATE } from '../../../shared/constants/urls';
 import { useRequest } from '../../../shared/hooks/useRequest';
@@ -59,6 +68,21 @@ const DisciplineCreation = () => {
   const [gradeWeight1, setGradeWeight1] = useState('');
   const [gradeWeight2, setGradeWeight2] = useState('');
   const [assignmentsWeight, setAssignmentsWeight] = useState('');
+
+  const handleGradeWeight1Change = (text) => {
+    text = text.replace(',', '.');
+    setGradeWeight1(text);
+  };
+
+  const handleGradeWeight2Change = (text) => {
+    text = text.replace(',', '.');
+    setGradeWeight2(text);
+  };
+
+  const handleAssignmentsWeightChange = (text) => {
+    text = text.replace(',', '.');
+    setAssignmentsWeight(text);
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -152,233 +176,234 @@ const DisciplineCreation = () => {
   };
 
   return (
-    <ScrollView style={CreateDisciplineStyle.container}>
-      <View style={CreateDisciplineStyle.container}>
-        <View style={CreateDisciplineStyle.inputContainer}>
-          <Text style={CreateDisciplineStyle.label}>Matéria:</Text>
-          <TextInput
-            style={CreateDisciplineStyle.input}
-            onChangeText={(text) => setName(text)}
-            value={name}
-            placeholder="Digite o nome da matéria"
-            placeholderTextColor="#000"
-          />
-        </View>
-
-        <View style={CreateDisciplineStyle.inputContainer}>
-          <Text style={CreateDisciplineStyle.label}>Professor(a):</Text>
-          <TextInput
-            style={CreateDisciplineStyle.input}
-            onChangeText={(text) => setTeacher(text)}
-            value={teacher}
-            placeholder="Digite o nome do professor(a)"
-            placeholderTextColor="#000"
-          />
-        </View>
-
-        <View style={CreateDisciplineStyle.inputContainer}>
-          <Text style={CreateDisciplineStyle.label}>Sala:</Text>
-          <TextInput
-            style={CreateDisciplineStyle.input}
-            onChangeText={(text) => setRoom(text)}
-            value={room}
-            placeholder="Digite o nome da sala"
-            placeholderTextColor="#000"
-          />
-        </View>
-
-        <View style={CreateDisciplineStyle.inputContainer}>
-          <Text style={CreateDisciplineStyle.label}>Nota Mínima:</Text>
-          <TextInput
-            style={CreateDisciplineStyle.input}
-            onChangeText={(text) => setMinGrade(text)}
-            value={minGrade}
-            placeholder="Digite a nota mínima"
-            placeholderTextColor="#000"
-            keyboardType="numeric"
-          />
-        </View>
-
-        <View style={CreateDisciplineStyle.inputContainer}>
-          <Text style={CreateDisciplineStyle.label}>Falta Máxima:</Text>
-          <TextInput
-            style={CreateDisciplineStyle.input}
-            onChangeText={(text) => setMaxAbsences(text)}
-            value={maxAbsences}
-            placeholder="Digite a falta máxima"
-            placeholderTextColor="#000"
-            keyboardType="numeric"
-          />
-        </View>
-
-        <View style={CreateDisciplineStyle.inputContainer}>
-          <Text style={CreateDisciplineStyle.label}>Horário:</Text>
-          <TextInput
-            style={CreateDisciplineStyle.input}
-            onChangeText={(text) => setHour(text)}
-            value={hour}
-            placeholder="Digite o horário"
-            placeholderTextColor="#000"
-          />
-        </View>
-
-        <View style={CreateDisciplineStyle.inputContainer}>
-          <Text style={CreateDisciplineStyle.label}>Dias de Aula:</Text>
-          <View style={CreateDisciplineStyle.statusContainer}>
-            <TouchableOpacity
-              style={[
-                CreateDisciplineStyle.statusButton,
-                monday ? CreateDisciplineStyle.selectedStatus : { backgroundColor: '#ccc' },
-              ]}
-              onPress={() => {
-                setMonday(!monday);
-              }}
-              disabled={false}
-            >
-              <Text style={CreateDisciplineStyle.statusText}>Seg</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                CreateDisciplineStyle.statusButton,
-                tuesday ? CreateDisciplineStyle.selectedStatus : { backgroundColor: '#ccc' },
-              ]}
-              onPress={() => {
-                setTuesday(!tuesday);
-              }}
-              disabled={false}
-            >
-              <Text style={CreateDisciplineStyle.statusText}>Ter</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                CreateDisciplineStyle.statusButton,
-                wednesday ? CreateDisciplineStyle.selectedStatus : { backgroundColor: '#ccc' },
-              ]}
-              onPress={() => {
-                setWednesday(!wednesday);
-              }}
-              disabled={false}
-            >
-              <Text style={CreateDisciplineStyle.statusText}>Qua</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                CreateDisciplineStyle.statusButton,
-                thursday ? CreateDisciplineStyle.selectedStatus : { backgroundColor: '#ccc' },
-              ]}
-              onPress={() => {
-                setThursday(!thursday);
-              }}
-              disabled={false}
-            >
-              <Text style={CreateDisciplineStyle.statusText}>Qui</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                CreateDisciplineStyle.statusButton,
-                friday ? CreateDisciplineStyle.selectedStatus : { backgroundColor: '#ccc' },
-              ]}
-              onPress={() => {
-                setFriday(!friday);
-              }}
-              disabled={false}
-            >
-              <Text style={CreateDisciplineStyle.statusText}>Sex</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                CreateDisciplineStyle.statusButton,
-                saturday ? CreateDisciplineStyle.selectedStatus : { backgroundColor: '#ccc' },
-              ]}
-              onPress={() => {
-                setSaturday(!saturday);
-              }}
-              disabled={true}
-            >
-              <Text style={CreateDisciplineStyle.statusText}>Sáb</Text>
-            </TouchableOpacity>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={50}>
+      <ScrollView style={CreateDisciplineStyle.container}>
+        <View style={CreateDisciplineStyle.container}>
+          <View style={CreateDisciplineStyle.inputContainer}>
+            <Text style={CreateDisciplineStyle.label}>Matéria:</Text>
+            <TextInput
+              style={CreateDisciplineStyle.input}
+              onChangeText={(text) => setName(text)}
+              value={name}
+              placeholder="Digite o nome da matéria"
+              placeholderTextColor="#000"
+            />
           </View>
-        </View>
 
-        <View style={CreateDisciplineStyle.inputContainer}>
-          <Text style={CreateDisciplineStyle.label}>Status:</Text>
-          <View style={CreateDisciplineStyle.statusContainer}>
-            {Object.keys(statusMap).map((statusKey) => (
+          <View style={CreateDisciplineStyle.inputContainer}>
+            <Text style={CreateDisciplineStyle.label}>Professor(a):</Text>
+            <TextInput
+              style={CreateDisciplineStyle.input}
+              onChangeText={(text) => setTeacher(text)}
+              value={teacher}
+              placeholder="Digite o nome do professor(a)"
+              placeholderTextColor="#000"
+            />
+          </View>
+
+          <View style={CreateDisciplineStyle.inputContainer}>
+            <Text style={CreateDisciplineStyle.label}>Sala:</Text>
+            <TextInput
+              style={CreateDisciplineStyle.input}
+              onChangeText={(text) => setRoom(text)}
+              value={room}
+              placeholder="Digite o nome da sala"
+              placeholderTextColor="#000"
+            />
+          </View>
+
+          <View style={CreateDisciplineStyle.inputContainer}>
+            <Text style={CreateDisciplineStyle.label}>Nota Mínima:</Text>
+            <TextInput
+              style={CreateDisciplineStyle.input}
+              onChangeText={(text) => setMinGrade(text)}
+              value={minGrade}
+              placeholder="Digite a nota mínima"
+              placeholderTextColor="#000"
+              keyboardType="numeric"
+            />
+          </View>
+
+          <View style={CreateDisciplineStyle.inputContainer}>
+            <Text style={CreateDisciplineStyle.label}>Falta Máxima:</Text>
+            <TextInput
+              style={CreateDisciplineStyle.input}
+              onChangeText={(text) => setMaxAbsences(text)}
+              value={maxAbsences}
+              placeholder="Digite a falta máxima"
+              placeholderTextColor="#000"
+              keyboardType="numeric"
+            />
+          </View>
+
+          <View style={CreateDisciplineStyle.inputContainer}>
+            <Text style={CreateDisciplineStyle.label}>Horário:</Text>
+            <TextInput
+              style={CreateDisciplineStyle.input}
+              onChangeText={(text) => setHour(text)}
+              value={hour}
+              placeholder="Digite o horário"
+              placeholderTextColor="#000"
+            />
+          </View>
+
+          <View style={CreateDisciplineStyle.inputContainer}>
+            <Text style={CreateDisciplineStyle.label}>Dias de Aula:</Text>
+            <View style={CreateDisciplineStyle.statusContainer}>
               <TouchableOpacity
-                key={statusKey}
                 style={[
                   CreateDisciplineStyle.statusButton,
-                  status === parseInt(statusKey, 10)
-                    ? CreateDisciplineStyle.selectedStatus
-                    : { backgroundColor: '#ccc' },
+                  monday ? CreateDisciplineStyle.selectedStatus : { backgroundColor: '#ccc' },
                 ]}
                 onPress={() => {
-                  setStatus(parseInt(statusKey, 10));
+                  setMonday(!monday);
                 }}
                 disabled={false}
               >
-                <Text style={CreateDisciplineStyle.statusText}>{statusMap[statusKey]}</Text>
+                <Text style={CreateDisciplineStyle.statusText}>Seg</Text>
               </TouchableOpacity>
-            ))}
-          </View>
-        </View>
-
-        <View style={CreateDisciplineStyle.inputContainer}>
-          <Text style={CreateDisciplineStyle.label}>Peso da Nota 1:</Text>
-          <TextInput
-            style={CreateDisciplineStyle.input}
-            onChangeText={(text) => setGradeWeight1(text)}
-            value={gradeWeight1}
-            placeholder="Digite o peso da Nota 1"
-            placeholderTextColor="#000"
-            keyboardType="numeric"
-          />
-        </View>
-
-        <View style={CreateDisciplineStyle.inputContainer}>
-          <Text style={CreateDisciplineStyle.label}>Peso da Nota 2:</Text>
-          <TextInput
-            style={CreateDisciplineStyle.input}
-            onChangeText={(text) => setGradeWeight2(text)}
-            value={gradeWeight2}
-            placeholder="Digite o peso da Nota 2"
-            placeholderTextColor="#000"
-            keyboardType="numeric"
-          />
-        </View>
-
-        <View style={CreateDisciplineStyle.inputContainer}>
-          <Text style={CreateDisciplineStyle.label}>Peso das Atividades:</Text>
-          <TextInput
-            style={CreateDisciplineStyle.input}
-            onChangeText={(text) => setAssignmentsWeight(text)}
-            value={assignmentsWeight}
-            placeholder="Digite o peso das Atividades"
-            placeholderTextColor="#000"
-            keyboardType="numeric"
-          />
-        </View>
-
-        <TouchableOpacity style={CreateDisciplineStyle.addButton} onPress={handleCreate}>
-          <Text style={CreateDisciplineStyle.addButtonText}>Cadastrar</Text>
-        </TouchableOpacity>
-
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => setModalVisible(false)}
-        >
-          <View style={CreateDisciplineStyle.modalContainer}>
-            <View style={CreateDisciplineStyle.modalContent}>
-              <Text style={CreateDisciplineStyle.modalText}>
-                Matéria {createdDisciplineName} cadastrada com sucesso!
-              </Text>
+              <TouchableOpacity
+                style={[
+                  CreateDisciplineStyle.statusButton,
+                  tuesday ? CreateDisciplineStyle.selectedStatus : { backgroundColor: '#ccc' },
+                ]}
+                onPress={() => {
+                  setTuesday(!tuesday);
+                }}
+                disabled={false}
+              >
+                <Text style={CreateDisciplineStyle.statusText}>Ter</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  CreateDisciplineStyle.statusButton,
+                  wednesday ? CreateDisciplineStyle.selectedStatus : { backgroundColor: '#ccc' },
+                ]}
+                onPress={() => {
+                  setWednesday(!wednesday);
+                }}
+                disabled={false}
+              >
+                <Text style={CreateDisciplineStyle.statusText}>Qua</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  CreateDisciplineStyle.statusButton,
+                  thursday ? CreateDisciplineStyle.selectedStatus : { backgroundColor: '#ccc' },
+                ]}
+                onPress={() => {
+                  setThursday(!thursday);
+                }}
+                disabled={false}
+              >
+                <Text style={CreateDisciplineStyle.statusText}>Qui</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  CreateDisciplineStyle.statusButton,
+                  friday ? CreateDisciplineStyle.selectedStatus : { backgroundColor: '#ccc' },
+                ]}
+                onPress={() => {
+                  setFriday(!friday);
+                }}
+                disabled={false}
+              >
+                <Text style={CreateDisciplineStyle.statusText}>Sex</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  CreateDisciplineStyle.statusButton,
+                  saturday ? CreateDisciplineStyle.selectedStatus : { backgroundColor: '#ccc' },
+                ]}
+                onPress={() => {
+                  setSaturday(!saturday);
+                }}
+                disabled={false}
+              >
+                <Text style={CreateDisciplineStyle.statusText}>Sáb</Text>
+              </TouchableOpacity>
             </View>
           </View>
-        </Modal>
-      </View>
-    </ScrollView>
+
+          <View style={CreateDisciplineStyle.inputContainer}>
+            <Text style={CreateDisciplineStyle.label}>Status:</Text>
+            <View style={CreateDisciplineStyle.statusContainer}>
+              {Object.keys(statusMap).map((statusKey) => (
+                <TouchableOpacity
+                  key={statusKey}
+                  style={[
+                    CreateDisciplineStyle.statusButton,
+                    status === parseInt(statusKey, 10)
+                      ? CreateDisciplineStyle.selectedStatus
+                      : { backgroundColor: '#ccc' },
+                  ]}
+                  onPress={() => {
+                    setStatus(parseInt(statusKey, 10));
+                  }}
+                  disabled={false}
+                >
+                  <Text style={CreateDisciplineStyle.statusText}>{statusMap[statusKey]}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+
+          <View style={CreateDisciplineStyle.inputContainer}>
+            <Text style={CreateDisciplineStyle.label}>Peso da Nota 1:</Text>
+            <TextInput
+              style={CreateDisciplineStyle.input}
+              onChangeText={handleGradeWeight1Change}
+              value={gradeWeight1}
+              placeholder="Digite o peso da Nota 1"
+              placeholderTextColor="#000"
+              keyboardType="numeric"
+            />
+          </View>
+          <View style={CreateDisciplineStyle.inputContainer}>
+            <Text style={CreateDisciplineStyle.label}>Peso da Nota 2:</Text>
+            <TextInput
+              style={CreateDisciplineStyle.input}
+              onChangeText={handleGradeWeight2Change}
+              value={gradeWeight2}
+              placeholder="Digite o peso da Nota 2"
+              placeholderTextColor="#000"
+              keyboardType="numeric"
+            />
+          </View>
+
+          <View style={CreateDisciplineStyle.inputContainer}>
+            <Text style={CreateDisciplineStyle.label}>Peso das Atividades:</Text>
+            <TextInput
+              style={CreateDisciplineStyle.input}
+              onChangeText={handleAssignmentsWeightChange}
+              value={assignmentsWeight}
+              placeholder="Digite o peso das Atividades"
+              placeholderTextColor="#000"
+              keyboardType="numeric"
+            />
+          </View>
+
+          <TouchableOpacity style={CreateDisciplineStyle.addButton} onPress={handleCreate}>
+            <Text style={CreateDisciplineStyle.addButtonText}>Cadastrar</Text>
+          </TouchableOpacity>
+
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => setModalVisible(false)}
+          >
+            <View style={CreateDisciplineStyle.modalContainer}>
+              <View style={CreateDisciplineStyle.modalContent}>
+                <Text style={CreateDisciplineStyle.modalText}>
+                  Matéria {createdDisciplineName} cadastrada com sucesso!
+                </Text>
+              </View>
+            </View>
+          </Modal>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
