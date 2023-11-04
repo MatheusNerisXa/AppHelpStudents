@@ -25,6 +25,7 @@ interface AbsenceDetails {
   id: number;
   reason: string | null;
   created_at: string;
+  date: string;
   number_of_absences: number;
   discipline_id: number;
 }
@@ -235,7 +236,7 @@ const AbsencesDetails = () => {
 
   return (
     <View style={AbsencesDetailsStyle.container}>
-      <Text style={AbsencesDetailsStyle.totalFaltas}>Faltas do dia: {totalFaltas}</Text>
+      <Text style={AbsencesDetailsStyle.totalFaltas}>Total de faltas: {totalFaltas}</Text>
       <FlatList
         data={absenceDetails}
         keyExtractor={(item) => item.id.toString()}
@@ -243,7 +244,7 @@ const AbsencesDetails = () => {
           <View style={AbsencesDetailsStyle.item}>
             <View>
               <Text>
-                <Text style={AbsencesDetailsStyle.bold}>Data:</Text> {formatDate(item.created_at)}
+                <Text style={AbsencesDetailsStyle.bold}>Data:</Text> {formatDate(item.date)}
               </Text>
               <Text>
                 <Text style={AbsencesDetailsStyle.bold}>Motivo:</Text> {item.reason || 'N/A'}
