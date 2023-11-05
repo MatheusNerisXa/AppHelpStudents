@@ -8,6 +8,7 @@ import { Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import ModalDropdown from 'react-native-modal-dropdown';
 
+import { URL_ACTIVITIE, URL_DISCIPLINE } from '../../../shared/constants/urls';
 import { useRequest } from '../../../shared/hooks/useRequest';
 import AbsencesStyle from '../../absences/styles/absences.style';
 import ActivitiesCreationStyle from '../styles/activitiesCreation';
@@ -61,7 +62,7 @@ const ActivitiesCreation = ({ navigation }) => {
   useEffect(() => {
     const fetchUserDisciplines = async () => {
       try {
-        const response = await axios.get(`http://192.168.1.10:8080/discipline/user/${user.id}`);
+        const response = await axios.get(URL_DISCIPLINE + `${user.id}`);
 
         if (response.status === 200) {
           const userDisciplines = response.data;
@@ -124,7 +125,7 @@ const ActivitiesCreation = ({ navigation }) => {
         discipline: selectedDiscipline ? selectedDiscipline.id : null,
       };
 
-      const response = await axios.post('http://192.168.1.10:8080/activities', activityData);
+      const response = await axios.post(URL_ACTIVITIE, activityData);
 
       if (response.status === 201) {
         navigation.navigate('Activities');

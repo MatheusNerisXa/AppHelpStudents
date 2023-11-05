@@ -26,3 +26,5 @@ export const URL_CONTENT = SERVER_IP + '/content/all';
 export const URL_ACTIVITIES_USER_PENDING = SERVER_IP + '/activities/user/';
 export const URL_RESULT = SERVER_IP + '/results/';
 export const URL_FILES = SERVER_IP + '/files-and-photos/upload';
+export const URL_ACTIVITIE = SERVER_IP + '/activities';
+export const URL_IAS = SERVER_IP + '/ias';

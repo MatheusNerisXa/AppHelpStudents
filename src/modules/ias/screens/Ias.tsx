@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Image, Linking, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
+import { URL_IAS } from '../../../shared/constants/urls';
 import IasStyle from '../styles/ias.style';
 
 const Ias = () => {
@@ -10,7 +11,7 @@ const Ias = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const fetchData = () => {
-    fetch('http://192.168.1.10:8080/ias')
+    fetch(URL_IAS)
       .then((response) => response.json())
       .then((data) => setIas(data))
       .finally(() => setRefreshing(false));
