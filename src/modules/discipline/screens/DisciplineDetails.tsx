@@ -45,7 +45,7 @@ const DisciplineDetails = ({ route, navigation }) => {
   const fetchDisciplineDetails = async () => {
     const disciplineUrl = URL_DISCIPLINEID + `${disciplineId}`;
     const absencesTotalUrl = URL_ABSENCES_TOTAL + `${disciplineId}`;
-    const resultsUrl = 'http://192.168.1.12:8080/results/discipline/46';
+    const resultsUrl = 'http://192.168.1.10:8080/results/discipline/46';
 
     try {
       const [disciplineResponse, totalAbsencesResponse, resultsResponse] = await Promise.all([

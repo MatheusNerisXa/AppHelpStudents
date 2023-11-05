@@ -228,7 +228,8 @@ const Home: React.FC = () => {
             <Text style={homeStyle.userName}>Aluno: {userName || user.name}</Text>
           </View>
         )}
-        {todayDisciplines.length > 0 && (
+
+        {todayDisciplines.length > 0 ? (
           <View style={homeStyle.todayDisciplines}>
             <Text style={homeStyle.todayDisciplinesHeading}>Aulas do dia:</Text>
             {todayDisciplines.map((discipline, index) => (
@@ -244,6 +245,13 @@ const Home: React.FC = () => {
                 )}
               </View>
             ))}
+          </View>
+        ) : (
+          <View style={homeStyle.noClassesMessage}>
+            <Text style={homeStyle.noClassesText}>
+              Nenhuma aula programada para hoje. Aproveite o dia para estudar ou colocar os
+              conteúdos em dia.
+            </Text>
           </View>
         )}
 

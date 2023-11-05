@@ -171,6 +171,24 @@ const homeStyle = StyleSheet.create({
     color: '#333',
     marginTop: 8,
   },
+  noClassesMessage: {
+    backgroundColor: '#f0f0f0',
+    borderRadius: 10,
+    padding: 16,
+    marginBottom: 16,
+    borderWidth: 2,
+    borderColor: '#253494',
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    marginTop: 10,
+  },
+
+  noClassesText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+    textAlign: 'center',
+  },
 });
 
 export default homeStyle;
