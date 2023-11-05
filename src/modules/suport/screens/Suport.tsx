@@ -15,7 +15,7 @@ const Support = () => {
       return;
     }
 
-    const to = ['matheus.nerisxa@outlook.com'];
+    const to = ['contato@helpstudent.com.br'];
 
     email(to, {
       subject,
