@@ -1,6 +1,7 @@
-/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable no-useless-catch */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   Image,
@@ -13,9 +14,8 @@ import {
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 
+import { URL_FILES } from '../../../shared/constants/urls';
 import fileCreateStyle from '../styles/fileCreate';
-
-const API_URL = 'http://192.168.1.10:8080/files-and-photos/upload';
 
 const FilesAndPhotosCreate = ({ route }) => {
   const { disciplineId } = route.params;
@@ -71,7 +71,6 @@ const FilesAndPhotosCreate = ({ route }) => {
 
     setIsUploading(true);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const formDataArray = selectedImages.map((image, index) => {
       const fileExtension = image.path.split('.').pop();
       const randomFileNameWithExtension = generateRandomFileName() + '.' + fileExtension;
@@ -94,11 +93,9 @@ const FilesAndPhotosCreate = ({ route }) => {
       const responses = await Promise.all(formDataArray.map((formData) => uploadImage(formData)));
 
       if (responses.every((response) => response.status === 200)) {
-        Alert.alert('Sucesso', 'Imagens enviadas com sucesso.');
-        setSelectedImages([]);
-        setFileDescription('');
-      } else {
         Alert.alert('Erro', 'Ocorreu um erro ao enviar uma ou mais imagens.');
+      } else {
+        Alert.alert('Sucesso', 'Imagens enviadas com sucesso.');
       }
     } catch (error) {
       console.error('Erro ao fazer upload das imagens:', error);
@@ -109,9 +106,8 @@ const FilesAndPhotosCreate = ({ route }) => {
   };
 
   const uploadImage = async (formData) => {
-    // eslint-disable-next-line no-useless-catch
     try {
-      const response = await axios.post(API_URL, formData, {
+      const response = await axios.post(URL_FILES, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -134,6 +130,14 @@ const FilesAndPhotosCreate = ({ route }) => {
     const randomFileName = Math.random().toString(36).substring(7);
     return randomFileName;
   };
+
+  useEffect(() => {
+    if (isUploading) {
+      // Limpar as imagens e a descrição após o envio bem-sucedido
+      setSelectedImages([]);
+      setFileDescription('');
+    }
+  }, [isUploading]);
 
   return (
     <ScrollView contentContainerStyle={fileCreateStyle.container}>
@@ -177,6 +181,7 @@ const FilesAndPhotosCreate = ({ route }) => {
 
       <TouchableOpacity
         onPress={uploadImages}
+        // eslint-disable-next-line react-native/no-inline-styles
         style={[fileCreateStyle.uploadButton, { opacity: selectedImages.length > 0 ? 1 : 0.5 }]}
         disabled={selectedImages.length === 0 || isUploading}
       >
