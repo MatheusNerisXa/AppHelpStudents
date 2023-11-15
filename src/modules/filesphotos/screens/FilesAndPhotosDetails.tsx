@@ -138,13 +138,18 @@ const FilesAndPhotosDetails = ({ route, navigation }) => {
       <View
         style={[
           filesAndPhotosDetailsStyle.fileContainer,
-
           selectedImages.includes(index) && { borderColor: 'blue', borderWidth: 2 },
         ]}
       >
         <Text style={filesAndPhotosDetailsStyle.fileName}>{item.fileDescription}</Text>
         <Image source={{ uri: item.fileUri }} style={filesAndPhotosDetailsStyle.thumbnail} />
         <Text style={filesAndPhotosDetailsStyle.fileCreatedAt}>Criado em: {item.createdAt}</Text>
+
+        {selectedImages.includes(index) && (
+          <View style={filesAndPhotosDetailsStyle.selectionOverlay}>
+            <Text style={filesAndPhotosDetailsStyle.selectionText}>Selecionado</Text>
+          </View>
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -196,6 +201,7 @@ const FilesAndPhotosDetails = ({ route, navigation }) => {
           </TouchableWithoutFeedback>
         </Modal>
       )}
+
       {isImageViewerVisible && (
         <ImageViewer
           imageUrls={files.map((file) => ({ url: file.fileUri, props: file }))}

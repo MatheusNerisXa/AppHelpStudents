@@ -155,6 +155,21 @@ const filesAndPhotosDetailsStyle = StyleSheet.create({
     color: '#333',
     fontSize: 16,
   },
+  selectionOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 255, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  selectionText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 });
 
 export default filesAndPhotosDetailsStyle;

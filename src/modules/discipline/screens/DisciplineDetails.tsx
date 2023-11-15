@@ -79,8 +79,12 @@ const DisciplineDetails = ({ route, navigation }) => {
         const gradeWeight1 = discipline.gradeWeight1 || 0;
         const gradeWeight2 = discipline.gradeWeight2 || 0;
 
-        const weightedGrade1 = gradeWeight1 * (resultsResponse[0].grade || 0);
-        const weightedGrade2 = gradeWeight2 * (resultsResponse[1].grade || 0);
+        const weightedGrade1 = resultsResponse[0]
+          ? gradeWeight1 * (resultsResponse[0].grade || 0)
+          : 0;
+        const weightedGrade2 = resultsResponse[1]
+          ? gradeWeight2 * (resultsResponse[1].grade || 0)
+          : 0;
         const totalWeight = gradeWeight1 + gradeWeight2 + discipline.assignmentsWeight;
 
         const weightedWorkNotes = resultsResponse.reduce(
