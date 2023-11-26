@@ -58,7 +58,16 @@ const NewsComponent = () => {
   const fetchData = () => {
     fetch(URL_NEWS)
       .then((response) => response.json())
-      .then((data) => setNews(data))
+      .then((data) => {
+        const sortedNews = data.sort((a, b) => {
+          const dateA = new Date(a.postedAt);
+          const dateB = new Date(b.postedAt);
+          return dateB - dateA;
+        });
+
+        // Set the sorted news array in the state
+        setNews(sortedNews);
+      })
       .finally(() => setRefreshing(false));
   };
 

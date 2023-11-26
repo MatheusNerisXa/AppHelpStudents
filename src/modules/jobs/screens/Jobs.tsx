@@ -64,9 +64,6 @@ const JobCard = ({ job, navigateToDetails }) => (
       <Text style={JobsStyle.title}>{job.title}</Text>
       <Text style={JobsStyle.location}>{`Localização: ${job.location}`}</Text>
       <Text style={JobsStyle.createdAt}>Data de Divulgação: {job.created_at}</Text>
-      <TouchableOpacity style={JobsStyle.detailsButton} onPress={navigateToDetails}>
-        <Text style={JobsStyle.detailsButtonText}>Detalhes</Text>
-      </TouchableOpacity>
     </View>
   </TouchableOpacity>
 );

@@ -36,8 +36,8 @@ const IasStyle = StyleSheet.create({
     elevation: 3,
   },
   iaImage: {
-    width: 110,
-    height: 100,
+    width: 90,
+    height: 90,
     marginLeft: 0,
     marginRight: 0,
     borderRadius: 5,

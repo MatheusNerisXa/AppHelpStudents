@@ -58,7 +58,6 @@ const IaCard = ({ ia }) => (
         <Text style={IasStyle.iaName}>{ia.name}</Text>
       </TouchableOpacity>
       <Text style={IasStyle.iaDescription}> {ia.description}</Text>
-      <Text style={IasStyle.learnMoreText}>Clique para saber mais</Text>
     </View>
   </TouchableOpacity>
 );

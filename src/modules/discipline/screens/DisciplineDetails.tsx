@@ -45,7 +45,7 @@ const DisciplineDetails = ({ route, navigation }) => {
   const fetchDisciplineDetails = async () => {
     const disciplineUrl = URL_DISCIPLINEID + `${disciplineId}`;
     const absencesTotalUrl = URL_ABSENCES_TOTAL + `${disciplineId}`;
-    const resultsUrl = 'http://192.168.1.10:8080/results/discipline/46';
+    const resultsUrl = 'http://192.168.1.12:8080/results/discipline/46';
 
     try {
       const [disciplineResponse, totalAbsencesResponse, resultsResponse] = await Promise.all([
@@ -85,18 +85,26 @@ const DisciplineDetails = ({ route, navigation }) => {
         const weightedGrade2 = resultsResponse[1]
           ? gradeWeight2 * (resultsResponse[1].grade || 0)
           : 0;
-        const totalWeight = gradeWeight1 + gradeWeight2 + discipline.assignmentsWeight;
 
+        const totalWeight = gradeWeight1 + gradeWeight2;
+        console.log('OOOIiiii' + gradeWeight1, gradeWeight2, discipline.assignmentsWeight);
+
+        // Calcular a média ponderada
         const weightedWorkNotes = resultsResponse.reduce(
-          (total, item) => total + (item.workNotes || 0),
+          (total, item) => total + (item.workNotes || 0) * discipline.assignmentsWeight,
           0,
         );
+
+        // Calcular a média ponderada final
+        const finalWeightedScore = weightedWorkNotes / 2;
 
         if (totalWeight === 0) {
           setAverage(0);
         } else {
-          const calculatedAverage =
-            (weightedGrade1 + weightedGrade2 + weightedWorkNotes) / totalWeight;
+          const calculatedAverage = weightedGrade1 + weightedGrade2 + finalWeightedScore;
+          console.log('nota atividade ' + weightedGrade2);
+          console.log('nota 1', weightedGrade1);
+          console.log('nota 2', weightedGrade2);
           setAverage(calculatedAverage);
         }
 

@@ -1,4 +1,4 @@
-export const SERVER_IP = 'http://192.168.1.10:8080';
+export const SERVER_IP = 'http://192.168.1.12:8080';
 export const URL_AUTH = SERVER_IP + '/auth';
 export const URL_USER = SERVER_IP + '/user';
 export const URL_USER_ID = SERVER_IP + '/user/';
