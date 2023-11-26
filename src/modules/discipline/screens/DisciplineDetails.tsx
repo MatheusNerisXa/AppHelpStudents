@@ -5,6 +5,7 @@ import { Modal, RefreshControl, ScrollView, Text, TouchableOpacity, View } from 
 
 import { Icon } from '../../../shared/components/icon/Icon';
 import {
+  SERVER_IP,
   URL_ABSENCES_TOTAL,
   URL_DISCIPLINE_CREATE,
   URL_DISCIPLINEID,
@@ -45,7 +46,7 @@ const DisciplineDetails = ({ route, navigation }) => {
   const fetchDisciplineDetails = async () => {
     const disciplineUrl = URL_DISCIPLINEID + `${disciplineId}`;
     const absencesTotalUrl = URL_ABSENCES_TOTAL + `${disciplineId}`;
-    const resultsUrl = 'http://192.168.1.12:8080/results/discipline/46';
+    const resultsUrl = SERVER_IP + '/results/discipline/' + `${disciplineId}`;
 
     try {
       const [disciplineResponse, totalAbsencesResponse, resultsResponse] = await Promise.all([
@@ -87,24 +88,20 @@ const DisciplineDetails = ({ route, navigation }) => {
           : 0;
 
         const totalWeight = gradeWeight1 + gradeWeight2;
-        console.log('OOOIiiii' + gradeWeight1, gradeWeight2, discipline.assignmentsWeight);
 
-        // Calcular a média ponderada
+        const filteredResults = resultsResponse.slice(2);
         const weightedWorkNotes = resultsResponse.reduce(
           (total, item) => total + (item.workNotes || 0) * discipline.assignmentsWeight,
           0,
         );
+        const itemCount = filteredResults.length;
 
-        // Calcular a média ponderada final
-        const finalWeightedScore = weightedWorkNotes / 2;
+        const finalWeightedScore = weightedWorkNotes / itemCount;
 
         if (totalWeight === 0) {
           setAverage(0);
         } else {
           const calculatedAverage = weightedGrade1 + weightedGrade2 + finalWeightedScore;
-          console.log('nota atividade ' + weightedGrade2);
-          console.log('nota 1', weightedGrade1);
-          console.log('nota 2', weightedGrade2);
           setAverage(calculatedAverage);
         }
 
@@ -240,7 +237,7 @@ const DisciplineDetails = ({ route, navigation }) => {
         </View>
 
         <View style={disciplineDetailsStyle.detailItem}>
-          <Text style={disciplineDetailsStyle.label}>Média:</Text>
+          <Text style={disciplineDetailsStyle.label}>Média atual:</Text>
           <Text style={disciplineDetailsStyle.value}>
             {average !== null ? average.toFixed(2) : 'N/A'}
           </Text>

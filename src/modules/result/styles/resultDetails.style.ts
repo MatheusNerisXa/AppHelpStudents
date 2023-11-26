@@ -10,6 +10,8 @@ const ResultDetailsStyle = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginTop: 10,
+    paddingBottom: 10,
+    textAlign: 'center',
   },
   notesContainer: {
     backgroundColor: '#f9f9f9',
